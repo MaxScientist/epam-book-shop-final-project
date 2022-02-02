@@ -22,8 +22,7 @@ import java.text.ParseException;
 
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
-import static com.epam.bookshop.constants.ServiceConstants.EDIT_BOOK_PAGE;
-import static com.epam.bookshop.constants.ServiceConstants.ERROR_OCCURRED;
+import static com.epam.bookshop.constants.ServiceConstants.*;
 
 
 public class AddAuthorToBookAction implements Action {
@@ -51,12 +50,19 @@ public class AddAuthorToBookAction implements Action {
         if (bookDAO.selectById(bookId) == null) {
             req.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
         } else if (authorDAO.isAuthorExists(author)) {
-            req.setAttribute(NOT_UNIQUE_BOOK_AUTHOR_ERROR, ERROR_OCCURRED);
+            if (!bookToAuthorDAO.isPairExists(bookId, authorDAO.selectAuthorByName(author))){
+                Long authorId = authorDAO.selectAuthorByName(author);
+                bookToAuthorDAO.insert(bookId, authorId);
+                dispatcher = req.getRequestDispatcher(EDIT_BOOK_PAGE_ACTION);
+                dispatcher.forward(req, resp);
+            }else {
+                req.setAttribute(NOT_UNIQUE_BOOK_AUTHOR_ERROR, ERROR_OCCURRED);
+            }
         } else {
             Long authorId = authorDAO.insert(author);
             bookToAuthorDAO.insert(bookId, authorId);
         }
-        dispatcher = req.getRequestDispatcher(EDIT_BOOK_PAGE);
+        dispatcher = req.getRequestDispatcher(EDIT_BOOK_PAGE_ACTION);
         dispatcher.forward(req, resp);
 
 

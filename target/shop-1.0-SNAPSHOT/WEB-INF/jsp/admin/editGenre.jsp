@@ -14,16 +14,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
-                        <%--                    <c:if test="${not empty requestScope.emptyFieldError}">--%>
-                        <%--                        <small class="form-text text-danger"><fmt:message key="small.error.empty.field"/></small>--%>
-                        <%--                    </c:if>--%>
-                        <%--                    <c:if test="${not empty requestScope.notUniquePublisherError}">--%>
-                        <%--                        <small class="form-text text-danger"><fmt:message key="small.error.publisher.exists"/></small>--%>
-                        <%--                    </c:if>--%>
                     <table class="table manage-candidates-top mb-0">
                         <thead>
                         <tr>
-                                <%--                            <th><fmt:message key="th.id"/>*</th>--%>
                             <th><fmt:message key="th.language"/></th>
                             <th><fmt:message key="th.genreName"/></th>
                         </tr>
@@ -39,11 +32,6 @@
                                 <td class="title">
                                     <input type="text" name="genreName" class="form-control" required>
                                 </td>
-                                    <%--                                <td>--%>
-                                    <%--                                    <button type="submit" class="btn btn-success"><fmt:message--%>
-                                    <%--                                            key="button.add"/></button>--%>
-                                    <%--                                </td>--%>
-
                             </tr>
                             <tr>
                                 <td class="title">

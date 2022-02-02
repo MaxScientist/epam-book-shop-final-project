@@ -14,9 +14,10 @@ public interface AuthorDAO {
     List<Author> selectAll() throws SQLException;
 
     boolean isAuthorExists(Author author) throws SQLException;
-    
+
     Long selectAuthorByName(Author author) throws SQLException;
-    
 
     List<Author> selectByBookId(Long id) throws SQLException;
+
+    Author selectById(Long authorId) throws SQLException;
 }

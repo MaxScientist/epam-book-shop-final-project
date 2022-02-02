@@ -2,6 +2,7 @@ package com.epam.bookshop.constants;
 
 public class ParameterConstants {
 
+    public final static String AUTHOR_ID = "authorId";
     public final static Integer DEFAULT_CART_ITEM_QUANTITY = 1;
     public final static Integer EMPTY_REQUEST_LENGTH = 0;
     public final static Integer LOCALE_ENGLISH_ID = 1;

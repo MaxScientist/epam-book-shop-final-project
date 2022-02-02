@@ -18,7 +18,7 @@ public class ServiceConstants {
     public final static String DISPLAY_ALL_USERS_ACTION = "/main/displayAllUsers";
     public final static String DISPLAY_CART_ACTION = "/main/displayCart";
     public final static String DISPLAY_CUSTOMER_ORDER_ACTION = "/main/displayCustomerOrder";
-    public final static String EDIT_BOOK_PAGE = "/main/editBook";
+    public final static String EDIT_BOOK_PAGE_ACTION = "/main/editBook";
     public final static String EDIT_GENRE_ACTION = "/main/editGenre";
     public final static String EDIT_ORDER_STATUS_ACTION = "/main/editOrderStatus";
     public final static String EDIT_PROFILE_ACTION = "/main/editProfileAction";
@@ -29,12 +29,12 @@ public class ServiceConstants {
     public final static String GENRE_LANGUAGE_IDS = "genreLanguageIds";
     public final static String SET_QUANTITY_ACTION = "/main/setQuantity";
     public final static String SORT_BOOK_ACTION = "/main/sortBooks";
-    public static String CHANGE_LANGUAGE_ACTION = "/main/changeLanguage";
-    public static String CURRENT_URI = "";
-    public static String INDEX_JSP = "/";
-    public static String LOGIN_PAGE_ACTION = "/main/login";
-    public static String LOGOUT_ACTION = "/main/logout";
-    public static String SIGN_UP_USER_ACTION_PAGE = "/main/signUp";
+    public static final String CHANGE_LANGUAGE_ACTION = "/main/changeLanguage";
+    public static final String CURRENT_URI = "";
+    public static final String INDEX_JSP = "/";
+    public static final String LOGIN_PAGE_ACTION = "/main/login";
+    public static final String LOGOUT_ACTION = "/main/logout";
+    public static final String SIGN_UP_USER_ACTION_PAGE = "/main/signUp";
     public static final String CART = "/main/cart";
     public static final String CATALOG = "/main/catalog";
     public static final String CATALOG_ACTION = "/main/catalogAction";
@@ -44,8 +44,10 @@ public class ServiceConstants {
     public static final String MAIN = "/WEB-INF/jsp/main.jsp";
     public static final String SIGN_UP_USER_ACTION = "/main/signUpAction";
     public static final String TO_MAIN = "/main/home";
-    public static String ERROR_SERVICE = "ERROR_SERVICE";
-    public static String FORWARD_SERVICE = "FORWARD_SERVICE";
+    public static final String ERROR_SERVICE = "ERROR_SERVICE";
+    public static final String DELETE_AUTHOR_FROM_BOOK_ACTION = "/main/deleteAuthor";
+    public static final String FORWARD_SERVICE = "FORWARD_SERVICE";
+    public static final String EDIT_AUTHOR_ACTION = "/main/editAuthor";
 
 
 }

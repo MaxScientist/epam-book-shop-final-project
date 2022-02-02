@@ -12,7 +12,7 @@ public class BookToAuthorDAOImpl implements BookToAuthorDAO {
 
     private static final String INSERT = "INSERT INTO public.book_to_author(book_id, author_id) VALUES(?, ?)";
     private static final String SELECT_BY_BOOK_AUTHOR_ID = "SELECT * FROM public.book_to_author WHERE (book_id = ? AND author_id = ?)";
-
+    private static final String DELETE_BOOK_AUTHOR_ID = "DELETE FROM public.book_to_author WHERE (book_id = ? and author_id=?)";
 
 
     @Override
@@ -52,5 +52,19 @@ public class BookToAuthorDAOImpl implements BookToAuthorDAO {
             connectionPool.returnConnection(connection);
         }
         return isExists;
+    }
+
+    @Override
+    public void delete(Long bookId, Long authorId) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BOOK_AUTHOR_ID)) {
+            preparedStatement.setLong(1, bookId);
+            preparedStatement.setLong(2, authorId);
+            preparedStatement.executeUpdate();
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
     }
 }

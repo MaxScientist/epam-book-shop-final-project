@@ -8,4 +8,5 @@ public interface BookToAuthorDAO {
 
     boolean isPairExists(Long bookId, Long authorId) throws SQLException;
 
+    void delete(Long bookId, Long authorId) throws SQLException;
 }

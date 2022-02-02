@@ -4,8 +4,7 @@ import com.epam.bookshop.entity.Author;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.epam.bookshop.constants.ParameterConstants.AUTHOR_FIRST_NAME;
-import static com.epam.bookshop.constants.ParameterConstants.AUTHOR_LAST_NAME;
+import static com.epam.bookshop.constants.ParameterConstants.*;
 
 
 public class AuthorBuilder {
@@ -20,6 +19,11 @@ public class AuthorBuilder {
         return author;
     }
 
+    public Author fillToUpdate(HttpServletRequest request) {
+        Author author = fillNewAuthor(request);
+        author.setId(Long.valueOf(request.getParameter(AUTHOR_ID)));
+        return author;
+    }
 
     public static AuthorBuilder getInstance() {
         if (instance == null) {
@@ -27,4 +31,6 @@ public class AuthorBuilder {
         }
         return instance;
     }
+
+
 }

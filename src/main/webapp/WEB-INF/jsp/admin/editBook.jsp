@@ -90,27 +90,93 @@
                         </div>
                     </div>
                 </form>
-                <form action="/main/addAuthorToBook" method="post">
-                    <input type="hidden" name="mangaID" value="${requestScope.manga.id}" required>
-                    <input type="text" name="authorFirstName" class="form-control"
-                           placeholder="<fmt:message key="label.FirstName"/>" required>
-                    <input type="text" name="authorLastName" class="form-control"
-                           placeholder="<fmt:message key="label.LastName"/>">
-                    <br>
-                    <c:if test="${not empty requestScope.notUniqueBookAuthorError}">
-                        <small class="form-text text-danger">
-                            <fmt:message key="small.error.author.exists"/>
-                        </small>
-                    </c:if>
-                    <br>
-                    <input type="hidden" name="bookId" value="${requestScope.bookInfo.id}">
-                    <button style="width: 100%" type="submit" class="btn btn-outline-primary">
-                        <i class="fas fa-plus"></i><fmt:message key="button.add.author"/>
-                    </button>
-                </form>
-                <c:forEach items="${requestScope.bookInfo.authors}" var="author">
-                    <h4>${author.firstName} ${author.lastName}</h4>
-                </c:forEach>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+                            <table class="table manage-candidates-top mb-0">
+                                <thead>
+                                <tr>
+                                    <th><fmt:message key="label.FirstName"/></th>
+                                    <th><fmt:message key="label.LastName"/></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <form action="/main/addAuthorToBook" method="post">
+
+                                    <tr>
+                                        <input type="hidden" name="bookId" value="${requestScope.bookInfo.id}" required>
+                                        <td class="title">
+                                            <input type="text" name="authorFirstName" class="form-control"
+                                                   placeholder="<fmt:message key="label.FirstName"/>" required>
+                                        </td>
+                                        <td class="title">
+                                            <input type="text" name="authorLastName" class="form-control"
+                                                   placeholder="<fmt:message key="label.LastName"/>">
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-warning" style="top: -15px;">
+                                                <fmt:message
+                                                        key="button.add"/></button>
+                                        </td>
+                                    </tr>
+
+                                </form>
+                                <c:forEach items="${requestScope.bookInfo.authors}" var="author" varStatus="iter">
+                                    <tr>
+                                        <form action="/main/editAuthor" method="post">
+                                            <td class="title">
+                                                <input type="text" name="authorFirstName"
+                                                       value="${author.firstName}"
+                                                       class="form-control" required>
+                                            </td>
+                                            <td class="title">
+                                                <input type="text" name="authorLastName" value="${author.lastName}"
+                                                       class="form-control" required>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="authorId" value="${author.id}" required>
+                                                <button type="submit" class="btn btn-success" style="top: -15px;">
+                                                    <fmt:message key="button.save"/>
+                                                </button>
+                                            </td>
+                                        </form>
+                                        <td>
+                                            <c:if test="${sessionScope.user.roleId eq Constants.roleAdminId}">
+                                                <form action="/main/deleteAuthor" method="post"
+                                                      style="display: inline-block">
+                                                    <input type="hidden" name="authorId" value="${author.id}" required>
+                                                    <input type="hidden" name="bookId"
+                                                           value="${requestScope.bookInfo.id}" required>
+                                                    <button type="submit" class="btn btn-danger">
+                                                        DELETE
+                                                    </button>
+                                                </form>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <%--                <form action="/main/addAuthorToBook" method="post">--%>
+                <%--                    <input type="hidden" name="bookId" value="${requestScope.bookInfo.id}" required>--%>
+                <%--                    <input type="text" name="authorFirstName" class="form-control"--%>
+                <%--                           placeholder="<fmt:message key="label.FirstName"/>" required>--%>
+                <%--                    <input type="text" name="authorLastName" class="form-control"--%>
+                <%--                           placeholder="<fmt:message key="label.LastName"/>">--%>
+                <%--                    <br>--%>
+                <%--                    <c:if test="${not empty requestScope.notUniqueBookAuthorError}">--%>
+                <%--                        <small class="form-text text-danger">--%>
+                <%--                            <fmt:message key="small.error.author.exists"/>--%>
+                <%--                        </small>--%>
+                <%--                    </c:if>--%>
+                <%--                    <br>--%>
+                <%--                    <button style="width: 100%" type="submit" class="btn btn-outline-primary">--%>
+                <%--                        <i class="fas fa-plus"></i><fmt:message key="button.add.author"/>--%>
+                <%--                    </button>--%>
+                <%--                </form>--%>
             </div>
         </div>
     </div>

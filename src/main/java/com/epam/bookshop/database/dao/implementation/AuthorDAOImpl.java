@@ -17,12 +17,12 @@ public class AuthorDAOImpl implements AuthorDAO {
     private static final String INSERT_AUTHOR = "INSERT INTO public.author(first_name, last_name) VALUES(?,?)";
     private static final String UPDATE_AUTHOR = "UPDATE public.author SET first_name =?, last_name = ? WHERE id = ?";
     private static final String SELECT_ALL_AUTHOR = "SELECT * FROM public.author";
+    private static final String SELECT_AUTHOR_BY_ID = "SELECT * FROM public.author WHERE id = ?";
     private static final String SELECT_AUTHOR_BY_NAME = "SELECT * FROM public.author WHERE (first_name = ? AND last_name = ?)";
     private static final String SELECT_ALL_AUTHORS_BY_BOOK_ID = "" +
             "SELECT a.id, a.first_name, a.last_name from public.book b" +
             " inner join public.book_to_author bta on b.id = bta.book_id" +
             " inner join public.author a on bta.author_id = a.id where b.id = ?";
-//
 
     private Author getAuthorByResultSet(ResultSet resultSet) throws SQLException {
         Author author = new Author();
@@ -140,5 +140,21 @@ public class AuthorDAOImpl implements AuthorDAO {
             connectionPool.returnConnection(connection);
         }
         return authorId;
+    }
+
+    @Override
+    public Author selectById(Long authorId) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        Author author = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_AUTHOR_BY_ID)) {
+            preparedStatement.setLong(1, authorId);
+            try (ResultSet resultSet =  preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    author = getAuthorByResultSet(resultSet);
+                }
+            }
+        }
+        return author;
     }
 }
