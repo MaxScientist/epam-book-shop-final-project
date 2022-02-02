@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 import static com.epam.bookshop.constants.ServiceConstants.MAIN;
 import static com.epam.bookshop.constants.ParameterConstants.*;
+import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
 
 
 public class FilterGenreAction implements Action {
@@ -47,7 +48,7 @@ public class FilterGenreAction implements Action {
 
 //        List<Genre> genreList = genreDAO.selectGenresByLanguageId(localeId);
 //        session.setAttribute(GENRES,  genreList);
-        dispatcher = req.getRequestDispatcher(MAIN);
+        dispatcher = req.getRequestDispatcher(SORT_BOOK_ACTION);
         dispatcher.forward(req, resp);
 
     }

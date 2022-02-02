@@ -18,9 +18,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
-import static com.epam.bookshop.constants.PageNameConstants.MAIN;
 import static com.epam.bookshop.constants.ParameterConstants.SORT_TYPES;
 import static com.epam.bookshop.constants.ParameterConstants.*;
+import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
 
 
 public class MainPageAction implements Action {
@@ -31,7 +31,6 @@ public class MainPageAction implements Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
         HttpSession session = req.getSession(true);
-        User user = (User) session.getAttribute(USER);
         Integer localeId = (Integer) session.getAttribute(LOCALE_ID);
         List<Genre> genres = genreDAO.selectGenresByLanguageId(localeId);
         List<Book> books = bookBuilder.fillAllToDisplay(localeId);
@@ -39,6 +38,6 @@ public class MainPageAction implements Action {
         session.setAttribute(GENRES, genres);
         req.setAttribute(BOOKS, books);
         session.setAttribute(SORT_TYPES, SortType.values());
-        req.getRequestDispatcher(MAIN).forward(req, resp);
+        req.getRequestDispatcher(SORT_BOOK_ACTION).forward(req, resp);
     }
 }

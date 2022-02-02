@@ -36,7 +36,9 @@ public class EditAuthorAction implements Action {
 
         Author author = authorBuilder.fillToUpdate(req);
 
-        if (author.getFirstName().length() == EMPTY_REQUEST_LENGTH || authorDAO.selectById(author.getId()) == null) {
+        if (author.getFirstName().length() == EMPTY_REQUEST_LENGTH ||
+                author.getLastName().length() ==EMPTY_REQUEST_LENGTH ||
+                authorDAO.selectById(author.getId()) == null) {
             req.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
         } else {
             authorDAO.update(author);

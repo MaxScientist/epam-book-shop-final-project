@@ -48,6 +48,8 @@ public class ServiceConstants {
     public static final String DELETE_AUTHOR_FROM_BOOK_ACTION = "/main/deleteAuthor";
     public static final String FORWARD_SERVICE = "FORWARD_SERVICE";
     public static final String EDIT_AUTHOR_ACTION = "/main/editAuthor";
+    public static final String EDIT_BOOK_ACTION = "/main/editBookInfo";
+    public static final String SEARCH_ACTION = "/main/search";
 
 
 }

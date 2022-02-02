@@ -57,6 +57,7 @@
                     <table>
                         <tr>
                             <c:forEach items="${requestScope.books}" var="book" varStatus="loop">
+
                             <c:if test="${not loop.first and loop.index % 3 == 0}">
                         </tr>
                         <tr>

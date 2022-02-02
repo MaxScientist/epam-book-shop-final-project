@@ -18,13 +18,23 @@
                         </div>
                     </div>
                 </div>
-                <form action="/main/editBookInfo">
+                <form action="/main/editBookInfo" method="post" enctype="multipart/form-data">
                     <div class="details col-md-6">
                         <div class="form-group col-md-8">
                             <label><fmt:message key="label.title"/></label>
                             <input name="bookTitle" type="text" class="form-control"
                                    value="${requestScope.bookInfo.title}" required>
                         </div>
+                        <select name="languageId" class="form-control">
+                            <option value="${Constants.localeRussianId}"
+                                    <c:if test="${sessionScope.localeId eq Constants.localeRussianId}">selected</c:if>>
+                                <fmt:message key="select.option.ru"/>
+                            </option>
+                            <option value="${Constants.localeEnglishId}"
+                                    <c:if test="${sessionScope.localeId eq Constants.localeEnglishId}">selected</c:if>>
+                                <fmt:message key="select.option.en"/>
+                            </option>
+                        </select>
 
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -55,6 +65,7 @@
                                        class="form-control" required>
                             </div>
                             <div class="form-group col-md-6">
+                                <input type="hidden" name="publisherId" value="${requestScope.bookInfo.publisher.id}">
                                 <label><fmt:message key="publisher"/></label>
                                 <input name="publisherHouse" type="text" class="form-control"
                                        value="${requestScope.bookInfo.publisher.publishHouse}"
@@ -83,7 +94,31 @@
                                        placeholder="${requestScope.bookInfo.releaseDate}"
                                        class="form-control" required>
                             </div>
+                            <div class="form-group">
+                            <select name="accessStatusId" class="form-control">
+                                <option value="${Constants.accessStatusActiveId}"
+                                        <c:if test="${requestScope.bookInfo.accessStatusId eq Constants.accessStatusActiveId}">
+                                            selected
+                                        </c:if>
+                                >
+                                    <fmt:message key="select.status.active"/>
+                                </option>
+                                <option value="${Constants.accessStatusDeletedId}"
+                                        <c:if test="${requestScope.bookInfo.accessStatusId eq Constants.accessStatusDeletedId}">
+                                            selected
+                                        </c:if>
+                                >
+                                    <fmt:message key="select.status.deleted"/>
+                                </option>
+                            </select>
+                        </div>
+                            <div class="form-group">
+                                <label><fmt:message key="label.cover.image"/></label>
 
+                                <input name="bookImage" type="file" value="${requestScope.bookInfo.bookImage}" accept="image/*" class="form-control-file">
+                            </div>
+
+                            <input type="hidden" name="bookId" value="${requestScope.bookInfo.id}">
                             <button type="submit" class="btn btn-primary btn-lg" style="float: right;"><fmt:message
                                     key="button.add"/></button>
 

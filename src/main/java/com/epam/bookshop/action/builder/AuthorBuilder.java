@@ -12,6 +12,8 @@ public class AuthorBuilder {
     private static AuthorBuilder instance = new AuthorBuilder();
 
 
+
+
     public Author fillNewAuthor(HttpServletRequest request) {
         Author author = new Author();
         author.setFirstName(request.getParameter(AUTHOR_FIRST_NAME).trim());

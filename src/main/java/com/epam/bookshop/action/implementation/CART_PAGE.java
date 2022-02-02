@@ -17,7 +17,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import static com.epam.bookshop.constants.PageNameConstants.CART_PAGE;
-import static com.epam.bookshop.constants.ServiceConstants.TO_MAIN;
+import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 
 
@@ -36,7 +36,7 @@ public class CART_PAGE implements Action {
 
             req.getRequestDispatcher(CART_PAGE).forward(req, resp);
         } else {
-            req.getRequestDispatcher(TO_MAIN).forward(req, resp);
+            req.getRequestDispatcher(SORT_BOOK_ACTION).forward(req, resp);
         }
     }
 }

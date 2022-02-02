@@ -27,12 +27,12 @@ public class LoginAction implements Action {
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private final UserDAO userDAO = new UserDAOImpl();
-    private RequestDispatcher dispatcher;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ParseException, SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
+        RequestDispatcher dispatcher;
         if (user != null) {
             dispatcher = request.getRequestDispatcher(MAIN);
             dispatcher.forward(request, response);
@@ -53,7 +53,7 @@ public class LoginAction implements Action {
             } else {
                 session.setAttribute(USER, user);
                 LOGGER.info("User '"+ user.getUserLogin() + "' has logged into the system.");
-                dispatcher = request.getRequestDispatcher(TO_MAIN);
+                dispatcher = request.getRequestDispatcher(SORT_BOOK_ACTION);
                 dispatcher.forward(request, response);
             }
         }

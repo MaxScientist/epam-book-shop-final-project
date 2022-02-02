@@ -4,6 +4,7 @@ import com.epam.bookshop.action.Action;
 import com.epam.bookshop.action.builder.BookBuilder;
 import com.epam.bookshop.constants.SortType;
 import com.epam.bookshop.entity.Book;
+import com.epam.bookshop.util.validator.AccessValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,6 +30,9 @@ public class SortBookAction implements Action {
         Integer locale_id = (Integer) session.getAttribute(LOCALE_ID);
         List<Book> books = bookBuilder.fillAllToDisplay(locale_id);
 
+        if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
+            books = bookBuilder.getActive(books);
+        }
         if (req.getParameter(SORT_TYPE) != null) {
             bookBuilder.sortByType(books, SortType.valueOf(req.getParameter(SORT_TYPE)));
             session.setAttribute(SELECTED_SORT_TYPE, req.getParameter(SORT_TYPE));

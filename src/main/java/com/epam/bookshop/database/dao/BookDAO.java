@@ -18,5 +18,7 @@ public interface BookDAO {
 
     List<Book> selectAllByFilter(Integer genreId, Integer localeID) throws SQLException;
 
+    boolean isBookExists(String title) throws SQLException;
 
+    List<Book> selectByTitle(String title) throws SQLException;
 }

@@ -1,50 +1,51 @@
 package com.epam.bookshop.action.builder;
 
-import com.epam.bookshop.database.dao.BookDAO;
 import com.epam.bookshop.database.dao.EditionDAO;
-import com.epam.bookshop.database.dao.PublisherDAO;
-import com.epam.bookshop.database.dao.implementation.BookDAOImpl;
 import com.epam.bookshop.database.dao.implementation.EditionDAOImpl;
-import com.epam.bookshop.database.dao.implementation.PublisherDAOImpl;
+import com.epam.bookshop.entity.Edition;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
+import java.sql.Date;
+import java.sql.SQLException;
+
+import static com.epam.bookshop.constants.ParameterConstants.*;
 
 public class EditionBuilder {
 
     private static EditionBuilder instance = new EditionBuilder();
-    private final PublisherDAO publisherDAO = new PublisherDAOImpl();
-    private final PublisherBuilder publisherBuilder = PublisherBuilder.getInstance();
-    private final BookBuilder bookBuilder = BookBuilder.getInstance();
-    private final BookDAO bookDAO = new BookDAOImpl();
     private final EditionDAO editionDAO = new EditionDAOImpl();
 
 
-//    public void fillNewEditionBook(HttpServletRequest request) throws SQLException, ParseException, IOException, ServletException {
-//        Publisher publisher = publisherBuilder.fillNewPublisher(request);
-//        Long publisherId = publisherDAO.insert(publisher);
-//        Book book = bookBuilder.fillNewBook(request);
-//        Long bookId = bookDAO.insert(book);
-//        Edition edition = new Edition();
-//        edition.setBookId(bookId);
-//        edition.setBinding(request.getParameter(BOOK_BINDING));
-//        edition.setDescription(request.getParameter(BOOK_DESCRIPTION));
-//        edition.setIsbn(request.getParameter(BOOK_ISBN));
-//        edition.setPages(Integer.parseInt(request.getParameter(BOOK_PAGES)));
-//        edition.setPrice(new BigInteger(request.getParameter(BOOK_PRICE)));
-//        edition.setPubId(publisherId);
-//        String releaseDate = request.getParameter(BOOK_RELEASE_DATE);
-//        Date releaseDateBook = getReleaseDate(releaseDate);
-//        edition.setReleaseDate(releaseDateBook);
-//        Long editionId = editionDAO.insert(edition);
-//        edition.setId(editionId);
-//
-//    }
+    public Edition fillNewEditionBook(HttpServletRequest request) {
+        Edition edition = new Edition();
 
-    private Date getReleaseDate(String date) throws ParseException {
-        String dateFormat = "yyyy/MM/dd";
-        return new SimpleDateFormat(dateFormat).parse(date);
+        edition.setBinding(request.getParameter(BOOK_BINDING).trim());
+
+        edition.setDescription(request.getParameter(BOOK_DESCRIPTION).trim());
+
+        edition.setIsbn(request.getParameter(BOOK_ISBN).trim());
+
+        edition.setPages(Integer.parseInt(request.getParameter(BOOK_PAGES).trim()));
+
+        edition.setPrice(new BigInteger(request.getParameter(BOOK_PRICE).trim()));
+
+        String releaseDate = request.getParameter(BOOK_RELEASE_DATE);
+        Date releaseDateBook = Date.valueOf(releaseDate);
+        edition.setReleaseDate(releaseDateBook);
+
+        return edition;
+    }
+
+    public Edition fillToUpdate(HttpServletRequest req) throws SQLException {
+        Edition edition = fillNewEditionBook(req);
+        edition.setId(editionDAO.selectByBookId(Long.valueOf(req.getParameter(BOOK_ID))).getId());
+        edition.setBookId(Long.valueOf(req.getParameter(BOOK_ID)));
+        edition.setPubId(editionDAO.selectByBookId(Long.valueOf(req.getParameter(BOOK_ID))).getPubId());
+        if (edition.getReleaseDate() == null) {
+            edition.setReleaseDate(editionDAO.selectByBookId(Long.valueOf(req.getParameter(BOOK_ID))).getReleaseDate());
+        }
+        return edition;
     }
 
     public static EditionBuilder getInstance() {
@@ -53,4 +54,6 @@ public class EditionBuilder {
         }
         return instance;
     }
+
+
 }

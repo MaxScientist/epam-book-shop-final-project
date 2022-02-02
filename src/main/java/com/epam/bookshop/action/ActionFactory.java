@@ -55,6 +55,8 @@ public class ActionFactory {
         ACTION_MAP.put(SIGN_UP_USER_ACTION_PAGE, new SignUpPageAction());
         ACTION_MAP.put(SORT_BOOK_ACTION, new SortBookAction());
         ACTION_MAP.put(TO_MAIN, new MainPageAction());
+        ACTION_MAP.put(EDIT_BOOK_ACTION, new EditBookAction());
+        ACTION_MAP.put(SEARCH_ACTION, new SearchAction());
     }
 
     public static ActionFactory getInstance() {

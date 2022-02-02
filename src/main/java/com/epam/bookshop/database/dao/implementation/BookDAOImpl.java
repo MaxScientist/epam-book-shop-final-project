@@ -20,6 +20,7 @@ public class BookDAOImpl implements BookDAO {
     private static final String UPDATE_BOOK = "UPDATE public.book SET title=?, access_status_id=?, genre_id=?, image = ?, language_id=? WHERE id = ?";
     private static final String INSERT_BOOK = "INSERT INTO public.book(title, access_status_id, genre_id, image, language_id) VALUES(?,?,?,?,?)";
     private static final String SELECT_ALL_BY_FILTER = "select * from public.book b inner join public.genre g on b.genre_id = g.id where g.id = ? and g.language_id = ?";
+    private static final String SELECT_BOOK_BY_TITLE = "SELECT * FROM public.book WHERE title = ?";
 
     private Book getBookByResultSet(ResultSet resultSet) throws SQLException {
         Book book = new Book();
@@ -61,7 +62,6 @@ public class BookDAOImpl implements BookDAO {
     }
 
 
-
     @Override
     public Book selectById(Long bookId) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
@@ -88,10 +88,10 @@ public class BookDAOImpl implements BookDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BOOK)) {
             preparedStatement.setString(1, book.getTitle());
             preparedStatement.setInt(2, book.getAccessStatusId());
-            preparedStatement.setLong(4, book.getGenreId());
-            preparedStatement.setBinaryStream(5, ImageUtil.baseToImage(book.getBookImage()));
-            preparedStatement.setInt(6, book.getLanguageId());
-            preparedStatement.setLong(7, book.getId());
+            preparedStatement.setLong(3, book.getGenreId());
+            preparedStatement.setBinaryStream(4, ImageUtil.baseToImage(book.getBookImage()));
+            preparedStatement.setInt(5, book.getLanguageId());
+            preparedStatement.setLong(6, book.getId());
             preparedStatement.executeUpdate();
         } finally {
             connectionPool.returnConnection(connection);
@@ -123,7 +123,7 @@ public class BookDAOImpl implements BookDAO {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         List<Book> bookList = new ArrayList<>();
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BY_FILTER)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BY_FILTER)) {
             preparedStatement.setInt(1, genreId);
             preparedStatement.setInt(2, localeId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -136,5 +136,40 @@ public class BookDAOImpl implements BookDAO {
             connectionPool.returnConnection(connection);
         }
         return bookList;
+    }
+
+    @Override
+    public boolean isBookExists(String title) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        boolean isExists;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_TITLE)) {
+            preparedStatement.setString(1, title);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                isExists = resultSet.next();
+            }
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return isExists;
+    }
+
+    @Override
+    public List<Book> selectByTitle(String title) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        List<Book> books = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_TITLE)) {
+            preparedStatement.setString(1, title);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()){
+                    Book book = getBookByResultSet(resultSet);
+                    books.add(book);
+                }
+            }
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return books;
     }
 }

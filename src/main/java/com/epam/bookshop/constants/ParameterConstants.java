@@ -59,22 +59,22 @@ public class ParameterConstants {
     public final static String USERS = "users";
     public final static String USER_ID = "userId";
     public final static String USER_ORDERS = "userOrders";
-    public static Integer ACCESS_STATUS_ACTIVE_ID = 1;
-    public static Integer ACCESS_STATUS_DELETED_ID = 2;
-    public static Integer ROLE_USER_ID = 0;
-    public static String EMAIL_PASSWORD_ERROR = "emailPasswordError";
-    public static String KEY_ERROR_SIGN_IN = "small.error.sign.in";
-    public static String KEY_ERROR_USER_NOT_EXISTS = "small.error.user.not.exists";
-    public static String LOCALE = "locale";
-    public static String LOCALE_ID = "localeId";
-    public static String USER = "user";
-    public static String USER_ADDRESS = "userAddress";
-    public static String USER_EMAIL = "userEmail";
-    public static String USER_LOGIN = "userLogin";
-    public static String USER_NOT_EXISTS_ERROR = "userNotExistsError";
-    public static String USER_PASSWORD = "userPassword";
-    public static String USER_PHONE_NUMBER = "userPhoneNumber";
-    public static String USER_POSTAL_CODE = "userPostalCode";
+    public static final Integer ACCESS_STATUS_ACTIVE_ID = 1;
+    public static final Integer ACCESS_STATUS_DELETED_ID = 2;
+    public static final Integer ROLE_USER_ID = 0;
+    public static final String EMAIL_PASSWORD_ERROR = "emailPasswordError";
+    public static final String KEY_ERROR_SIGN_IN = "small.error.sign.in";
+    public static final String KEY_ERROR_USER_NOT_EXISTS = "small.error.user.not.exists";
+    public static final String LOCALE = "locale";
+    public static final String LOCALE_ID = "localeId";
+    public static final String USER = "user";
+    public static final String USER_ADDRESS = "userAddress";
+    public static final String USER_EMAIL = "userEmail";
+    public static final String USER_LOGIN = "userLogin";
+    public static final String USER_NOT_EXISTS_ERROR = "userNotExistsError";
+    public static final String USER_PASSWORD = "userPassword";
+    public static final String USER_PHONE_NUMBER = "userPhoneNumber";
+    public static final String USER_POSTAL_CODE = "userPostalCode";
     public static final String ACTION = "action";
     public static final String BOOKS = "books";
     public static final String BOOK_ID = "bookId";
@@ -93,6 +93,10 @@ public class ParameterConstants {
     public static final String QUANTITY = "quantity";
     public static final String USER_FIRST_NAME = "userFirstName";
     public static final String USER_LAST_NAME = "userLastName";
+    public static final String SUCH_BOOK_EXISTS = "suchBookExists";
+    public static final String ISBN_INVALID_ERROR = "isbnInvalidError";
+    public static final String PUBLISHER_ID = "publisherId";
+    public static final String ACCESS_STATUS_ID = "accessStatusId";
 
 
 
