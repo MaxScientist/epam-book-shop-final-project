@@ -1,0 +1,135 @@
+.logo {
+    width: 130px;
+    display: block;
+}
+body {
+    background-image: url("../img/wallpaper.png");
+    background-size: cover;
+
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgb(255, 129, 129, 0.25);
+    border-color: #CED4DA;
+}
+
+h3,h5 {
+    color: #562e2e;
+}
+h1 {
+    color: #524D4D;
+}
+p {
+    color: #777777;
+    display: block;
+}
+.form-group {
+    margin-bottom: 10px;
+}
+.rating {
+    color: #F9A501;
+}
+li {
+    color: #3d3d3d;
+}
+.btn.btn-primary
+{
+    background-color: #f2506d;
+    border-color: #f2506d;
+}
+
+.btn.btn-primary:active,
+.btn-primary:hover,
+.btn-primary:focus  {
+    background-color: #ff5b77 !important;
+    border-color: #f2506d;
+    box-shadow: 0 0 0 0.2rem rgb(255, 129, 129, 0.25);
+}
+
+.btn:active,
+.btn:hover,
+.btn:focus {
+    box-shadow: 0 0 0 0.2rem rgb(255, 129, 129, 0.25);
+}
+
+.btn.btn-outline-primary {
+    background-color: #ffffff;
+    border-color: #f2506d;
+    color: #f2506d;
+
+}
+
+.btn.btn-outline-primary:active,
+.btn.btn-outline-primary:hover,
+.btn.btn-outline-primary:focus,
+.btn.btn-outline-primary:dropdown-toggle
+{
+    box-shadow: 0 0 0 0.2rem rgb(255, 129, 129, 0.25) !important;
+    background-color: #f2506d !important;
+    color: white;
+}
+
+.pagination * {
+    color: #f2506d	 !important;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+    color: #c83150;
+}
+
+.nav-item {
+    margin-left: 5px;
+}
+
+.sidebar {
+    /*display: block;*/
+    margin-top: 20px;
+}
+.sidebar * {
+    display: block;
+}
+.card * {
+
+    font-size: 14px;
+    /*display: block;*/
+}
+
+.card-img-top {
+    height: 190px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#inputState {
+    display: block;
+    width: 100px;
+}
+div {
+    display: block;
+
+}
+.main-containter {
+    background-color: #f5f5f5 !important;
+}
+.list-items {
+    list-style: none;
+}
+.list-items li:before {
+    list-style-type: circle;
+    margin: 0 16px 0 0;
+}
+.card-body {
+    text-align: left;
+}
+
+.btn-link {
+    background: none !important;
+    border: none !important;
+    color: #c83150 !important;
+    text-decoration: none !important;
+}
+.btn-link:hover {
+    color: #ff5b77 !important;
+    cursor: pointer;
+}
