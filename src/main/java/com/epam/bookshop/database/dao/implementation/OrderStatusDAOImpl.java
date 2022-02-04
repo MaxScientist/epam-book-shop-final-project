@@ -3,7 +3,6 @@ package com.epam.bookshop.database.dao.implementation;
 import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.OrderStatusDAO;
 import com.epam.bookshop.entity.OrderStatus;
-import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderStatusDAOImpl implements OrderStatusDAO {
-
-    static Logger LOGGER = Logger.getLogger(OrderStatusDAOImpl.class);
 
     private ConnectionPool connectionPool;
     private Connection connection;
@@ -26,7 +23,7 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
     private OrderStatus getOrderStatusByResultSet(ResultSet resultSet) throws SQLException {
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setId(resultSet.getLong("id"));
-        orderStatus.setLanguage_id(resultSet.getInt("language_id"));
+        orderStatus.setLanguageId(resultSet.getInt("language_id"));
         orderStatus.setName(resultSet.getString("name"));
         return orderStatus;
     }

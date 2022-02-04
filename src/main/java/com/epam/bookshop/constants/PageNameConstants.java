@@ -3,11 +3,8 @@ package com.epam.bookshop.constants;
 public class PageNameConstants {
 
     public static final String MAIN = "/WEB-INF/jsp/main.jsp";
-    public static final String LOGIN = "/WEB-INF/jsp/login.jsp"; //rename it!!!!
+    public static final String LOGIN = "/WEB-INF/jsp/login.jsp";
     public static final String SIGN_UP = "/WEB-INF/jsp/signup.jsp";
-    public static final String ABOUT = "/WEB-INF/jsp/about.jsp";
-    public static final String PRODUCT = "/WEB-INF/jsp/product.jsp";
-    public static final String CUSTOMER_MAIN_PAGE = "/WEB-INF/jsp/customer/customer.jsp";
     public static final String CART_PAGE = "/WEB-INF/jsp/cart.jsp";
     public static final String CATALOG_PAGE = "/WEB-INF/jsp/catalog.jsp";
     public static final String ERROR_PAGE = "/WEB-INF/jsp/error.jsp";

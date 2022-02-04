@@ -6,7 +6,7 @@
 
 <jsp:useBean id="Constants" class="com.epam.bookshop.constants.ParameterConstants"/>
 
-<jsp:include page="../customer/fragments/header.jsp"/>
+<jsp:include page="../fragments/mainHeader.jsp"/>
 <c:if test="${sessionScope.user.roleId eq Constants.roleAdminId and
                     not sessionScope.user.banned and
                     sessionScope.user.statusId ne Constants.accessStatusDeletedId}">
@@ -125,3 +125,4 @@
     <img src="img/404.png" class="mx-auto" width="100%">
 </c:if>
 </div>
+<jsp:include page="../fragments/footer.jsp"/>

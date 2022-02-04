@@ -6,7 +6,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 import static com.epam.bookshop.constants.ParameterConstants.*;
 public class UserBuilder {
     private static UserBuilder instance = new UserBuilder();

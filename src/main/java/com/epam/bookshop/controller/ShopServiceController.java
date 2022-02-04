@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 public class ShopServiceController extends HttpServlet {
 
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
@@ -47,7 +47,7 @@ public class ShopServiceController extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
         try {
             String pathInfo = request.getServletPath() + request.getPathInfo();
-            Action action = ActionFactory.getInstance().getAction(pathInfo);
+            Action action = actionFactory.getAction(pathInfo);
             action.execute(request, response);
         } catch (ParseException | SQLException e) {
             LOGGER.error("Couldn't execute request", e);

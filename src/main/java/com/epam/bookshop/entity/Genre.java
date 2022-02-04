@@ -1,14 +1,12 @@
 package com.epam.bookshop.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 public class Genre implements Serializable {
 
     private Integer id;
     private Integer languageId;
-    private List<Integer> languageIdList;
     private String name;
 
     public Integer getId() {

@@ -26,7 +26,7 @@
                                         </c:forEach>
                                         <hr/>
                                         <button class="btn btn-primary justify-content-center" type="submit" style="width: 100%">
-                                            <fmt:message key="button.search"/>
+                                            <fmt:message key="label.search"/>
                                         </button>
                                     </form>
 

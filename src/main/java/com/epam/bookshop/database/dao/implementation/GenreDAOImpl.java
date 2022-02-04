@@ -10,11 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class GenreDAOImpl implements GenreDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String SELECT_ALL_GENRES = "SELECT * FROM public.genre";
     private static final String SELECT_ALL_GENRES_BY_LANGUAGE_ID = "SELECT * FROM public.genre WHERE language_id = ?";
@@ -53,6 +56,7 @@ public class GenreDAOImpl implements GenreDAO {
         } catch (SQLException e) {
             connection.rollback();
         } finally {
+            LOGGER.info("New genres has been added " +genres);
             connectionPool.returnConnection(connection);
         }
     }
@@ -153,6 +157,7 @@ public class GenreDAOImpl implements GenreDAO {
         } catch (SQLException e) {
             connection.rollback();
         } finally {
+            LOGGER.info(genres  + " has been deleted.");
             connectionPool.returnConnection(connection);
         }
     }

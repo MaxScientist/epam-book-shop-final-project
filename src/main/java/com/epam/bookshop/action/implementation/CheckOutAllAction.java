@@ -19,9 +19,8 @@ import java.util.List;
 
 import static com.epam.bookshop.constants.PageNameConstants.CONFIRM_PAGE;
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
-import static com.epam.bookshop.constants.ParameterConstants.EMPTY_REQUEST_LENGTH;
-import static com.epam.bookshop.constants.ServiceConstants.DISPLAY_CART_ACTION;
 import static com.epam.bookshop.constants.ParameterConstants.*;
+import static com.epam.bookshop.constants.ServiceConstants.DISPLAY_CART_ACTION;
 
 
 public class CheckOutAllAction implements Action {

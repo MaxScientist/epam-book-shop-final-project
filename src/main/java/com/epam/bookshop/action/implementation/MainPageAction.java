@@ -7,7 +7,6 @@ import com.epam.bookshop.database.dao.GenreDAO;
 import com.epam.bookshop.database.dao.implementation.GenreDAOImpl;
 import com.epam.bookshop.entity.Book;
 import com.epam.bookshop.entity.Genre;
-import com.epam.bookshop.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
-import static com.epam.bookshop.constants.ParameterConstants.SORT_TYPES;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
 
@@ -36,7 +34,7 @@ public class MainPageAction implements Action {
         List<Book> books = bookBuilder.fillAllToDisplay(localeId);
 
         session.setAttribute(GENRES, genres);
-        req.setAttribute(BOOKS, books);
+        session.setAttribute(BOOKS, books);
         session.setAttribute(SORT_TYPES, SortType.values());
         req.getRequestDispatcher(SORT_BOOK_ACTION).forward(req, resp);
     }

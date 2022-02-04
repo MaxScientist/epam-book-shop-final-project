@@ -17,8 +17,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import static com.epam.bookshop.constants.PageNameConstants.LOGIN;
-import static com.epam.bookshop.constants.ServiceConstants.DISPLAY_ALL_ORDERS_ACTION;
 import static com.epam.bookshop.constants.ParameterConstants.*;
+import static com.epam.bookshop.constants.ServiceConstants.DISPLAY_ALL_ORDERS_ACTION;
 
 public class EditOrderStatusAction implements Action {
 

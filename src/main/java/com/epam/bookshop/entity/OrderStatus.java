@@ -3,7 +3,7 @@ package com.epam.bookshop.entity;
 public class OrderStatus {
 
     private Long id;
-    private Integer language_id;
+    private Integer languageId;
     private String name;
 
     public Long getId() {
@@ -14,12 +14,12 @@ public class OrderStatus {
         this.id = id;
     }
 
-    public Integer getLanguage_id() {
-        return language_id;
+    public Integer getLanguageId() {
+        return languageId;
     }
 
-    public void setLanguage_id(Integer language_id) {
-        this.language_id = language_id;
+    public void setLanguageId(Integer languageId) {
+        this.languageId = languageId;
     }
 
     public String getName() {

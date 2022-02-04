@@ -3,6 +3,7 @@ package com.epam.bookshop.database.dao.implementation;
 import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.OrderDAO;
 import com.epam.bookshop.entity.Order;
+import org.apache.log4j.Logger;
 
 import java.math.BigInteger;
 import java.sql.*;
@@ -13,6 +14,8 @@ public class OrderDAOImpl implements OrderDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String SELECT_ALL_ORDER = "SELECT * FROM public.order";
     private static final String INSERT_ORDER = "INSERT INTO public.order(user_id, order_status_id, total_price, created_date)" +
@@ -49,6 +52,7 @@ public class OrderDAOImpl implements OrderDAO {
                 }
             }
         } finally {
+            LOGGER.info("New order has been added " + order);
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -102,6 +106,7 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement.setLong(2, orderId);
             preparedStatement.executeUpdate();
         } finally {
+            LOGGER.info("Order has been updated order id = " + orderId + " status id = " + statusId);
             connectionPool.returnConnection(connection);
         }
     }

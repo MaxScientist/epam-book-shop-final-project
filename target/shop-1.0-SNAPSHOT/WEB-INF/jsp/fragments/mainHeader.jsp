@@ -24,7 +24,6 @@
 
     <style>
         <%@include  file="/static/css/style.css" %>
-        <%--        <%@include file="/static/css/style_last.css"%>--%>
         <%@include file="/static/css/form.css" %>
         <%@include file="/static/css/megamenu.css"%>
 
@@ -39,7 +38,7 @@
 <body>
 <div class="header-top">
     <div class="wrap">
-        <div class="header-top-left">
+        <div class="header-top-left" style="">
             <form action="/main/changeLanguage" method="get">
                 <select name="locale" class="btn rounded-pill" onchange="this.form.submit();">
                     <option value="ru"
@@ -51,21 +50,54 @@
                         <fmt:message key="select.option.en"/>
                     </option>
                 </select>
+                <input type="hidden" name="pageName" value="${pageContext.request.servletPath}">
+
             </form>
+
             <div class="clear"></div>
+
         </div>
+<div style="position: absolute; right: 10%; margin-right: 700px;">
+            <h1 align="center" style="color: white;font-family: fontawesome; font-size: 20px; ">BOOK SHOP</h1>
+</div>
         <div class="cssmenu">
+
             <ul>
-                <li class="active"><a href="${pageContext.request.contextPath}/main/login">
-                    <fmt:message key="button.sample"/></a></li>
-                |
-                <li><a href="${pageContext.request.contextPath}/main/catalog">Catalog</a></li>
-                |
-                <li><a href="${pageContext.request.contextPath}/main/cart">Checkout</a></li>
-                |
-                <li><a href="${pageContext.request.contextPath}/main/login">Log In</a></li>
-                |
-                <li><a href="${pageContext.request.contextPath}/main/signUp">Sign Up</a></li>
+                <c:if test="${sessionScope.user.roleId eq Constants.roleUserId}">
+                    |
+                    <li><a href="${pageContext.request.contextPath}/main/displayCart">
+                        <fmt:message key="label.checkOut"/>
+                    </a></li>
+                    |
+                    <li><a href="${pageContext.request.contextPath}/main/displayCustomerOrder">
+                        <fmt:message key="label.myOrders"/></a>
+                    </li>
+                </c:if>
+                <c:if test="${sessionScope.user.roleId eq Constants.roleAdminId}">
+                    <li><a href="/main/adminPanel"><fmt:message key="head.adminPanel"/></a></li>
+                </c:if>
+                <c:if test="${sessionScope.user.roleId eq Constants.roleAdminId or
+                sessionScope.user.roleId eq Constants.roleUserId}">
+                    |
+                    <li><a href="${pageContext.request.contextPath}/main/editProfile"><fmt:message
+                            key="head.edit.profile"/></a></li>
+                    |
+                    <li><a href="${pageContext.request.contextPath}/main/logout"><fmt:message key="label.signOut"/> </a>
+                    </li>
+                </c:if>
+
+                <c:if test="${sessionScope.user eq null}">
+                    <li><a href="${pageContext.request.contextPath}/main/login">
+                        <fmt:message key="label.login"/></a>
+                    </li>
+                    |
+                    <li><a href="${pageContext.request.contextPath}/main/signUp">
+                        <fmt:message key="label.signUp"/></a>
+                    </li>
+                    |
+
+                </c:if>
+
             </ul>
         </div>
         <div class="clear"></div>
@@ -75,39 +107,34 @@
     <div class="wrap">
         <div class="header-bottom-left">
             <div class="logo">
-                <a href="${pageContext.request.contextPath}/index.jsp">
-                    <img src="${pageContext.request.contextPath}/res/shop_assets/images/logo.png" style="height: 41px"
+                <a href="${pageContext.request.contextPath}/main/home">
+                    <img src="${pageContext.request.contextPath}/static/images/logo.png" style="height: 100px"
                          alt=""/></a>
             </div>
             <div class="menu">
                 <ul class="megamenu skyblue">
-                    <%--                    <li class="active grid"><a href="/"><fmt:message key="index.name" /></a></li>--%>
-                    <%--                    <li><a class="color4" href="#">Category</a>--%>
-                    <%--                        <div class="megapanel">--%>
-                    <%--                            <div class="row">--%>
-                    <%--                                <div class="col1">--%>
-                    <%--                                    <div class="h_nav">--%>
-                    <%--                                        <h4>List of Category</h4>--%>
-                    <%--                                        <ul>--%>
-                    <%--                                        </ul>--%>
-                    <%--                                    </div>--%>
-                    <%--                                </div>--%>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/main/home">
+                            <fmt:message key="label.main"/>
+                        </a>
+                    </li>
+                    <c:if test="${sessionScope.user.roleId eq Constants.roleAdminId}">
 
-                    <%--                            </div>--%>
-                    <%--                        </div>--%>
-                    <%--                    </li>--%>
-
-                    <li><a href="${pageContext.request.contextPath}/main/orders">Other</a></li>
-                    <li><a href="${pageContext.request.contextPath}/main/cart">Purchase</a></li>
+                        <li><a href=${pageContext.request.contextPath}"/main/addBook">
+                            <fmt:message key="head.add.book"/>
+                        </a></li>
+                    </c:if>
                 </ul>
             </div>
         </div>
         <form action="/main/search" method="get">
             <div class="header-bottom-right">
                 <div class="search">
-                    <input type="text" name="bookTitle" class="textbox" value="Search" onfocus="this.value = '';"
+
+                    <input type="text" name="bookTitle" class="textbox" value="<fmt:message key="label.search"/>"
+                           onfocus="this.value = '';"
                            onblur="if (this.value == '') {this.value = 'Search';}">
-                    <input type="submit" value="Subscribe" id="submit" name="submit">
+                    <input type="image" src="/static/images/search.png" style="width: 15px;height: 15px" id="submit" name="submit">
                     <div id="response"></div>
                 </div>
             </div>

@@ -5,11 +5,9 @@ import com.epam.bookshop.database.dao.*;
 import com.epam.bookshop.database.dao.implementation.*;
 import com.epam.bookshop.entity.Book;
 import com.epam.bookshop.entity.Edition;
-import com.epam.bookshop.util.ImageUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ public class BookBuilder {
     private final EditionDAO editionDAO = new EditionDAOImpl();
     private final GenreDAO genreDAO = new GenreDAOImpl();
     private final PublisherDAO publisherDAO = new PublisherDAOImpl();
-    private final String defaultImage = "0";
 
     private BookBuilder() {
     }
@@ -78,33 +75,20 @@ public class BookBuilder {
         book.setReleaseDate(edition.getReleaseDate());
     }
 
-    public Book fillNewBook(HttpServletRequest request) throws IOException, ServletException {
+    public Book fillNewBook(HttpServletRequest request) {
 
         Book book = new Book();
         book.setTitle(request.getParameter(BOOK_TITLE).trim());
         book.setGenreId(Long.parseLong(request.getParameter(GENRE_ID)));
         book.setAccessStatusId(ACCESS_STATUS_ACTIVE_ID);
         book.setLanguageId(Integer.parseInt(request.getParameter(LANGUAGE_ID)));
-
-        if (request.getParameter(BOOK_IMAGE) == null) {
-            book.setBookImage(defaultImage);
-        }else {
-            Part imageBook = request.getPart(BOOK_IMAGE);
-            if (imageBook.getSize() > EMPTY_REQUEST_LENGTH) {
-                if (ImageUtil.isImageFormatValid(imageBook)) {
-                    book.setBookImage(ImageUtil.imageToBase(request.getPart(BOOK_IMAGE).getInputStream()));
-                }
-            }
-        }
         return book;
     }
     public Book fillToUpdate(HttpServletRequest req) throws IOException, ServletException, SQLException {
         Book book = fillNewBook(req);
         book.setId(Long.valueOf(req.getParameter(BOOK_ID)));
         book.setAccessStatusId(Integer.parseInt(req.getParameter(ACCESS_STATUS_ID)));
-        if (book.getBookImage().equalsIgnoreCase(defaultImage)){
-            book.setBookImage(bookDAO.selectById(Long.valueOf(req.getParameter(BOOK_ID))).getBookImage());
-        }
+
         return book;
     }
 

@@ -15,7 +15,7 @@
     <style>
 
     </style>
-    <title>Manga Store &ndash; <fmt:message key="button.register"/></title>
+    <title>Book Shop &ndash; <fmt:message key="button.register"/></title>
 </head>
 <body>
 <section class="vh-100" style="background-color: #eee;">
@@ -36,8 +36,8 @@
                                                     key="label.FirstName"/></label>
                                             <input type="text" name="userFirstName" class="form-control"
                                                    id="registerFirstName"
-                                                   placeHolder="UserFirstName" required/>
-                                            <%--            <small id="registerFirstNameHelp" class="form-text text-danger">${}</small>--%>
+                                                   placeHolder="<fmt:message
+                                                    key="label.FirstName"/>" required/>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
@@ -46,7 +46,8 @@
                                                     key="label.LastName"/></label>
                                             <input type="text" name="userLastName" class="form-control"
                                                    id="registerLastName"
-                                                   placeholder="UserLastName" required/>
+                                                   placeholder="<fmt:message
+                                                    key="label.LastName"/>" required/>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
@@ -55,7 +56,8 @@
                                                     key="label.login"/></label>
                                             <input type="text" name="userLogin" class="form-control"
                                                    id="registerUsername"
-                                                   placeholder="Username" required>
+                                                   placeholder="<fmt:message
+                                                    key="label.login"/>" required>
                                             <small id="registerUsernameHelp"
                                                    class="form-text text-danger">${requestScope.loginError}</small>
                                         </div>
@@ -120,7 +122,7 @@
                                     <div style="display:flex">
                                         <a class="d-block text-center mt-2 small" href="/main/login"
                                            style="margin-left: 0px;margin-right: 5%">
-                                            <fmt:message key="button.signIn"/>
+                                            <fmt:message key="label.login"/>
                                         </a>
                                         <a class="d-block text-center mt-2 small" href="/">
                                             <fmt:message key="button.main"/>

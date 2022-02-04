@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
-import static com.epam.bookshop.constants.PageNameConstants.MAIN;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
 
@@ -31,7 +30,7 @@ public class SearchAction implements Action {
 
         List<Book> books = bookBuilder.fillAllBySearch(localeId, title);
 
-        req.setAttribute(BOOKS, books);
+        session.setAttribute(BOOKS, books);
         dispatcher = req.getRequestDispatcher(SORT_BOOK_ACTION);
         dispatcher.forward(req, resp);
     }

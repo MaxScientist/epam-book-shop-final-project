@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import static com.epam.bookshop.constants.PageNameConstants.LOGIN;
+import static com.epam.bookshop.constants.PageNameConstants.MAIN;
 import static com.epam.bookshop.constants.ParameterConstants.USER;
-import static com.epam.bookshop.constants.ServiceConstants.MAIN;
 
 public class LoginPageAction implements Action {
     @Override

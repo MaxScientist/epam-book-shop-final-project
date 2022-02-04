@@ -23,7 +23,7 @@ import static com.epam.bookshop.constants.ParameterConstants.*;
 public class AddNewBookPageAction implements Action {
 
     private RequestDispatcher dispatcher;
-    private GenreDAO genreDAO = new GenreDAOImpl();
+    private final GenreDAO genreDAO = new GenreDAOImpl();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {

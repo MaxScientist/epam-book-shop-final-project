@@ -16,11 +16,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.INDEX_JSP;
 import static com.epam.bookshop.constants.ServiceConstants.SIGN_UP_USER_ACTION_PAGE;
 import static com.epam.bookshop.util.ErrorMessageProvider.getErrorMessage;
 import static com.epam.bookshop.util.validator.UserValidator.*;
-import static com.epam.bookshop.constants.ParameterConstants.*;
 
 
 
@@ -50,6 +50,8 @@ public class SignUpUserAction implements Action {
             displayErrorMessage(request, response, POSTAL_CODE_ERROR, ParameterConstants.KEY_ERROR_POSTAL_CODE_FORMAT);
         } else if (userDAO.isUserExistsByEmail(user.getEmail())) {
             displayErrorMessage(request, response, ParameterConstants.EMAIL_ERROR, ParameterConstants.KEY_ERROR_EMAIL_FORMAT);
+        } else if (userDAO.isUserExistsByLogin(user.getUserLogin())) {
+            displayErrorMessage(request, response, LOGIN_ERROR, KEY_ERROR_LOGIN_EXISTS);
         } else {
             Long generatedId = userDAO.insert(user);
             user.setId(generatedId);
@@ -62,7 +64,7 @@ public class SignUpUserAction implements Action {
 
     private void displayErrorMessage(HttpServletRequest request, HttpServletResponse response,
                                      String errorName, String errorKey) throws ServletException, IOException {
-        request.setAttribute(errorName, getErrorMessage(request, errorKey));
+        request.setAttribute(errorName, getErrorMessage(errorKey));
         dispatcher = request.getRequestDispatcher(SIGN_UP_USER_ACTION_PAGE);
         dispatcher.forward(request, response);
     }

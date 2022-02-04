@@ -1,11 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" import="java.util.*" language="java" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" import="java.util.*" language="java" pageEncoding="UTF-8"
+         isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="local" />
-<jsp:include page="customer/fragments/header.jsp"/>
+<fmt:setBundle basename="local"/>
 <jsp:useBean id="Constants" class="com.epam.bookshop.constants.ParameterConstants"/>
+<jsp:include page="fragments/mainHeader.jsp"/>
+
 <div class="container mt-5" style="background-color: #f5f5f5; margin-top: 100px;">
     <c:if test="${(sessionScope.user.roleId eq Constants.roleUserId) and
                     not sessionScope.user.banned and
@@ -16,15 +18,16 @@
                     <table class="table manage-candidates-top mb-0">
                         <thead>
                         <tr>
-                            <th scope="col"><fmt:message key="th.select"/></th>
-                            <th scope="col"><fmt:message key="th.book"/></th>
-                            <th scope="col"><fmt:message key="th.price"/>
+                            <th scope="col"><fmt:message key="label.select"/></th>
+                            <th scope="col"><fmt:message key="label.book"/></th>
+                            <th scope="col"><fmt:message key="label.price"/>
                                 (<span><fmt:message key="span.currency.tenge"/></span>)
                             </th>
-                            <th scope="col"><fmt:message key="th.quantity"/></th>
-                            <th scope="col"><fmt:message key="th.sum"/>
-                                (<span><fmt:message key="span.currency.tenge"/></span>)</th>
-                            <th scope="col"><fmt:message key="th.delete"/></th>
+                            <th scope="col"><fmt:message key="label.quantity"/></th>
+                            <th scope="col"><fmt:message key="label.sum"/>
+                                (<span><fmt:message key="span.currency.tenge"/></span>)
+                            </th>
+                            <th scope="col"><fmt:message key="label.delete"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,17 +43,17 @@
                                     <div>
                                         <div>
                                             <h5 class="card-title">
-                                                <fmt:message key="head.title"/>
-                                                ${cartItem.book.title}
+                                                <fmt:message key="label.title"/>
+                                                    ${cartItem.book.title}
                                             </h5>
                                             <div>
                                                 <ul class="list-items">
                                                     <li>ISBN: <span>${cartItem.book.isbn}</span></li>
-                                                    <li><fmt:message key="li.pageCount"/>:
+                                                    <li><fmt:message key="label.pageCount"/>:
                                                         <span>${cartItem.book.pages}</span></li>
-                                                    <li><fmt:message key="li.binding"/>:
+                                                    <li><fmt:message key="label.binding"/>:
                                                         <span>${cartItem.book.binding}</span></li>
-                                                    <li><fmt:message key="li.releaseDate"/>:
+                                                    <li><fmt:message key="label.releaseDate"/>:
                                                         <span>${cartItem.book.releaseDate}</span></li>
                                                 </ul>
                                             </div>
@@ -78,8 +81,8 @@
                                 <td class="candidate-list-favourite-time text-center">
                                     <form action="/main/deleteCartItem" method="post" class="form-check">
                                         <input type="hidden" name="cartItemId" value="${cartItem.id}">
-                                        <button type="submit" class="btn btn-outline-primary">
-                                            <i class="far fa-trash-alt"></i>
+                                        <button type="submit" class="btn btn-danger">
+                                            <fmt:message key="label.delete"/>
                                         </button>
                                     </form>
                                 </td>

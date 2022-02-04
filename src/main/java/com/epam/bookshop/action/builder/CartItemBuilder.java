@@ -17,7 +17,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.bookshop.constants.ParameterConstants.DEFAULT_CART_ITEM_QUANTITY;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 
 

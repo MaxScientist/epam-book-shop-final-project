@@ -4,6 +4,7 @@ import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.BookDAO;
 import com.epam.bookshop.entity.Book;
 import com.epam.bookshop.util.ImageUtil;
+import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -14,6 +15,8 @@ public class BookDAOImpl implements BookDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String SELECT_ALL_BOOK = "SELECT * FROM public.book";
     private static final String SELECT_BOOK_BY_ID = "SELECT * FROM public.book where id=?";
@@ -56,6 +59,7 @@ public class BookDAOImpl implements BookDAO {
                 }
             }
         } finally {
+            LOGGER.info("New book has been added " + book);
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -94,6 +98,7 @@ public class BookDAOImpl implements BookDAO {
             preparedStatement.setLong(6, book.getId());
             preparedStatement.executeUpdate();
         } finally {
+            LOGGER.info(book + " has been updated");
             connectionPool.returnConnection(connection);
         }
     }
@@ -162,7 +167,7 @@ public class BookDAOImpl implements BookDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_TITLE)) {
             preparedStatement.setString(1, title);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()){
+                while (resultSet.next()) {
                     Book book = getBookByResultSet(resultSet);
                     books.add(book);
                 }

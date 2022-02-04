@@ -6,7 +6,7 @@
 
 <jsp:useBean id="Constants" class="com.epam.bookshop.constants.ParameterConstants"/>
 
-<jsp:include page="../customer/fragments/header.jsp"/>
+<jsp:include page="../fragments/mainHeader.jsp"/>
 <div class="container mt-5" style="background-color: #f5f5f5; margin-top: 100px;">
     <c:if test="${sessionScope.user.roleId eq Constants.roleAdminId and
                     not sessionScope.user.banned and
@@ -18,11 +18,11 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th><fmt:message key="th.user"/></th>
-                            <th><fmt:message key="th.order.products"/></th>
-                            <th><fmt:message key="th.total"/></th>
+                            <th><fmt:message key="label.user"/></th>
+                            <th><fmt:message key="label.order.products"/></th>
+                            <th><fmt:message key="label.total"/></th>
                             <th><fmt:message key="th.status"/></th>
-                            <th><fmt:message key="th.date"/></th>
+                            <th><fmt:message key="label.date"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -68,7 +68,7 @@
                                                 </div>
                                                 <div>
                                                     <b class="text-success">${orderItem.quantity} <fmt:message
-                                                            key="b.pieces.short"/></b> x <b
+                                                            key="label.amount.short"/></b> x <b
                                                         class="text-danger"> ${orderItem.fixedPrice} <fmt:message
                                                         key="span.currency.tenge"/></b>
                                                 </div>
@@ -111,6 +111,4 @@
         <img src="img/404.png" class="mx-auto" width="100%">
     </c:if>
 </div>
-<%--<jsp:include page="footer.jsp"/>--%>
-<%--</body>--%>
-<%--</html>--%>
+<jsp:include page="../fragments/footer.jsp"/>

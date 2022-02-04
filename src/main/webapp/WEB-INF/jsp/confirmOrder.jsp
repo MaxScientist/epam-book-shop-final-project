@@ -1,20 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${sessionScope.locale}" />
-<fmt:setBundle basename="local" />
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="local"/>
 
 <jsp:useBean id="Constants" class="com.epam.bookshop.constants.ParameterConstants"/>
-<c:choose>
-    <c:when test="${sessionScope.user != null}">
-        <jsp:include page="customer/fragments/header.jsp"/>
-    </c:when>
-    <c:otherwise>
-        <jsp:include  page="fragments/mainHeader.jsp"/>
-    </c:otherwise>
 
-</c:choose>
+<jsp:include page="fragments/mainHeader.jsp"/>
 <div class="container">
     <c:if test="${(sessionScope.user.roleId eq Constants.roleUserId) and
                     not sessionScope.user.banned and
@@ -32,17 +25,17 @@
                 <ul class="list-group mb-3">
                     <li class="d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0"><fmt:message key="th.total"/></h6>
+                            <h6 class="my-0"><fmt:message key="label.total"/></h6>
                         </div>
                         <b class="text-danger">${requestScope.cartTotalPrice.longValue()} <fmt:message
                                 key="span.currency.tenge"/></b>
                     </li>
                 </ul>
-                <c:forEach items="${requestScope.cartItems}" var="cartItem" >
+                <c:forEach items="${requestScope.cartItems}" var="cartItem">
                     <ul class="list-group mb-3">
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
-                                <a><fmt:message key="head.vol"/>${cartItem.book.title}</a>
+                                <a><fmt:message key="label.title"/>: ${cartItem.book.title}</a>
                             </div>
                             <div>
                                 <b class="text-success">${cartItem.quantity} pc</b> x <b
@@ -65,27 +58,29 @@
                         <div class="candidate-list-option">
                             <ul class="list-unstyled">
                                 <li>
-                                    <i class="fas fa-envelope"></i>
+                                    <label for="ccn"><fmt:message key="label.credit.cart"/>:</label>
+                                    <input id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+
+                                </li>
+                                <li>
                                         ${sessionScope.user.email}
                                 </li>
                                 <li>
-                                    <i class="fas fa-map-marker-alt pr-1"></i>
                                         ${sessionScope.user.address}, ${sessionScope.user.postalCode}
                                 </li>
                                 <li>
-                                    <i class="fas fa-phone"></i>
-                                        ${requestScope.user.phone}
+                                        ${sessionScope.user.phoneNumber}
+                                </li>
+                                <li>
+                                    <button type="submit" class="btn-warning">
+                                        <a href="/main/editProfileAction"><fmt:message key="button.edit.personal.details"/></a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>
-                        <button type="submit" class="btn btn-secondary">
-                            <a href="edit_profile.jsp"><fmt:message key="button.edit"/></a>
-                        </button>
                     </div>
                 </div>
                 <hr class="mb-4">
-
-
             </div>
         </div>
     </c:if>
@@ -94,4 +89,3 @@
     </c:if>
 </div>
 <jsp:include page="fragments/footer.jsp"/>
-

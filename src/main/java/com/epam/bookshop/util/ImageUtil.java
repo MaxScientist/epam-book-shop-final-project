@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 
-import static  com.epam.bookshop.constants.ParameterConstants.*;
+import static com.epam.bookshop.constants.ParameterConstants.*;
 
 public class ImageUtil {
 

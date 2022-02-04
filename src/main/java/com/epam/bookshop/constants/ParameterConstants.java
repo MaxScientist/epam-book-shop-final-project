@@ -17,9 +17,10 @@ public class ParameterConstants {
     public final static String AUTHOR_NAME_ERROR = "authorNameError";
     public final static String BOOK_BINDING = "bookBinding";
     public final static String BOOK_DESCRIPTION = "bookDescription";
+    public final static String PAGE_NAME = "pageName";
     public final static String BOOK_IMAGE = "bookImage";
     public final static String BOOK_INFO = "bookInfo";
-    public final static String BOOK_ISBN  = "bookISBN";
+    public final static String BOOK_ISBN = "bookISBN";
     public final static String BOOK_PAGES = "bookPages";
     public final static String BOOK_PRICE = "bookPrice";
     public final static String BOOK_RELEASE_DATE = "bookReleaseDate";
@@ -31,6 +32,7 @@ public class ParameterConstants {
     public final static String CONTENT_TYPE_PNG = "image/png";
     public final static String EMPTY_FIELD_ERROR = "emptyFieldError";
     public final static String GENRES = "genres";
+    public final static String KEY_ERROR_LOGIN_EXISTS = "small.error.login.exists";
     public final static String GENRE_ID = "genreId";
     public final static String GENRE_LANGUAGE_ID = "genreLanguageId";
     public final static String GENRE_NAME = "genreName";
@@ -93,11 +95,11 @@ public class ParameterConstants {
     public static final String QUANTITY = "quantity";
     public static final String USER_FIRST_NAME = "userFirstName";
     public static final String USER_LAST_NAME = "userLastName";
-    public static final String SUCH_BOOK_EXISTS = "suchBookExists";
-    public static final String ISBN_INVALID_ERROR = "isbnInvalidError";
+    public static final String SUCH_BOOK_EXISTS_ERROR = "suchBookExistsError";
+    public static final String ISBN_ERROR = "isbnError";
     public static final String PUBLISHER_ID = "publisherId";
     public static final String ACCESS_STATUS_ID = "accessStatusId";
-
+    public static final String IMAGE_ERROR = "imageError";
 
 
     public Integer getRoleUserId() {

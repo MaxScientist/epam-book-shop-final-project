@@ -3,6 +3,7 @@ package com.epam.bookshop.database.dao.implementation;
 import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.AuthorDAO;
 import com.epam.bookshop.entity.Author;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
 
     private static final String INSERT_AUTHOR = "INSERT INTO public.author(first_name, last_name) VALUES(?,?)";
@@ -49,6 +52,7 @@ public class AuthorDAOImpl implements AuthorDAO {
                 }
             }
         } finally {
+            LOGGER.info("New author has been added " + author);
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -64,6 +68,7 @@ public class AuthorDAOImpl implements AuthorDAO {
             preparedStatement.setLong(3, author.getId());
             preparedStatement.executeUpdate();
         } finally {
+            LOGGER.info(author + " has been updated.");
             connectionPool.returnConnection(connection);
         }
     }

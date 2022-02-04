@@ -23,23 +23,22 @@ import static com.epam.bookshop.constants.ParameterConstants.*;
 
 public class DisplayCartAction implements Action {
 
-    private CartItemBuilder cartItemBuilder = CartItemBuilder.getInstance();
-    private RequestDispatcher dispatcher;
+    private final CartItemBuilder cartItemBuilder = CartItemBuilder.getInstance();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
+        RequestDispatcher dispatcher;
         if (AccessValidator.isAccessDenied(ROLE_USER_ID, session)) {
-            dispatcher = req.getRequestDispatcher(ERROR_PAGE);// PAY ATTENTION ON IT!
+            dispatcher = req.getRequestDispatcher(ERROR_PAGE);
             dispatcher.forward(req, resp);
         }
 
         User user = (User) session.getAttribute(USER);
         Integer localeId = (Integer) session.getAttribute(LOCALE_ID);
         List<CartItem> cartItems = cartItemBuilder.fillUserCartItems(user.getId(), localeId);
-//request attribute cart_items ???
         req.setAttribute(CART_ITEMS, cartItems);
-        dispatcher = req.getRequestDispatcher(CART_PAGE);// PAY ATTENTION ON IT!!!
+        dispatcher = req.getRequestDispatcher(CART_PAGE);
         dispatcher.forward(req, resp);
     }
 }

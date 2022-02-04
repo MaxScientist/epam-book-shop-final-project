@@ -2,8 +2,7 @@ package com.epam.bookshop.action.implementation;
 
 import com.epam.bookshop.action.Action;
 import com.epam.bookshop.action.builder.BookBuilder;
-import com.epam.bookshop.database.dao.GenreDAO;
-import com.epam.bookshop.database.dao.implementation.GenreDAOImpl;
+
 import com.epam.bookshop.entity.Book;
 
 import javax.servlet.RequestDispatcher;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.epam.bookshop.constants.ServiceConstants.MAIN;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
 
@@ -26,7 +24,6 @@ import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
 public class FilterGenreAction implements Action {
 
     private final BookBuilder bookBuilder = BookBuilder.getInstance();
-    private final GenreDAO genreDAO = new GenreDAOImpl();
 
     private RequestDispatcher dispatcher;
 
@@ -44,10 +41,8 @@ public class FilterGenreAction implements Action {
         } else {
             bookList = bookBuilder.fillAllToDisplay(localeId);
         }
-        req.setAttribute(BOOKS, bookList);
+        session.setAttribute(BOOKS, bookList);
 
-//        List<Genre> genreList = genreDAO.selectGenresByLanguageId(localeId);
-//        session.setAttribute(GENRES,  genreList);
         dispatcher = req.getRequestDispatcher(SORT_BOOK_ACTION);
         dispatcher.forward(req, resp);
 

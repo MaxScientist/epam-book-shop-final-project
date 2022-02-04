@@ -22,7 +22,8 @@ import java.text.ParseException;
 
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
-import static com.epam.bookshop.constants.ServiceConstants.*;
+import static com.epam.bookshop.constants.ServiceConstants.EDIT_BOOK_PAGE_ACTION;
+import static com.epam.bookshop.constants.ServiceConstants.ERROR_OCCURRED;
 
 
 public class AddAuthorToBookAction implements Action {

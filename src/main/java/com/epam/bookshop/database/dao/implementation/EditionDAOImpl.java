@@ -3,6 +3,7 @@ package com.epam.bookshop.database.dao.implementation;
 import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.EditionDAO;
 import com.epam.bookshop.entity.Edition;
+import org.apache.log4j.Logger;
 
 import java.math.BigInteger;
 import java.sql.*;
@@ -13,6 +14,8 @@ public class EditionDAOImpl implements EditionDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String SELECT_ALL = "SELECT * FROM public.edition";
     private static final String INSERT_EDITION = "INSERT INTO public.edition ( isbn, binding, pages," +
@@ -83,6 +86,7 @@ public class EditionDAOImpl implements EditionDAO {
                 }
             }
         } finally {
+            LOGGER.info("Edition of book id = " + edition.getBookId() + " has been added " + edition);
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -103,6 +107,7 @@ public class EditionDAOImpl implements EditionDAO {
             preparedStatement.setLong(8, edition.getId());
             preparedStatement.executeUpdate();
         } finally {
+            LOGGER.info("Edition of book id = " + edition.getBookId() + " has been updated " + edition);
             connectionPool.returnConnection(connection);
         }
     }

@@ -33,6 +33,7 @@ body{
     -o-transition:all .2s linear;
     -ms-transition:all .2s linear;
 }
+
 .header-top{
     background: #409eb4;
 }
@@ -144,15 +145,6 @@ body{
 }
 .search input[type="text"]:focus{
     width:150px;
-}
-.search input[type="submit"] {
-    border: none;
-    text-indent: -9999px;
-    outline:none;
-    cursor: pointer;
-    width:30px;
-    height:25px;
-    padding:8px;
 }
 .search input[type="submit"]:active {
     position:relative;
@@ -724,12 +716,6 @@ p.m_2{
     width: 16.5%;
     margin:0% 2.6% 0 0;
 }
-.recent-tweet-icon span {
-    width:50px;
-    height:50px;
-    display: block;
-    background: url(../images/f-tw.png) no-repeat;
-}
 .recent-tweet-info {
     float: right;
     width:77.5%;
@@ -745,10 +731,7 @@ p.m_2{
 .recent-tweet-info p a:hover{
     color:#fff;
 }
-ul.f-list1 li {
-    list-style-image: url(../images/f-icon.png);
-    margin: 0 15px 5px;
-}
+
 ul.f-list1 li a {
     font-size: 0.85em;
     color: #fff;
@@ -781,12 +764,7 @@ ul.f-list1 li a:hover {
     margin: 0px 10px 10px 0;
     display:inline-block;
 }
-.social-media li a {
-    height: 40px;
-    width: 40px;
-    display: block;
-    background: url(../images/img-sprite.png);
-}
+
 .social-media li a:hover {
     zoom: 1;
     filter: alpha(opacity=50);
@@ -866,19 +844,7 @@ ul.f-list1 li a:hover {
     -o-transform: translateY(10px);
     transform: translateY(10px);
 }
-/*------------end social simptip----------------*/
-.social-media li:nth-child(1) a{
-    background: url(../images/img-sprite.png) -20px -170px;
-}
-.social-media li:nth-child(2) a{
-    background: url(../images/img-sprite.png) -68px -170px;
-}
-.social-media li:nth-child(3) a{
-    background: url(../images/img-sprite.png) -112px -170px;
-}
-.social-media li:nth-child(4) a{
-    background: url(../images/img-sprite.png) -157px -170px;
-}
+
 /*--footer-bottom--*/
 .footer-bottom{
     background:#0b4b5a;
@@ -1212,147 +1178,8 @@ ul.dc_pagination li a:hover{
     top: 2px;
     width: 30px;
     background: transparent;
-}
-.metro.focus:after{
-    background:url(../images/minus.gif);
-    width: 13px;
-    height: 13px;
-    right: 10px;
-    top: 50%;
-    margin-top: -4px;
-}
-/* CARAT */
-.metro .carat,
-.metro .carat:after{
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    margin-top: -4px;
-    background: url(../images/plus.gif);
-    width: 13px;
-    height: 13px;
-    -webkit-transform-origin: 50% 20%;
-    -moz-transform-origin: 50% 20%;
-    -ms-transform-origin: 50% 20%;
-    transform-origin: 50% 20%;
-    /*--content: '';
-    border: 8px solid transparent;
-    border-top: 8px solid #000;--*/
-}
-/* OLD SELECT (HIDDEN) */
-.metro .old{
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 0;
-    width: 0;
-    overflow: hidden;
-}
-.metro select{
-    position: absolute;
-    left: 0px;
-    top: 0px;
-}
-.metro.touch select{
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-}
-/* SELECTED FEEDBACK ITEM */
-.metro .selected,
-.metro li{
-    display: block;
-    font-size:13px;
-    line-height: 1;
-    color: #777;
-    padding: 9px 12px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-.metro .selected::after{
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 60px;
-}
-.metro:hover .selected::after{
-    box-shadow: inset -55px 0 25px -20px #f4f4f4;
-    -webkit-box-shadow: inset -55px 0 25px -20px #f4f4f4;
-    -moz-box-shadow: inset -55px 0 25px -20px #f4f4f4;
-    -o-box-shadow: inset -55px 0 25px -20px #f4f4f4;
-}
-/* DROP DOWN WRAPPER */
-.metro div{
-    position: absolute;
-    height: 0;
-    left: 0;
-    right: 0;
-    top: 100%;
-    margin-top: -1px;
-    background: #f8f8f8;
-    overflow: hidden;
-    opacity: 0;
-}
-.metro:hover div{
-    background: #f4f4f4;
-}
-/* Height is adjusted by JS on open */
-.metro.open div{
-    opacity: 1;
-    z-index: 2;
-}
-/* FADE OVERLAY FOR SCROLLING LISTS */
-.metro.scrollable div::after{
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 50px;
-    box-shadow: inset 0 -50px 30px -35px #f8f8f8;
-}
-.metro.scrollable:hover div::after{
-    box-shadow: inset 0 -50px 30px -35px #f4f4f4;
-}
-.metro.scrollable.bottom div::after{
-    opacity: 0;
-}
-
+}  /* DROP DOWN WRAPPER */
 /* DROP DOWN LIST */
-.metro ul{
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    list-style: none;
-    overflow: hidden;
-}
-.metro.scrollable.open ul{
-    overflow-y: auto;
-}
-/* DROP DOWN LIST ITEMS */
-.metro li{
-    list-style: none;
-    padding: 8px 12px;
-}
-/* .focus class is also added on hover */
-.metro li.focus{
-    /*--background: #0180d1;--*/
-    position: relative;
-    z-index: 3;
-    color: #fff;
-    background:#4CB1CA;
-}
-/*--.metro li.active{
-	background:#4CB1CA;
-	color: #fff;
-}--*/
-/* --- EASYDROPDOWN FLAT THEME by Jan Cantor --- */
 
 /* PREFIXED CSS */
 .dropdown,
@@ -1798,14 +1625,6 @@ p.m_text{
     cursor: pointer;
     z-index: 100;
 }
-.nbs-flexisel-nav-left {
-    left: 0px;
-    background: url(../images/img-sprite.png) no-repeat -23px -217px;
-}
-.nbs-flexisel-nav-right {
-    right: 0px;
-    background: url(../images/img-sprite.png) no-repeat -51px -217px;
-}
 .toogle{
     margin-top:4%;
 }
@@ -1917,17 +1736,7 @@ p.m_text2{
     color: #777;
     line-height: 1.8em;
 }
-.testimonials .testi-item blockquote {
-    position: relative;
-    display: block;
-    margin: 0;
-    padding: 30px;
-    border: none;
-    background:#f7f7f7;
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding-box;
-    background-clip: padding-box;
-}
+
 .testimonials .testi-item blockquote a{
     color:#777;
     font-size:0.85em;
@@ -1968,16 +1777,7 @@ p.m_text2{
     padding-bottom: 2em;
     background: none;
 }
-.testimonials .testi-item blockquote:after {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    display: block;
-    width: 41px;
-    height: 38px;
-    background: url(../images/quotes.png) 0 0 no-repeat;
-    content: "";
-}
+
 .testimonials .testi-item blockquote > a:hover {
     color:#4CB1CA;
 }
@@ -2010,18 +1810,7 @@ h4.m_7 a{
 h4.m_7 a:hover{
     color:#000;
 }
-span.rollover {
-    -o-transition-duration: 1s;
-    -moz-transition-duration: 1s;
-    -webkit-transition: -webkit-transform 1s;
-    background: url(../images/magnify-alt.png) center center no-repeat rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    height: 215px;
-    width: 252px;
-    position: absolute;
-    z-index: 10;
-    opacity: 0;
-}
+
 .span_1_of_about-box img {
     border: 1px solid #F0F0F0;
     display:block;
@@ -2038,11 +1827,7 @@ span.rollover:hover {
 ul.delivery-list{
     margin-bottom: 20px;
 }
-ul.delivery-list li{
-    font-size: 0.85em;
-    margin: 0 0 8px 10px;
-    list-style-image: url(../images/list_marker.png);
-}
+
 ul.delivery-list li a{
     color: #777;
     vertical-align: middle;
@@ -2119,12 +1904,6 @@ ul.delivery-list li a:hover{
         height: 205px;
         width: 240px;
     }
-    .search input[type="text"] {
-        width: 110px;
-    }
-    .search input[type="text"]:focus {
-        width: 132px;
-    }
     .like_box {
         width: 114%;
     }
@@ -2144,9 +1923,6 @@ ul.delivery-list li a:hover{
     }
     .to input[type="text"] {
         width: 47.7%;
-    }
-    .search input[type="text"]:focus {
-        width: 132px;
     }
 }
 @media (max-width:1024px){
@@ -3275,78 +3051,27 @@ img {
     margin-top: 0;
 }
 
-.size {
-    margin-right: 10px;
+.card-custom{
+    width: 250px;
+}
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
 }
 
-.size:first-of-type {
-    margin-left: 40px;
+
+.label-custom {
+    max-width: 200px;
+    padding: 5px;
+    position: relative;
+}
+.td-custom {
+    width: 40%;
 }
 
-.color {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-    height: 2em;
-    width: 2em;
-    border-radius: 2px;
+.custom-select {
+    width: 200px;
 }
-
-.color:first-of-type {
-    margin-left: 20px;
-}
-
-.add-to-cart, .like {
-    background: #ff9f1a;
-    padding: 1.2em 1.5em;
-    border: none;
-    text-transform: UPPERCASE;
-    font-weight: bold;
-    color: #fff;
-    -webkit-transition: background .3s ease;
-    transition: background .3s ease;
-}
-
-.add-to-cart:hover, .like:hover {
-    background: #b36800;
-    color: #fff;
-}
-
-.not-available {
-    text-align: center;
-    line-height: 2em;
-}
-
-.not-available:before {
-    font-family: fontawesome;
-    content: "\f00d";
-    color: #fff;
-}
-
-@-webkit-keyframes opacity {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale(3);
-        transform: scale(3);
-    }
-    100% {
-        opacity: 1;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-}
-
-@keyframes opacity {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale(3);
-        transform: scale(3);
-    }
-    100% {
-        opacity: 1;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-}
-
-/*can be removed*/

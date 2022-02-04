@@ -3,12 +3,12 @@ package com.epam.bookshop.entity;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Book {
 
     private Long id;
     private String title;
-    private Long authorId;
     private Integer accessStatusId;
     private Long genreId;
     private String bookImage;
@@ -38,14 +38,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
     }
 
     public Integer getAccessStatusId() {
@@ -150,5 +142,39 @@ public class Book {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(accessStatusId, book.accessStatusId) && Objects.equals(genreId, book.genreId) && Objects.equals(bookImage, book.bookImage) && Objects.equals(languageId, book.languageId) && Objects.equals(authors, book.authors) && Objects.equals(genre, book.genre) && Objects.equals(bookPrice, book.bookPrice) && Objects.equals(description, book.description) && Objects.equals(publisher, book.publisher) && Objects.equals(isbn, book.isbn) && Objects.equals(pages, book.pages) && Objects.equals(binding, book.binding) && Objects.equals(releaseDate, book.releaseDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, accessStatusId, genreId, bookImage, languageId, authors, genre, bookPrice, description, publisher, isbn, pages, binding, releaseDate);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", accessStatusId=" + accessStatusId +
+                ", genreId=" + genreId +
+                ", bookImage='" + bookImage + '\'' +
+                ", languageId=" + languageId +
+                ", authors=" + authors +
+                ", genre=" + genre +
+                ", bookPrice=" + bookPrice +
+                ", description='" + description + '\'' +
+                ", publisher=" + publisher +
+                ", isbn='" + isbn + '\'' +
+                ", pages=" + pages +
+                ", binding='" + binding + '\'' +
+                ", releaseDate=" + releaseDate +
+                '}';
     }
 }

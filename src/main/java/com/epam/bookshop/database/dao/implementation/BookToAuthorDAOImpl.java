@@ -2,6 +2,7 @@ package com.epam.bookshop.database.dao.implementation;
 
 import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.BookToAuthorDAO;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 
@@ -9,6 +10,9 @@ public class BookToAuthorDAOImpl implements BookToAuthorDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+
 
     private static final String INSERT = "INSERT INTO public.book_to_author(book_id, author_id) VALUES(?, ?)";
     private static final String SELECT_BY_BOOK_AUTHOR_ID = "SELECT * FROM public.book_to_author WHERE (book_id = ? AND author_id = ?)";
@@ -31,6 +35,7 @@ public class BookToAuthorDAOImpl implements BookToAuthorDAO {
                 }
             }
         } finally {
+            LOGGER.info("New relation 'book to author' has been added bookId{"+bookId+"} author{"+authorId+"}");
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -59,11 +64,12 @@ public class BookToAuthorDAOImpl implements BookToAuthorDAO {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BOOK_AUTHOR_ID)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BOOK_AUTHOR_ID)) {
             preparedStatement.setLong(1, bookId);
             preparedStatement.setLong(2, authorId);
             preparedStatement.executeUpdate();
         } finally {
+            LOGGER.info("Relation 'book to author' has been deleted bookId{"+bookId+"} author{"+authorId+"}");
             connectionPool.returnConnection(connection);
         }
     }

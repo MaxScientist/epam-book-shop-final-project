@@ -1,8 +1,5 @@
 package com.epam.bookshop.database.connection;
 
-
-
-
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -21,10 +18,10 @@ public final class ConnectionPool {
     private String user;
     private String password;
     private String driverName;
-    private final ResourceBundle properties = ResourceBundle.getBundle("ConnectionPool"); //may be final
+    private final ResourceBundle properties = ResourceBundle.getBundle("ConnectionPool");
     private final int POOL_SIZE = Integer.parseInt(properties.getString("db.poolsize"));
     private static volatile ConnectionPool instance;
-    private final BlockingQueue<Connection> connectionQueue = new ArrayBlockingQueue<>(POOL_SIZE); //may be final
+    private final BlockingQueue<Connection> connectionQueue = new ArrayBlockingQueue<>(POOL_SIZE);
 
     private ConnectionPool() {
         init();
@@ -70,7 +67,7 @@ public final class ConnectionPool {
     private void initPoolData() {
         Connection connection;
 
-        while(connectionQueue.size() < POOL_SIZE) {
+        while (connectionQueue.size() < POOL_SIZE) {
             try {
                 connection = DriverManager.getConnection(url, user, password);
                 connectionQueue.put(connection);

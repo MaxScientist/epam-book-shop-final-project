@@ -3,6 +3,7 @@ package com.epam.bookshop.database.dao.implementation;
 import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.UserDAO;
 import com.epam.bookshop.entity.User;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ public class UserDAOImpl implements UserDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String INSERT_USER = "INSERT INTO public.user " +
             " (first_name, last_name, phone_number, email, password, address, postal_code, is_banned, status_id, user_login, role) " +
@@ -72,6 +75,7 @@ public class UserDAOImpl implements UserDAO {
                 }
             }
         } finally {
+            LOGGER.info("New user has been added " + user);
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -87,6 +91,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setLong(3, user.getId());
             preparedStatement.executeUpdate();
         } finally {
+            LOGGER.info("User access has been updated " + user);
             connectionPool.returnConnection(connection);
         }
     }
@@ -123,6 +128,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(5, user.getPostalCode());
             preparedStatement.setLong(6, user.getId());
         } finally {
+            LOGGER.info("User has been updated " + user);
             connectionPool.returnConnection(connection);
         }
     }
@@ -151,8 +157,9 @@ public class UserDAOImpl implements UserDAO {
         boolean isExist;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_EMAIL)) {
             preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            isExist = resultSet.next();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                isExist = resultSet.next();
+            }
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -167,8 +174,9 @@ public class UserDAOImpl implements UserDAO {
         boolean isExists;
         try( PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USER_LOGIN)) {
             preparedStatement.setString(1, login);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            isExists = resultSet.next();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                isExists = resultSet.next();
+            }
         } finally {
             connectionPool.returnConnection(connection);
         }

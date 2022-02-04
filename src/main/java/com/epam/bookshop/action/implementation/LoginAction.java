@@ -18,9 +18,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import static com.epam.bookshop.constants.PageNameConstants.MAIN;
+import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.*;
 import static com.epam.bookshop.util.validator.AccessValidator.isBannedOrDeleted;
-import static com.epam.bookshop.constants.ParameterConstants.*;
 
 
 public class LoginAction implements Action {
@@ -43,17 +44,17 @@ public class LoginAction implements Action {
             user = userDAO.selectUserByEmailPassword(email, cipheredPassword);
 
             if (user == null) {
-                request.setAttribute(EMAIL_PASSWORD_ERROR, ErrorMessageProvider.getErrorMessage(request, KEY_ERROR_USER_NOT_EXISTS));
+                request.setAttribute(EMAIL_PASSWORD_ERROR, ErrorMessageProvider.getErrorMessage(KEY_ERROR_USER_NOT_EXISTS));
                 dispatcher = request.getRequestDispatcher(LOGIN_PAGE_ACTION);
                 dispatcher.forward(request, response);
             } else if (isBannedOrDeleted(user)) {
-                request.setAttribute(ParameterConstants.USER_NOT_EXISTS_ERROR, ErrorMessageProvider.getErrorMessage(request, KEY_ERROR_USER_NOT_EXISTS));
+                request.setAttribute(ParameterConstants.USER_NOT_EXISTS_ERROR, ErrorMessageProvider.getErrorMessage(KEY_ERROR_USER_NOT_EXISTS));
                 dispatcher = request.getRequestDispatcher(LOGIN_PAGE_ACTION);
                 dispatcher.forward(request, response);
             } else {
                 session.setAttribute(USER, user);
                 LOGGER.info("User '"+ user.getUserLogin() + "' has logged into the system.");
-                dispatcher = request.getRequestDispatcher(SORT_BOOK_ACTION);
+                dispatcher = request.getRequestDispatcher(TO_MAIN);
                 dispatcher.forward(request, response);
             }
         }

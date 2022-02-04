@@ -1,7 +1,6 @@
 package com.epam.bookshop.util.validator;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.regex.Pattern;
 
 import static com.epam.bookshop.constants.ParameterConstants.*;
@@ -18,9 +17,9 @@ public class BookValidator {
     }
 
     public boolean isISBNValid(String isbn) {
-        int isbnMAXLength =13;
         return Pattern.matches("\\d{13}", isbn);
     }
+
     public boolean isEmptyParamExists(HttpServletRequest request) {
         return request.getParameter(AUTHOR_FIRST_NAME).length() == EMPTY_REQUEST_LENGTH ||
                 request.getParameter(AUTHOR_LAST_NAME).length() == EMPTY_REQUEST_LENGTH ||
@@ -33,7 +32,8 @@ public class BookValidator {
                 request.getParameter(BOOK_ISBN).length() == EMPTY_REQUEST_LENGTH ||
                 request.getParameter(BOOK_PAGES).length() == EMPTY_REQUEST_LENGTH ||
                 request.getParameter(BOOK_PRICE).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_RELEASE_DATE).length() == EMPTY_REQUEST_LENGTH;
+                request.getParameter(BOOK_RELEASE_DATE).length() == EMPTY_REQUEST_LENGTH ||
+                request.getParameter(BOOK_IMAGE).length() == EMPTY_REQUEST_LENGTH;
     }
 
     public boolean isEmptyUpdateDataExists(HttpServletRequest request) {

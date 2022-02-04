@@ -3,6 +3,7 @@ package com.epam.bookshop.database.dao.implementation;
 import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.CartDAO;
 import com.epam.bookshop.entity.CartItem;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ public class CartDAOImpl implements CartDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String INSERT_CART = "INSERT INTO public.cart (user_id, book_id, quantity) VALUES (?, ?, ?)";
     private static final String SELECT_ALL_CART_ITEMS_BY_USER_ID = "SELECT * FROM public.cart WHERE user_id = ?";
@@ -45,11 +48,13 @@ public class CartDAOImpl implements CartDAO {
             preparedStatement.setInt(3, cartItem.getQuantity());
 
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                generatedId = resultSet.getLong(1);
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    generatedId = resultSet.getLong(1);
+                }
             }
         } finally {
+            LOGGER.info("New cart item has been added " + cartItem);
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -95,7 +100,7 @@ public class CartDAOImpl implements CartDAO {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         boolean isExist;
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CART_ITEMS_BY_USER_BOOK_ID)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CART_ITEMS_BY_USER_BOOK_ID)) {
             preparedStatement.setLong(1, cartItem.getUserId());
             preparedStatement.setLong(2, cartItem.getBook().getId());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -115,6 +120,7 @@ public class CartDAOImpl implements CartDAO {
             preparedStatement.setLong(1, cartItemId);
             preparedStatement.executeUpdate();
         } finally {
+            LOGGER.info("Cart item has been added " + cartItemId);
             connectionPool.returnConnection(connection);
         }
     }

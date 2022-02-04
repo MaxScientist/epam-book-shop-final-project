@@ -6,7 +6,7 @@
 
 <jsp:useBean id="Constants" class="com.epam.bookshop.constants.ParameterConstants"/>
 
-<jsp:include page="../customer/fragments/header.jsp"/>
+<jsp:include page="../fragments/mainHeader.jsp"/>
 <div class="container mt-5" style="background-color: #f5f5f5; margin-top: 100px;">
     <c:if test="${(sessionScope.user.roleId eq Constants.roleAdminId) and
                     not sessionScope.user.banned and
@@ -17,8 +17,8 @@
                     <table class="table manage-candidates-top mb-0">
                         <thead>
                         <tr>
-                            <th><fmt:message key="th.language"/></th>
-                            <th><fmt:message key="th.genreName"/></th>
+                            <th><fmt:message key="label.language"/></th>
+                            <th><fmt:message key="label.genreName"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -41,7 +41,7 @@
                                     <input type="text" name="genreName" class="form-control" required>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-success" style="top: -15px;"><fmt:message
+                                    <button type="submit" class="btn btn-success"><fmt:message
                                             key="button.add"/></button>
                                 </td>
                             </tr>
@@ -63,7 +63,7 @@
                                         <input type="hidden" name="genreId" value="${genre.id}" required>
                                         <c:choose>
                                             <c:when test="${iter.count%2 == 0}">
-                                                <button type="submit" class="btn btn-danger" style="top: -15px;">
+                                                <button type="submit" class="btn btn-danger">
                                                 <fmt:message key="button.save"/>
                                                 </button>
                                             </c:when>
@@ -82,3 +82,4 @@
         <img src="img/404.png" class="mx-auto" width="100%">
     </c:if>
 </div>
+<jsp:include page="../fragments/footer.jsp"/>

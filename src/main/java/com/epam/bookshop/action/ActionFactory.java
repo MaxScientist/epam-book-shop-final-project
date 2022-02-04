@@ -23,9 +23,7 @@ public class ActionFactory {
         ACTION_MAP.put(ADD_TO_CART, new AddToCartAction());
         ACTION_MAP.put(ADMIN_PANEL_ACTION, new AdminPanelPageAction());
         ACTION_MAP.put(BOOK_DETAILS_ACTION, new ProductDetailsAction());
-        ACTION_MAP.put(CART, new CART_PAGE());
-        ACTION_MAP.put(CATALOG, new ShowAllProductPageAction());
-        ACTION_MAP.put(CATALOG_ACTION, new ShowAllBookAction());
+        ACTION_MAP.put(CART, new CartPageAction());
         ACTION_MAP.put(CHANGE_LANGUAGE_ACTION, new ChangeLanguageAction());
         ACTION_MAP.put(CHECK_OUT_ALL_ACTION, new CheckOutAllAction());
         ACTION_MAP.put(CHECK_OUT_SELECTED_ITEM, new CheckOutSelectedAction());
@@ -46,7 +44,7 @@ public class ActionFactory {
         ACTION_MAP.put(EDIT_PROFILE_ACTION, new EditProfileAction());
         ACTION_MAP.put(EDIT_PROFILE_PAGE_ACTION, new EditProfileActionPage());
         ACTION_MAP.put(EDIT_USER_CREDENTIALS_ACTION, new EditUserCredentialsAction());
-        ACTION_MAP.put(ERROR_SERVICE, new ErrorAction());
+        ACTION_MAP.put(ERROR_ACTION, new ErrorAction());
         ACTION_MAP.put(FILTER_GENRE, new FilterGenreAction());
         ACTION_MAP.put(LOGIN_PAGE_ACTION, new LoginPageAction());
         ACTION_MAP.put(LOGOUT_ACTION, new LogOutAction());
@@ -64,7 +62,7 @@ public class ActionFactory {
     }
 
     public Action getAction(String request) {
-        Action action = ACTION_MAP.get(ERROR_SERVICE);
+        Action action = ACTION_MAP.get(ERROR_ACTION);
 
         for (Map.Entry<String, Action> pair : ACTION_MAP.entrySet()) {
             if (request.equalsIgnoreCase(pair.getKey())) {

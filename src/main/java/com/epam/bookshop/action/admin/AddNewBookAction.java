@@ -11,6 +11,7 @@ import com.epam.bookshop.entity.Author;
 import com.epam.bookshop.entity.Book;
 import com.epam.bookshop.entity.Edition;
 import com.epam.bookshop.entity.Publisher;
+import com.epam.bookshop.util.ImageUtil;
 import com.epam.bookshop.util.validator.AccessValidator;
 import com.epam.bookshop.util.validator.BookValidator;
 
@@ -54,35 +55,44 @@ public class AddNewBookAction implements Action {
 
         if (bookValidator.isEmptyParamExists(req)) {
             displayErrorMessage(req, resp, EMPTY_FIELD_ERROR);
-        } else {
-            Author author = authorBuilder.fillNewAuthor(req);
-            assembleAuthorDetails(author);
+        }
+        Author author = authorBuilder.fillNewAuthor(req);
 
-            Book book = bookBuilder.fillNewBook(req);
-            assembleBookDetails(book, req, resp);
-
-            bookToAuthorDAO.insert(book.getId(), author.getId());
+        Book book = bookBuilder.fillNewBook(req);
+        if (bookDAO.isBookExists(book.getTitle())) {
+            displayErrorMessage(req, resp, SUCH_BOOK_EXISTS_ERROR);
+        } else if (req.getPart(BOOK_IMAGE).getSize() > EMPTY_REQUEST_LENGTH) {
+            if (ImageUtil.isImageFormatValid((req.getPart(BOOK_IMAGE)))) {
+                book.setBookImage(ImageUtil.imageToBase(req.getPart(BOOK_IMAGE).getInputStream()));
+            } else {
+                displayErrorMessage(req, resp, IMAGE_ERROR);
+            }
 
             Publisher publisher = publisherBuilder.fillNewPublisher(req);
-            assemblePublisherDetails(publisher);
 
             Edition edition = editionBuilder.fillNewEditionBook(req);
-            assembleEditionDetails(req, resp, edition, book, publisher);
+
+            if (!bookValidator.isISBNValid(edition.getIsbn())) {
+                displayErrorMessage(req, resp, ISBN_ERROR);
+
+            }
+            assembleAuthorDetails(author);
+            assembleBookDetails(book);
+
+            bookToAuthorDAO.insert(book.getId(), author.getId());
+            assemblePublisherDetails(publisher);
+            assembleEditionDetails(edition, book, publisher);
+
 
             dispatcher = req.getRequestDispatcher(SORT_BOOK_ACTION);
             dispatcher.forward(req, resp);
         }
     }
 
-    private void assembleEditionDetails(HttpServletRequest req, HttpServletResponse resp, Edition edition, Book book, Publisher publisher) throws SQLException, ServletException, IOException {
-        if (bookValidator.isISBNValid(edition.getIsbn())) {
-            edition.setBookId(book.getId());
-            edition.setPubId(publisher.getId());
-            editionDAO.insert(edition);
-        } else {
-            displayErrorMessage(req, resp, ISBN_INVALID_ERROR);
-
-        }
+    private void assembleEditionDetails(Edition edition, Book book, Publisher publisher) throws SQLException {
+        edition.setBookId(book.getId());
+        edition.setPubId(publisher.getId());
+        editionDAO.insert(edition);
     }
 
 
@@ -98,13 +108,9 @@ public class AddNewBookAction implements Action {
         publisher.setId(publisherId);
     }
 
-    private void assembleBookDetails(Book book, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        if (bookDAO.isBookExists(book.getTitle())) {
-            displayErrorMessage(req, resp, SUCH_BOOK_EXISTS);
-        } else {
-            Long bookId = bookDAO.insert(book);
-            book.setId(bookId);
-        }
+    private void assembleBookDetails(Book book) throws SQLException {
+        Long bookId = bookDAO.insert(book);
+        book.setId(bookId);
     }
 
 

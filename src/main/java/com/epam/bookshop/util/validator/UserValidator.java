@@ -1,5 +1,7 @@
 package com.epam.bookshop.util.validator;
 
+import com.epam.bookshop.exceptions.InvalidUserCredentialException;
+
 import java.util.regex.Pattern;
 
 public class UserValidator {
@@ -10,7 +12,7 @@ public class UserValidator {
     private final static String PHONE_FORMAT_REGEX = "[0-9]{10}";
     private final static String POSTAL_CODE_FORMAT_REGEX = "[0-9]{6}";
 
-    private UserValidator() { throw new UnsupportedOperationException();}
+    private UserValidator() throws InvalidUserCredentialException { throw new InvalidUserCredentialException();}
 
     public static boolean isEmailFormatCorrect(String email) {
         return Pattern.matches(EMAIL_FORMAT_REGEX, email);

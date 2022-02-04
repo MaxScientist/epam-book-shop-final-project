@@ -22,10 +22,10 @@ public class OrderBuilder {
 
     private static OrderBuilder instance = new OrderBuilder();
 
-    private OrderItemBuilder orderItemBuilder = OrderItemBuilder.getInstance();
-    private OrderStatusDAO orderStatusDAO = new OrderStatusDAOImpl();
-    private UserDAO userDAO = new UserDAOImpl();
-    private OrderDAO orderDAO = new OrderDAOImpl();
+    private final OrderItemBuilder orderItemBuilder = OrderItemBuilder.getInstance();
+    private final OrderStatusDAO orderStatusDAO = new OrderStatusDAOImpl();
+    private final UserDAO userDAO = new UserDAOImpl();
+    private final OrderDAO orderDAO = new OrderDAOImpl();
 
     private OrderBuilder() {
     }

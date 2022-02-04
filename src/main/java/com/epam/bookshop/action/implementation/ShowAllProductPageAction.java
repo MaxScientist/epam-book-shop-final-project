@@ -19,7 +19,6 @@ import static com.epam.bookshop.constants.ParameterConstants.BOOKS;
 public class ShowAllProductPageAction implements Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
-//        resp.setContentType("image/jpeg");
         BookDAO bookDAO = new BookDAOImpl();
         List<Book> bookList =  bookDAO.selectAllBooks();
 

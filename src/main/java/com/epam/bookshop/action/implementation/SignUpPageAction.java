@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import static com.epam.bookshop.constants.PageNameConstants.MAIN;
 import static com.epam.bookshop.constants.PageNameConstants.SIGN_UP;
 import static com.epam.bookshop.constants.ParameterConstants.USER;
-import static com.epam.bookshop.constants.ServiceConstants.MAIN;
 
 public class SignUpPageAction implements Action {
 

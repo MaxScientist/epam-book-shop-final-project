@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.epam.bookshop.constants.ParameterConstants.*;
+import static com.epam.bookshop.constants.ParameterConstants.LOCALE;
+import static com.epam.bookshop.constants.ParameterConstants.LOCALE_ID;
 
 
 public class LanguageFilter implements Filter {

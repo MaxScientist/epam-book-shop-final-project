@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.epam.bookshop.constants.PageNameConstants.LOGIN;
-import static com.epam.bookshop.constants.ServiceConstants.*;
 import static com.epam.bookshop.constants.ParameterConstants.*;
+import static com.epam.bookshop.constants.ServiceConstants.*;
 
 
 public class ConfirmOrderAction implements Action {

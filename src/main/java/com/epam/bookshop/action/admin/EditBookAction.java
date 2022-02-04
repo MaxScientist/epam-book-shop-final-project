@@ -13,6 +13,7 @@ import com.epam.bookshop.database.dao.implementation.PublisherDAOImpl;
 import com.epam.bookshop.entity.Book;
 import com.epam.bookshop.entity.Edition;
 import com.epam.bookshop.entity.Publisher;
+import com.epam.bookshop.util.ImageUtil;
 import com.epam.bookshop.util.validator.AccessValidator;
 import com.epam.bookshop.util.validator.BookValidator;
 
@@ -52,18 +53,26 @@ public class EditBookAction implements Action {
         }
 
         Book book = bookBuilder.fillToUpdate(req);
-        bookDAO.update(book);
-
+        if (req.getParameter(BOOK_IMAGE) == null) {
+            book.setBookImage(bookDAO.selectById(Long.valueOf(req.getParameter(BOOK_ID))).getBookImage());
+        } else if (req.getPart(BOOK_IMAGE).getSize() > EMPTY_REQUEST_LENGTH) {
+            if (ImageUtil.isImageFormatValid((req.getPart(BOOK_IMAGE)))) {
+                book.setBookImage(ImageUtil.imageToBase(req.getPart(BOOK_IMAGE).getInputStream()));
+            } else {
+                displayErrorMessage(req, resp, IMAGE_ERROR);
+            }
+        }
 
         Publisher publisher = publisherBuilder.fillToUpdate(req);
-        publisherDAO.update(publisher);
 
         Edition edition = editionBuilder.fillToUpdate(req);
-        if (bookValidator.isISBNValid(edition.getIsbn())) {
-            editionDAO.update(edition);
-        } else {
-            displayErrorMessage(req, resp, ISBN_INVALID_ERROR);
+        if (!bookValidator.isISBNValid(edition.getIsbn())) {
+            displayErrorMessage(req, resp, ISBN_ERROR);
         }
+
+        bookDAO.update(book);
+        publisherDAO.update(publisher);
+        editionDAO.update(edition);
 
         dispatcher = req.getRequestDispatcher(SORT_BOOK_ACTION);
         dispatcher.forward(req, resp);

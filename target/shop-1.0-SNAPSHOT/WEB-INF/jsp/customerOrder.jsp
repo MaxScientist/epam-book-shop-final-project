@@ -1,21 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${sessionScope.locale}" />
-<fmt:setBundle basename="local" />
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="local"/>
 
 <jsp:useBean id="Constants" class="com.epam.bookshop.constants.ParameterConstants"/>
-<c:choose>
-    <c:when test="${sessionScope.user != null}">
-        <jsp:include page="customer/fragments/header.jsp"/>
-    </c:when>
-    <c:otherwise>
-        <jsp:include  page="fragments/mainHeader.jsp"/>
-    </c:otherwise>
-</c:choose>
 
+<jsp:include page="fragments/mainHeader.jsp"/>
 <div class="container mt-5" style="background-color: #f5f5f5; margin-top: 100px;">
     <c:if test="${sessionScope.user.roleId eq Constants.roleUserId and
                     not sessionScope.user.banned and
@@ -27,17 +20,17 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th><fmt:message key="th.order.products"/></th>
-                            <th><fmt:message key="th.total"/></th>
-                            <th><fmt:message key="th.status"/></th>
-                            <th><fmt:message key="th.date"/></th>
+                            <th><fmt:message key="label.order.products"/></th>
+                            <th><fmt:message key="label.total"/></th>
+                            <th><fmt:message key="label.status"/></th>
+                            <th><fmt:message key="label.date"/></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:if test="${empty requestScope.userOrders}">
                             <div class="mx-auto" style="text-align: center">
                                 <h5 class="card-title"><fmt:message key="head.order.empty"/></h5>
-                                <img src="${pageContext.request.contextPath}/img/sad.png" style="width: 40%">
+                                <img src="${pageContext.request.contextPath}/static/img/empty.png" style="width: 40%">
                             </div>
                         </c:if>
                         <c:if test="${not empty requestScope.userOrders}">
@@ -52,18 +45,17 @@
                                                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                                                     <div>
                                                         <h5 class="card-title">
-                                                            <fmt:message key="head.vol"/>
                                                             <span>${orderItem.book.title}
                                                         </h5>
                                                         <div>
                                                             <ul>
                                                                 <li>ISBN: <span>${orderItem.book.isbn}</span></li>
-                                                                <li><fmt:message key="li.pageCount"/>
+                                                                <li><fmt:message key="label.pageCount"/>
                                                                     <span>${orderItem.book.pages}</span>
                                                                 </li>
-                                                                <li><fmt:message key="li.binding"/>:
+                                                                <li><fmt:message key="label.binding"/>:
                                                                     <span>${orderItem.book.binding}</span></li>
-                                                                <li><fmt:message key="li.releaseDate"/>:
+                                                                <li><fmt:message key="label.releaseDate"/>:
                                                                     <span>${orderItem.book.releaseDate}</span>
                                                                 </li>
                                                             </ul>
@@ -71,7 +63,7 @@
                                                     </div>
                                                     <div>
                                                         <b class="text-success">${orderItem.quantity}
-                                                            <fmt:message key="b.pieces.short"/></b> x
+                                                            <fmt:message key="label.amount.short"/></b> x
                                                         <b class="text-danger"> ${orderItem.fixedPrice}
                                                             <fmt:message key="span.currency.tenge"/></b>
                                                     </div>
@@ -97,7 +89,5 @@
             </div>
         </div>
     </c:if>
-    <c:if test="${sessionScope.user.roleId eq Constants.roleAdminId}">
-        <img src="img/404.png" class="mx-auto" width="100%">
-    </c:if>
 </div>
+<jsp:include page="fragments/footer.jsp"/>

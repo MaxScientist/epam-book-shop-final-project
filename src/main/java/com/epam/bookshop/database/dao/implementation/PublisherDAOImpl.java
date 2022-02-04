@@ -3,6 +3,7 @@ package com.epam.bookshop.database.dao.implementation;
 import com.epam.bookshop.database.connection.ConnectionPool;
 import com.epam.bookshop.database.dao.PublisherDAO;
 import com.epam.bookshop.entity.Publisher;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class PublisherDAOImpl implements PublisherDAO {
     private ConnectionPool connectionPool;
     private Connection connection;
 
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String INSERT_PUBLISHER = "INSERT INTO public.publisher(publish_house) VALUES(?)";
     private static final String UPDATE_PUBLISHER = "UPDATE public.publisher SET publish_house = ? WHERE id = ?";
@@ -62,6 +64,7 @@ public class PublisherDAOImpl implements PublisherDAO {
                 }
             }
         } finally {
+            LOGGER.info("New publisher has been added " + publisher);
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -77,6 +80,7 @@ public class PublisherDAOImpl implements PublisherDAO {
             preparedStatement.setLong(2, publisher.getId());
             preparedStatement.executeUpdate();
         } finally {
+            LOGGER.info("Publisher has been updated " + publisher);
             connectionPool.returnConnection(connection);
         }
     }

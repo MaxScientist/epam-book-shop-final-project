@@ -13,8 +13,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import static com.epam.bookshop.constants.ParameterConstants.LOCALE;
+import static com.epam.bookshop.constants.ParameterConstants.LOCALE_ID;
 import static com.epam.bookshop.constants.ServiceConstants.INDEX_JSP;
-import static com.epam.bookshop.constants.ParameterConstants.*;
 
 public class ChangeLanguageAction implements Action {
 

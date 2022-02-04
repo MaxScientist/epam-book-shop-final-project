@@ -42,14 +42,6 @@ public class Order {
         this.user = user;
     }
 
-//    public Integer getStatusId() {
-//        return statusId;
-//    }
-//
-//    public void setStatusId(Integer statusId) {
-//        this.statusId = statusId;
-//    }
-
     public OrderStatus getStatus() {
         return status;
     }

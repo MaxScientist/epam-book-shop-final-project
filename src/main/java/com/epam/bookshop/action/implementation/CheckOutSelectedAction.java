@@ -21,7 +21,6 @@ import java.util.stream.Stream;
 import static com.epam.bookshop.constants.PageNameConstants.CONFIRM_PAGE;
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
-
 import static com.epam.bookshop.constants.ServiceConstants.DISPLAY_CART_ACTION;
 
 public class CheckOutSelectedAction implements Action {
@@ -46,8 +45,7 @@ public class CheckOutSelectedAction implements Action {
 
             if (cartItems.size() != EMPTY_REQUEST_LENGTH) {
                 BigInteger totalPrice = cartItemBuilder.calculateTotalPrice(cartItems);
-//                req.setAttribute(CART_ITEMS, cartItems);???
-//                req.setAttribute(CART_TOTAL_PRICE, totalPrice);??
+
                 req.setAttribute(CART_ITEMS, cartItems);
                 req.setAttribute(CART_TOTAL_PRICE, totalPrice);
                 dispatcher = req.getRequestDispatcher(CONFIRM_PAGE);
