@@ -13,7 +13,7 @@
                     sessionScope.user.statusId ne Constants.accessStatusDeletedId}">
     <div class="row">
 
-        <form action="/main/addNewBook" method="post"  class="col-md-9 mt-5">
+        <form action="/main/addNewBook" method="post" enctype='multipart/form-data' class="col-md-9 mt-5">
             <c:if test="${not empty requestScope.emptyFieldError}">
                 <small class="form-text text-danger"><fmt:message key="small.error.empty.field"/></small>
             </c:if>
@@ -100,7 +100,7 @@
 
                 <div class="form-group">
                     <label><fmt:message key="label.book.image"/></label>
-                    <input name="bookImage" type="file" accept="image/*" class="form-control-file">
+                    <input name="bookImage" type='file'  accept="image/*" class="form-control-file">
                 </div>
                 <c:if test="${not empty requestScope.imageError}">
                 <small class="form-text text-danger"><fmt:message key="small.error.invalid.image"/></small>
