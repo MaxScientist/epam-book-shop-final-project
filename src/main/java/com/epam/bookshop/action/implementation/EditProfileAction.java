@@ -21,6 +21,7 @@ import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.EDIT_PROFILE_PAGE_ACTION;
 import static com.epam.bookshop.constants.ServiceConstants.ERROR_OCCURRED;
+import static com.epam.bookshop.util.ErrorMessageProvider.displayErrorMessage;
 import static com.epam.bookshop.util.validator.UserValidator.*;
 
 
@@ -45,13 +46,13 @@ public class EditProfileAction implements Action {
             dispatcher = req.getRequestDispatcher(EDIT_PROFILE_PAGE_ACTION);
             dispatcher.forward(req, resp);
         } else if (!isLoginFormatCorrect(updatedUser.getUserLogin())) {
-            displayErrorMessage(req, resp, ParameterConstants.LOGIN_ERROR);
+            displayErrorMessage(req, resp, ParameterConstants.LOGIN_ERROR, EDIT_PROFILE_PAGE_ACTION);
         } else if (!isPasswordFormatCorrect(req.getParameter(ParameterConstants.USER_PASSWORD))) {
-            displayErrorMessage(req, resp, PASSWORD_ERROR);
+            displayErrorMessage(req, resp, PASSWORD_ERROR, EDIT_PROFILE_PAGE_ACTION);
         } else if (!isPhoneFormatCorrect(updatedUser.getPhoneNumber())) {
-            displayErrorMessage(req, resp, PHONE_NUMBER_ERROR);
+            displayErrorMessage(req, resp, PHONE_NUMBER_ERROR, EDIT_PROFILE_PAGE_ACTION);
         } else if (!isPostalCodeFormatCorrect(updatedUser.getPostalCode())) {
-            displayErrorMessage(req, resp, POSTAL_CODE_ERROR);
+            displayErrorMessage(req, resp, POSTAL_CODE_ERROR, EDIT_PROFILE_PAGE_ACTION);
         }
         else {
             userDAO.update(updatedUser);
@@ -59,12 +60,5 @@ public class EditProfileAction implements Action {
             dispatcher = req.getRequestDispatcher(EDIT_PROFILE_PAGE_ACTION);
             dispatcher.forward(req, resp);
         }
-    }
-
-    private void displayErrorMessage(HttpServletRequest request, HttpServletResponse response,
-                                     String errorName) throws ServletException, IOException {
-        request.setAttribute(errorName, ERROR_OCCURRED);
-        dispatcher = request.getRequestDispatcher(EDIT_PROFILE_PAGE_ACTION);
-        dispatcher.forward(request, response);
     }
 }

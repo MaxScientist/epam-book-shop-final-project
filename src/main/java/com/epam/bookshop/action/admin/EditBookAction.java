@@ -29,6 +29,7 @@ import java.text.ParseException;
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.*;
+import static com.epam.bookshop.util.ErrorMessageProvider.displayErrorMessage;
 
 public class EditBookAction implements Action {
 
@@ -49,7 +50,7 @@ public class EditBookAction implements Action {
             dispatcher = req.getRequestDispatcher(ERROR_PAGE);
             dispatcher.forward(req, resp);
         } else if (bookValidator.isEmptyUpdateDataExists(req)) {
-            displayErrorMessage(req, resp, EMPTY_FIELD_ERROR);
+            displayErrorMessage(req, resp, EMPTY_FIELD_ERROR, ADD_NEW_BOOK_PAGE);
         }
 
         Book book = bookBuilder.fillToUpdate(req);
@@ -59,7 +60,7 @@ public class EditBookAction implements Action {
             if (ImageUtil.isImageFormatValid((req.getPart(BOOK_IMAGE)))) {
                 book.setBookImage(ImageUtil.imageToBase(req.getPart(BOOK_IMAGE).getInputStream()));
             } else {
-                displayErrorMessage(req, resp, IMAGE_ERROR);
+                displayErrorMessage(req, resp, IMAGE_ERROR, ADD_NEW_BOOK_PAGE);
             }
         }
 
@@ -67,7 +68,7 @@ public class EditBookAction implements Action {
 
         Edition edition = editionBuilder.fillToUpdate(req);
         if (!bookValidator.isISBNValid(edition.getIsbn())) {
-            displayErrorMessage(req, resp, ISBN_ERROR);
+            displayErrorMessage(req, resp, ISBN_ERROR, ADD_NEW_BOOK_PAGE);
         }
 
         bookDAO.update(book);
@@ -78,10 +79,4 @@ public class EditBookAction implements Action {
         dispatcher.forward(req, resp);
     }
 
-
-    private void displayErrorMessage(HttpServletRequest request, HttpServletResponse response, String errorName) throws ServletException, IOException {
-        request.setAttribute(errorName, ERROR_OCCURRED);
-        dispatcher = request.getRequestDispatcher(ADD_NEW_BOOK_PAGE);
-        dispatcher.forward(request, response);
-    }
 }

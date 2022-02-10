@@ -44,7 +44,7 @@ public class LoginAction implements Action {
             user = userDAO.selectUserByEmailPassword(email, cipheredPassword);
 
             if (user == null) {
-                request.setAttribute(EMAIL_PASSWORD_ERROR, ErrorMessageProvider.getErrorMessage(KEY_ERROR_USER_NOT_EXISTS));
+                request.setAttribute(EMAIL_PASSWORD_ERROR, ErrorMessageProvider.getErrorMessage(KEY_ERROR_SIGN_IN));
                 dispatcher = request.getRequestDispatcher(LOGIN_PAGE_ACTION);
                 dispatcher.forward(request, response);
             } else if (isBannedOrDeleted(user)) {

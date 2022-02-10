@@ -27,6 +27,7 @@ import java.text.ParseException;
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.*;
+import static com.epam.bookshop.util.ErrorMessageProvider.displayErrorMessage;
 
 
 public class AddNewBookAction implements Action {
@@ -54,18 +55,18 @@ public class AddNewBookAction implements Action {
         }
 
         if (bookValidator.isEmptyParamExists(req)) {
-            displayErrorMessage(req, resp, EMPTY_FIELD_ERROR);
+            displayErrorMessage(req, resp, EMPTY_FIELD_ERROR, ADD_NEW_BOOK_PAGE);
         }
         Author author = authorBuilder.fillNewAuthor(req);
 
         Book book = bookBuilder.fillNewBook(req);
         if (bookDAO.isBookExists(book.getTitle())) {
-            displayErrorMessage(req, resp, SUCH_BOOK_EXISTS_ERROR);
+            displayErrorMessage(req, resp, SUCH_BOOK_EXISTS_ERROR, ADD_NEW_BOOK_PAGE);
         } else if (req.getPart(BOOK_IMAGE).getSize() > EMPTY_REQUEST_LENGTH) {
             if (ImageUtil.isImageFormatValid((req.getPart(BOOK_IMAGE)))) {
                 book.setBookImage(ImageUtil.imageToBase(req.getPart(BOOK_IMAGE).getInputStream()));
             } else {
-                displayErrorMessage(req, resp, IMAGE_ERROR);
+                displayErrorMessage(req, resp, IMAGE_ERROR, ADD_NEW_BOOK_PAGE);
             }
 
             Publisher publisher = publisherBuilder.fillNewPublisher(req);
@@ -73,7 +74,7 @@ public class AddNewBookAction implements Action {
             Edition edition = editionBuilder.fillNewEditionBook(req);
 
             if (!bookValidator.isISBNValid(edition.getIsbn())) {
-                displayErrorMessage(req, resp, ISBN_ERROR);
+                displayErrorMessage(req, resp, ISBN_ERROR, ADD_NEW_BOOK_PAGE);
 
             }
             assembleAuthorDetails(author);
@@ -124,9 +125,5 @@ public class AddNewBookAction implements Action {
         author.setId(authorId);
     }
 
-    private void displayErrorMessage(HttpServletRequest request, HttpServletResponse response, String errorName) throws ServletException, IOException {
-        request.setAttribute(errorName, ERROR_OCCURRED);
-        dispatcher = request.getRequestDispatcher(ADD_NEW_BOOK_PAGE);
-        dispatcher.forward(request, response);
-    }
+
 }

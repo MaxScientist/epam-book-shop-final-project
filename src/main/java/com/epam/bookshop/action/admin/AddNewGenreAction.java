@@ -20,7 +20,8 @@ import java.util.List;
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.ROLE_ADMIN_ID;
 import static com.epam.bookshop.constants.ParameterConstants.SUCH_GENRE_EXISTS_ERROR;
-import static com.epam.bookshop.constants.ServiceConstants.*;
+import static com.epam.bookshop.constants.ServiceConstants.DISPLAY_ALL_GENRES;
+import static com.epam.bookshop.util.ErrorMessageProvider.displayErrorMessage;
 
 
 public class AddNewGenreAction implements Action {
@@ -33,19 +34,18 @@ public class AddNewGenreAction implements Action {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
 
-        if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)){
+        if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
             dispatcher = req.getRequestDispatcher(ERROR_PAGE);
             dispatcher.forward(req, resp);
         }
 
 
-
-        List<Genre>  genres = genreBuilder.fillNew(req);
+        List<Genre> genres = genreBuilder.fillNew(req);
         genreDAO.insert(genres);
 
-        for (Genre genre: genres) {
+        for (Genre genre : genres) {
             if (genreDAO.isGenreExists(genre.getName())) {
-                displayErrorMessage(req, resp, SUCH_GENRE_EXISTS_ERROR);
+                displayErrorMessage(req, resp, SUCH_GENRE_EXISTS_ERROR, DISPLAY_ALL_GENRES);
             }
         }
 
@@ -53,9 +53,4 @@ public class AddNewGenreAction implements Action {
         dispatcher.forward(req, resp);
     }
 
-    private void displayErrorMessage(HttpServletRequest request, HttpServletResponse response, String errorName) throws ServletException, IOException {
-        request.setAttribute(errorName, ERROR_OCCURRED);
-        dispatcher = request.getRequestDispatcher(DISPLAY_ALL_GENRES);
-        dispatcher.forward(request, response);
-    }
 }

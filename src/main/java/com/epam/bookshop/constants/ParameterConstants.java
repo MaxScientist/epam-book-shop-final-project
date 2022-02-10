@@ -29,7 +29,7 @@ public class ParameterConstants {
     public final static String CONTENT_TYPE_PNG = "image/png";
     public final static String EMPTY_FIELD_ERROR = "emptyFieldError";
     public final static String GENRES = "genres";
-    public final static String KEY_ERROR_LOGIN_EXISTS = "small.error.login.exists";
+    public static final String KEY_ERROR_LOGIN_EXISTS = "small.error.login.exists";
     public final static String GENRE_ID = "genreId";
     public final static String GENRE_LANGUAGE_ID = "genreLanguageId";
     public final static String GENRE_NAME = "genreName";
@@ -52,7 +52,7 @@ public class ParameterConstants {
     public final static String SORT_TYPES = "sortTypes";
     public final static String STATUS_ID = "statusId";
     public final static String USERS = "users";
-    public final static String USER_ID = "userId";
+    public static final String USER_ID = "userId";
     public final static String USER_ORDERS = "userOrders";
     public static final Integer ACCESS_STATUS_ACTIVE_ID = 1;
     public static final Integer ACCESS_STATUS_DELETED_ID = 2;
@@ -70,7 +70,6 @@ public class ParameterConstants {
     public static final String USER_PASSWORD = "userPassword";
     public static final String USER_PHONE_NUMBER = "userPhoneNumber";
     public static final String USER_POSTAL_CODE = "userPostalCode";
-    public static final String ACTION = "action";
     public static final String BOOKS = "books";
     public static final String BOOK_ID = "bookId";
     public static final String CART_ITEMS = "cartItems";
