@@ -18,4 +18,6 @@ public interface GenreDAO {
     List<Genre> selectAll() throws SQLException;
 
     void update(List<Genre> genres) throws SQLException;
+
+    boolean isGenreExists(String name) throws SQLException;
 }

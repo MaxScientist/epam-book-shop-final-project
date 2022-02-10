@@ -26,16 +26,28 @@
 
                             <tr>
                                 <td class="title">
+                                    <select name="genreLanguageId" id="">
+                                        <option value="${Constants.localeEnglishId}" selected>
+                                            <fmt:message key="select.option.en"/>
+                                        </option>
+                                    </select>
 
-                                    <input type="text" name="genreLanguageId" class="form-control" required>
                                 </td>
+                                <c:if test="${not empty requestScope.genreExistsError}">
+                                    <small style="color: red"><fmt:message key="small.error.genre.exist"/> </small>
+                                </c:if>
                                 <td class="title">
                                     <input type="text" name="genreName" class="form-control" required>
                                 </td>
+
                             </tr>
                             <tr>
                                 <td class="title">
-                                    <input type="text" name="genreLanguageId" class="form-control" required>
+                                    <select name="genreLanguageId">
+                                        <option class="form-control" value="${Constants.localeRussianId}" selected>
+                                            <fmt:message key="select.option.ru"/>
+                                        </option>
+                                    </select>
                                 </td>
                                 <td class="title">
                                     <input type="text" name="genreName" class="form-control" required>
@@ -51,9 +63,20 @@
                             <tr>
                                 <form action="/main/editGenre" method="post">
                                     <td class="title">
-                                                <input type="text" name="genreLanguageId"
-                                                       value="${genre.languageId}"
-                                                       class="form-control" required>
+                                        <select name="genreLanguageId">
+                                            <option value="${genre.languageId}"
+                                                    <c:if test="${genre.languageId eq Constants.localeEnglishId}">
+                                                        selected
+                                                    </c:if>>
+                                                <fmt:message key="select.option.en"/>
+                                            </option>
+                                            <option value="${genre.languageId}"
+                                                    <c:if test="${genre.languageId eq Constants.localeRussianId}">
+                                                        selected
+                                                    </c:if>>
+                                                <fmt:message key="select.option.ru"/>
+                                            </option>
+                                        </select>
                                     </td>
                                     <td class="title">
                                         <input type="text" name="genreName" value="${genre.name}"
@@ -64,7 +87,7 @@
                                         <c:choose>
                                             <c:when test="${iter.count%2 == 0}">
                                                 <button type="submit" class="btn btn-danger">
-                                                <fmt:message key="button.save"/>
+                                                    <fmt:message key="button.save"/>
                                                 </button>
                                             </c:when>
                                         </c:choose>

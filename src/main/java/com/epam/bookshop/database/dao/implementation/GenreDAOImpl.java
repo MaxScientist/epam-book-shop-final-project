@@ -24,6 +24,7 @@ public class GenreDAOImpl implements GenreDAO {
     private static final String INSERT_GENRE = "INSERT INTO public.genre(id, language_id, name) VALUES(?, ?, ?)";
     private static final String UPDATE_GENRE = "UPDATE public.genre SET name = ? WHERE (id = ? AND language_id = ?)";
     private static final String SELECT_GENRE_BY_ID = "SELECT * FROM public.genre WHERE id = ?";
+    private static final String SELECT_GENRE_BY_NAME = "SELECT * FROM public.genre WHERE name = ?";
 
     private static final String SELECT_GENRE_BY_BOOK_LANGUAGE_ID =
             "select g.id, g.language_id, g.name from public.book b inner join public.genre g on b.genre_id = g.id where b.id = ? AND g.language_id=?";
@@ -160,5 +161,22 @@ public class GenreDAOImpl implements GenreDAO {
             LOGGER.info(genres  + " has been deleted.");
             connectionPool.returnConnection(connection);
         }
+    }
+
+    @Override
+    public boolean isGenreExists(String name) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+
+        boolean isExists;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GENRE_BY_NAME)) {
+            preparedStatement.setString(1, name);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                isExists = resultSet.next();
+            }
+        }finally {
+            connectionPool.returnConnection(connection);
+        }
+        return isExists;
     }
 }

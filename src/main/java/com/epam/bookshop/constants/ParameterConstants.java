@@ -11,13 +11,10 @@ public class ParameterConstants {
     public final static Integer MIN_IMAGE_SIZE = 0;
     public final static Integer ORDER_STATUS_IN_PROCESSING = 1;
     public final static Integer ROLE_ADMIN_ID = 1;
-    public final static Long DEFAULT_COVER_ID = 7L;
     public final static String AUTHOR_FIRST_NAME = "authorFirstName";
     public final static String AUTHOR_LAST_NAME = "authorLastName";
-    public final static String AUTHOR_NAME_ERROR = "authorNameError";
     public final static String BOOK_BINDING = "bookBinding";
     public final static String BOOK_DESCRIPTION = "bookDescription";
-    public final static String PAGE_NAME = "pageName";
     public final static String BOOK_IMAGE = "bookImage";
     public final static String BOOK_INFO = "bookInfo";
     public final static String BOOK_ISBN = "bookISBN";
@@ -36,23 +33,19 @@ public class ParameterConstants {
     public final static String GENRE_ID = "genreId";
     public final static String GENRE_LANGUAGE_ID = "genreLanguageId";
     public final static String GENRE_NAME = "genreName";
-    public final static String GENRE_NAMES = "genreNames";
     public final static String HIDDEN_INPUT_ERROR = "hiddenInputError";
     public final static String IS_USER_BANNED = "isUserBanned";
     public final static String KEY_PRICE_ASC = "select.price.asc";
     public final static String KEY_PRICE_DESC = "select.price.desc";
     public final static String KEY_TITLE = "select.title";
     public final static String LANGUAGE_ID = "languageId";
-    public final static String NOT_UNIQUE_AUTHOR_ERROR = "notUniqueAuthorError";
     public final static String NOT_UNIQUE_BOOK_AUTHOR_ERROR = "notUniqueBookAuthorError";
-    public final static String NOT_UNIQUE_PUBLISHER_ERROR = "notUniquePublisherError";
     public final static String ORDER = "order";
     public final static String ORDERS = "orders";
     public final static String ORDER_ID = "orderId";
     public final static String ORDER_STATUSES = "orderStatuses";
     public final static String ORDER_STATUS_ID = "orderStatusId";
     public final static String PUBLISHER_HOUSE = "publisherHouse";
-    public final static String REFERER = "referer";
     public final static String ROLE_ID = "roleId";
     public final static String SELECTED_SORT_TYPE = "selectedSortType";
     public final static String SORT_TYPE = "sortType";
@@ -100,6 +93,7 @@ public class ParameterConstants {
     public static final String PUBLISHER_ID = "publisherId";
     public static final String ACCESS_STATUS_ID = "accessStatusId";
     public static final String IMAGE_ERROR = "imageError";
+    public static final String SUCH_GENRE_EXISTS_ERROR = "genreExistsError";
 
 
     public Integer getRoleUserId() {

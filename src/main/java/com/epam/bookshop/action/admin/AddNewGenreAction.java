@@ -19,7 +19,8 @@ import java.util.List;
 
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.ROLE_ADMIN_ID;
-import static com.epam.bookshop.constants.ServiceConstants.DISPLAY_ALL_GENRES;
+import static com.epam.bookshop.constants.ParameterConstants.SUCH_GENRE_EXISTS_ERROR;
+import static com.epam.bookshop.constants.ServiceConstants.*;
 
 
 public class AddNewGenreAction implements Action {
@@ -41,8 +42,20 @@ public class AddNewGenreAction implements Action {
 
         List<Genre>  genres = genreBuilder.fillNew(req);
         genreDAO.insert(genres);
+
+        for (Genre genre: genres) {
+            if (genreDAO.isGenreExists(genre.getName())) {
+                displayErrorMessage(req, resp, SUCH_GENRE_EXISTS_ERROR);
+            }
+        }
+
         dispatcher = req.getRequestDispatcher(DISPLAY_ALL_GENRES);
         dispatcher.forward(req, resp);
+    }
 
+    private void displayErrorMessage(HttpServletRequest request, HttpServletResponse response, String errorName) throws ServletException, IOException {
+        request.setAttribute(errorName, ERROR_OCCURRED);
+        dispatcher = request.getRequestDispatcher(DISPLAY_ALL_GENRES);
+        dispatcher.forward(request, response);
     }
 }
