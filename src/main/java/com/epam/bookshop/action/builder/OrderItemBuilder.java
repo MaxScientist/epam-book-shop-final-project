@@ -17,8 +17,10 @@ public class OrderItemBuilder {
     private final CartItemBuilder cartItemBuilder = CartItemBuilder.getInstance();
     private final BookBuilder bookBuilder = BookBuilder.getInstance();
     private final OrderItemDAO orderItemDAO = new OrderItemDAOImpl();
-    private OrderItemBuilder(){
+
+    private OrderItemBuilder() {
     }
+
     public List<OrderItem> fillNewOrderItems(List<Long> cartItemIds) throws SQLException {
         List<OrderItem> orderItems = new ArrayList<>();
         List<CartItem> cartItems = cartItemBuilder.fillCartItemByIds(cartItemIds);
@@ -45,7 +47,7 @@ public class OrderItemBuilder {
     }
 
     public static OrderItemBuilder getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new OrderItemBuilder();
         }
         return instance;
