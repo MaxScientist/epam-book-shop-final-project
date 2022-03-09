@@ -84,6 +84,7 @@ public class BookBuilder {
         book.setLanguageId(Integer.parseInt(request.getParameter(LANGUAGE_ID)));
         return book;
     }
+
     public Book fillToUpdate(HttpServletRequest req) throws IOException, ServletException, SQLException {
         Book book = fillNewBook(req);
         book.setId(Long.valueOf(req.getParameter(BOOK_ID)));
