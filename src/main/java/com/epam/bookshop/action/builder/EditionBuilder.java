@@ -16,6 +16,9 @@ public class EditionBuilder {
     private static EditionBuilder instance = new EditionBuilder();
     private final EditionDAO editionDAO = new EditionDAOImpl();
 
+    private EditionBuilder() {
+
+    }
 
     public Edition fillNewEditionBook(HttpServletRequest request) {
         Edition edition = new Edition();

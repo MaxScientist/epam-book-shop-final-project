@@ -12,6 +12,10 @@ public class PublisherBuilder {
 
     private static PublisherBuilder instance = new PublisherBuilder();
 
+    private PublisherBuilder() {
+
+    }
+
     public Publisher fillNewPublisher(HttpServletRequest request) {
         Publisher publisher = new Publisher();
         publisher.setPublishHouse(request.getParameter(PUBLISHER_HOUSE).trim());
