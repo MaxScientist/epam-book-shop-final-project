@@ -19,7 +19,6 @@ public final class DataBaseSupplier {
         DB_USER = properties.getString("db.user");
         DB_PASSWORD = properties.getString("db.password");
         POOL_SIZE = Integer.parseInt(properties.getString("db.poolsize"));
-
     }
 
 
