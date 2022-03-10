@@ -23,29 +23,29 @@ public class BookValidator {
     }
 
     public boolean isEmptyParamExists(HttpServletRequest request) throws IOException, ServletException {
-        return request.getParameter(AUTHOR_FIRST_NAME).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(AUTHOR_LAST_NAME).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(LANGUAGE_ID).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_TITLE).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(GENRE_ID).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(PUBLISHER_HOUSE).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_BINDING).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_DESCRIPTION).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_ISBN).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_PAGES).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_PRICE).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_RELEASE_DATE).length() == EMPTY_REQUEST_LENGTH ||
-                request.getPart(BOOK_IMAGE).getSubmittedFileName().length() == EMPTY_REQUEST_LENGTH;
+        return (request.getParameter(AUTHOR_FIRST_NAME).isEmpty()) ||
+                (request.getParameter(AUTHOR_LAST_NAME).isEmpty()) ||
+                (request.getParameter(LANGUAGE_ID).isEmpty()) ||
+                (request.getParameter(BOOK_TITLE).isEmpty()) ||
+                (request.getParameter(GENRE_ID).isEmpty()) ||
+                request.getParameter(PUBLISHER_HOUSE).isEmpty() ||
+                request.getParameter(BOOK_BINDING).isEmpty() ||
+                request.getParameter(BOOK_DESCRIPTION).isEmpty() ||
+                request.getParameter(BOOK_ISBN).isEmpty() ||
+                request.getParameter(BOOK_PAGES).isEmpty() ||
+                request.getParameter(BOOK_PRICE).isEmpty() ||
+                request.getParameter(BOOK_RELEASE_DATE).isEmpty() ||
+                request.getPart(BOOK_IMAGE).getSubmittedFileName().isEmpty();
     }
 
-    public boolean isEmptyUpdateDataExists(HttpServletRequest request) {
-        return request.getParameter(BOOK_TITLE).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(GENRE_ID).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(PUBLISHER_HOUSE).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_BINDING).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_DESCRIPTION).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_ISBN).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_PAGES).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(BOOK_PRICE).length() == EMPTY_REQUEST_LENGTH;
+    public boolean isBookDataEmpty(HttpServletRequest request) {
+        return request.getParameter(BOOK_TITLE).isEmpty() ||
+                request.getParameter(GENRE_ID).isEmpty() ||
+                request.getParameter(PUBLISHER_HOUSE).isEmpty() ||
+                request.getParameter(BOOK_BINDING).isEmpty() ||
+                request.getParameter(BOOK_DESCRIPTION).isEmpty() ||
+                request.getParameter(BOOK_ISBN).isEmpty()  ||
+                request.getParameter(BOOK_PAGES).isEmpty() ||
+                request.getParameter(BOOK_PRICE).isEmpty();
     }
 }
