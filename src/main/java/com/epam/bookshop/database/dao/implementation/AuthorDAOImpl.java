@@ -13,6 +13,8 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     private ConnectionPool connectionPool;
     private Connection connection;
+    private static final String authorAdded = "New author has been added %s.";
+    private static final String authorUpdated = "%s author has been updated.";
 
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
@@ -52,7 +54,7 @@ public class AuthorDAOImpl implements AuthorDAO {
                 }
             }
         } finally {
-            LOGGER.info("New author has been added " + author);
+            LOGGER.info(String.format(authorAdded, author));
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -68,7 +70,7 @@ public class AuthorDAOImpl implements AuthorDAO {
             preparedStatement.setLong(3, author.getId());
             preparedStatement.executeUpdate();
         } finally {
-            LOGGER.info(author + " has been updated.");
+            LOGGER.info(String.format(authorUpdated, author));
             connectionPool.returnConnection(connection);
         }
     }
@@ -154,7 +156,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         Author author = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_AUTHOR_BY_ID)) {
             preparedStatement.setLong(1, authorId);
-            try (ResultSet resultSet =  preparedStatement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     author = getAuthorByResultSet(resultSet);
                 }

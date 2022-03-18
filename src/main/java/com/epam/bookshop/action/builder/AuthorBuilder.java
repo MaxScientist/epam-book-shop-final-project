@@ -14,6 +14,13 @@ public class AuthorBuilder {
     private AuthorBuilder() {
     }
 
+    public static AuthorBuilder getInstance() {
+        if (instance == null) {
+            instance = new AuthorBuilder();
+        }
+        return instance;
+    }
+
     public Author fillNewAuthor(HttpServletRequest request) {
         Author author = new Author();
         author.setFirstName(request.getParameter(AUTHOR_FIRST_NAME).trim());
@@ -25,13 +32,6 @@ public class AuthorBuilder {
         Author author = fillNewAuthor(request);
         author.setId(Long.valueOf(request.getParameter(AUTHOR_ID)));
         return author;
-    }
-
-    public static AuthorBuilder getInstance() {
-        if (instance == null) {
-            instance = new AuthorBuilder();
-        }
-        return instance;
     }
 
 

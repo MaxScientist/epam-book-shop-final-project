@@ -17,22 +17,23 @@ public class EditionBuilder {
     private final EditionDAO editionDAO = new EditionDAOImpl();
 
     private EditionBuilder() {
+    }
 
+    public static EditionBuilder getInstance() {
+        if (instance == null) {
+            instance = new EditionBuilder();
+        }
+        return instance;
     }
 
     public Edition fillNewEditionBook(HttpServletRequest request) {
         Edition edition = new Edition();
 
         edition.setBinding(request.getParameter(BOOK_BINDING).trim());
-
         edition.setDescription(request.getParameter(BOOK_DESCRIPTION).trim());
-
-        edition.setIsbn(request.getParameter(BOOK_ISBN).trim());
-
+        edition.setIsbn(request.getParameter(BOOK_ISBN).replaceAll(ONLY_NUMBER_REGEX, WHITE_SPACE).trim());
         edition.setPages(Integer.parseInt(request.getParameter(BOOK_PAGES).trim()));
-
         edition.setPrice(new BigInteger(request.getParameter(BOOK_PRICE).trim()));
-
         String releaseDate = request.getParameter(BOOK_RELEASE_DATE);
         Date releaseDateBook = Date.valueOf(releaseDate);
         edition.setReleaseDate(releaseDateBook);
@@ -49,13 +50,6 @@ public class EditionBuilder {
             edition.setReleaseDate(editionDAO.selectByBookId(Long.valueOf(req.getParameter(BOOK_ID))).getReleaseDate());
         }
         return edition;
-    }
-
-    public static EditionBuilder getInstance() {
-        if (instance == null) {
-            instance = new EditionBuilder();
-        }
-        return instance;
     }
 
 

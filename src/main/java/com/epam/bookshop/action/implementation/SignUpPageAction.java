@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 
 import static com.epam.bookshop.constants.PageNameConstants.MAIN;
 import static com.epam.bookshop.constants.PageNameConstants.SIGN_UP;
@@ -18,15 +16,15 @@ import static com.epam.bookshop.constants.ParameterConstants.USER;
 
 public class SignUpPageAction implements Action {
 
-
-    private RequestDispatcher dispatcher;
-
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(USER);
-        if (user != null) dispatcher = req.getRequestDispatcher(MAIN);
-        else {
+
+        RequestDispatcher dispatcher;
+        if (user != null) {
+            dispatcher = req.getRequestDispatcher(MAIN);
+        } else {
             dispatcher = req.getRequestDispatcher(SIGN_UP);
         }
         dispatcher.forward(req, resp);

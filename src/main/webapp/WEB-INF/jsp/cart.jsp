@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" import="java.util.*" language="java" pageEncoding="UTF-8"
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"
          isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -35,8 +35,10 @@
                             <tr>
                                 <td scope="row">
                                     <div class="form-check">
-                                        <input name="cartItemId" value="${cartItem.id}" form="checkOutSelected"
-                                               class="form-check-input" type="checkbox">
+                                        <label>
+                                            <input name="cartItemId" value="${cartItem.id}" form="checkOutSelected"
+                                                   class="form-check-input" type="checkbox">
+                                        </label>
                                     </div>
                                 </td>
                                 <td>
@@ -64,7 +66,7 @@
                                     <b class="text-success">${cartItem.book.bookPrice}</b>
                                 </td>
                                 <td>
-                                    <form action="/main/setQuantity" method="post" id="SetQuantityForm">
+                                    <form action="${pageContext.request.contextPath}/main/setQuantity" method="get" id="SetQuantityForm">
                                         <input type="hidden" name="cartItemId" value="${cartItem.id}">
                                         <input
                                                 class="form-control"
@@ -79,7 +81,7 @@
                                     <span class="text-danger"><b>${cartItem.book.bookPrice.longValue() * cartItem.quantity}</b><span></span></span>
                                 </td>
                                 <td class="candidate-list-favourite-time text-center">
-                                    <form action="/main/deleteCartItem" method="post" class="form-check">
+                                    <form action="${pageContext.request.contextPath}/main/deleteCartItem" method="post" class="form-check">
                                         <input type="hidden" name="cartItemId" value="${cartItem.id}">
                                         <button type="submit" class="btn btn-danger">
                                             <fmt:message key="label.delete"/>
@@ -92,11 +94,11 @@
                     </table>
                     <c:if test="${not empty requestScope.cartItems}">
                         <div class="row">
-                            <form id="checkOutAll" action="/main/checkOutAll" method="post" class="col">
+                            <form id="checkOutAll" action="${pageContext.request.contextPath}/main/checkOutAll" method="post" class="col">
                                 <button type="submit" class="btn btn-primary" style="width: 100%"><fmt:message
                                         key="button.checkout.all"/></button>
                             </form>
-                            <form id="checkOutSelected" action="/main/checkOutSelected" method="post" class="col">
+                            <form id="checkOutSelected" action="${pageContext.request.contextPath}/main/checkOutSelected" method="post" class="col">
                                 <button type="submit" class="btn btn-outline-primary" style="width: 100%"><fmt:message
                                         key="button.checkout.selected"/></button>
                             </form>
@@ -105,7 +107,8 @@
                     <c:if test="${empty requestScope.cartItems}">
                         <div class="mx-auto" style="text-align: center">
                             <h5 class="card-title"><fmt:message key="head.cart.empty"/></h5>
-                            <img src="${pageContext.request.contextPath}/img/sad.png" style="width: 40%">
+                            <img src="${pageContext.request.contextPath}/static/images/empty.png" style="display: block; margin-right: auto;"
+                                 type="img/png" class="mx-auto" width="400px" height="300px" alt=""/>
                         </div>
                     </c:if>
                 </div>
@@ -113,7 +116,7 @@
         </div>
     </c:if>
     <c:if test="${sessionScope.user.roleId eq Constants.roleAdminId}">
-        <img src="img/404.png" class="mx-auto" width="100%">
+        <img src="${pageContext.request.contextPath}/static/images/error.png" style="display: block; margin-right: auto; margin-right: auto;" type="img/png" class="mx-auto" width="70%"/>
     </c:if>
 </div>
 <jsp:include page="fragments/footer.jsp"/>

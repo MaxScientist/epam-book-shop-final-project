@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.epam.bookshop.constants.ParameterConstants.*;
@@ -20,6 +21,13 @@ public class GenreBuilder {
     private final GenreDAO genreDAO = new GenreDAOImpl();
 
     private GenreBuilder() {
+    }
+
+    public static GenreBuilder getInstance() {
+        if (instance == null) {
+            instance = new GenreBuilder();
+        }
+        return instance;
     }
 
     private Integer getIdForNextGenre() throws SQLException {
@@ -38,13 +46,13 @@ public class GenreBuilder {
         List<String> genreNames = Stream.of(request.getParameterValues(GENRE_NAME)).
                 map(String::valueOf).collect(Collectors.toList());
         List<Genre> genreList = new ArrayList<>();
-        for (int i = 0; i < genreLanguageIds.size(); i++) {
+        IntStream.range(0, genreLanguageIds.size()).forEach(i -> {
             Genre genre = new Genre();
             genre.setId(idForNextGenre);
             genre.setLanguageId(genreLanguageIds.get(i));
             genre.setName(genreNames.get(i));
             genreList.add(genre);
-        }
+        });
         return genreList;
     }
 
@@ -52,17 +60,8 @@ public class GenreBuilder {
         List<Genre> genres = fillNew(request);
         List<Integer> updatedGenreIds = Stream.of(request.getParameterValues(GENRE_ID)).
                 map(Integer::valueOf).collect(Collectors.toList());
-        for (int i = 0; i <genres.size() ; i++) {
-            genres.get(i).setId(updatedGenreIds.get(i));
-        }
+        IntStream.range(0, genres.size()).forEach(i -> genres.get(i).setId(updatedGenreIds.get(i)));
         return genres;
-    }
-
-    public static GenreBuilder getInstance() {
-        if (instance == null) {
-            instance = new GenreBuilder();
-        }
-        return instance;
     }
 
 

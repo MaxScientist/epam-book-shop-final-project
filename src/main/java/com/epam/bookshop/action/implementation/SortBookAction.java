@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.epam.bookshop.constants.PageNameConstants.MAIN;
 import static com.epam.bookshop.constants.ParameterConstants.*;
@@ -23,10 +23,9 @@ import static com.epam.bookshop.constants.ParameterConstants.*;
 public class SortBookAction implements Action {
 
     private final BookBuilder bookBuilder = BookBuilder.getInstance();
-    private RequestDispatcher dispatcher;
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
         Integer locale_id = (Integer) session.getAttribute(LOCALE_ID);
 
@@ -38,14 +37,14 @@ public class SortBookAction implements Action {
         }
 
         if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
-            books = bookBuilder.getActive(books);
+            books = bookBuilder.getActive(Objects.requireNonNull(books));
         }
         if (req.getParameter(SORT_TYPE) != null) {
             bookBuilder.sortByType(books, SortType.valueOf(req.getParameter(SORT_TYPE)));
             session.setAttribute(SELECTED_SORT_TYPE, req.getParameter(SORT_TYPE));
         }
         session.setAttribute(BOOKS, books);
-        dispatcher = req.getRequestDispatcher(MAIN);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(MAIN);
         dispatcher.forward(req, resp);
     }
 }

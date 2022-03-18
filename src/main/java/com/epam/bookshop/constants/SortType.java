@@ -4,7 +4,8 @@ import static com.epam.bookshop.constants.ParameterConstants.*;
 
 public enum SortType {
 
-    TITLE(KEY_TITLE),
+    TITLE_ASC(KEY_TITLE_ASCENDING),
+    TITLE_DESC(KEY_TITLE_DESCENDING),
     PRICE_ASC(KEY_PRICE_ASC),
     PRICE_DESC(KEY_PRICE_DESC);
 

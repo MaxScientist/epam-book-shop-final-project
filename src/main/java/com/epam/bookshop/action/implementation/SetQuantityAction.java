@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
@@ -28,25 +27,24 @@ public class SetQuantityAction implements Action {
     private final CartDAO cartDAO = new CartDAOImpl();
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
 
         RequestDispatcher dispatcher;
         if (AccessValidator.isAccessDenied(ROLE_USER_ID, session)) {
             dispatcher = req.getRequestDispatcher(ERROR_PAGE);
-            dispatcher.forward(req, resp);
-        }
-
-        User user = (User) session.getAttribute(USER);
-        CartItem cartItem = cartItemBuilder.fillToUpdate(req);
-
-        if (cartItem.getQuantity() > DEFAULT_CART_ITEM_QUANTITY &&
-                cartItem.getUserId().equals(user.getId())) {
-            cartDAO.updateQuantity(cartItem);
         } else {
-            req.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
+            User user = (User) session.getAttribute(USER);
+            CartItem cartItem = cartItemBuilder.fillToUpdate(req);
+
+            if (cartItem.getQuantity() >= DEFAULT_CART_ITEM_QUANTITY &&
+                    cartItem.getUserId().equals(user.getId())) {
+                cartDAO.updateQuantity(cartItem);
+            } else {
+                req.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
+            }
+            dispatcher = req.getRequestDispatcher(DISPLAY_CART_ACTION);
         }
-        dispatcher = req.getRequestDispatcher(DISPLAY_CART_ACTION);
         dispatcher.forward(req, resp);
     }
 }

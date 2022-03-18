@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,7 +26,6 @@ import java.util.stream.Stream;
 import static com.epam.bookshop.constants.PageNameConstants.LOGIN;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.*;
-
 
 public class ConfirmOrderAction implements Action {
 
@@ -37,35 +35,36 @@ public class ConfirmOrderAction implements Action {
     private final CartItemValidator cartItemValidator = CartItemValidator.getInstance();
     private RequestDispatcher dispatcher;
 
-
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
 
-        if (AccessValidator.isAccessDenied(ROLE_USER_ID, session)) {
-            dispatcher = req.getRequestDispatcher(LOGIN); //RENAME `LOGIN`
-            dispatcher.forward(req, resp);
-        }
+        if (!AccessValidator.isAccessDenied(ROLE_USER_ID, session)) {
+            List<Long> cartItemIds = Stream.of(req.getParameterValues(CART_ITEM_ID)).map(Long::valueOf)
+                    .collect(Collectors.toList());
+            User user = (User) session.getAttribute(USER);
 
-        List<Long> cartItemIds = Stream.of(req.getParameterValues(CART_ITEM_ID)).map(Long::valueOf)
-                .collect(Collectors.toList());
-        User user = (User) session.getAttribute(USER);
-
-        if (!cartItemValidator.isCartItemsExist(cartItemIds)) {
-            req.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
-            dispatcher = req.getRequestDispatcher(DISPLAY_CART_ACTION);
-            dispatcher.forward(req, resp);
-        } else {
-            Order newOrder = orderBuilder.fillNew(user.getId(), cartItemIds);
-            Long newOrderId = orderDAO.insert(newOrder);
-
-            for (OrderItem orderItem : newOrder.getOrderItems()) {
-                orderItem.setOrderId(newOrderId);
-                orderItemDAO.insert(orderItem);
+            if (!cartItemValidator.isCartItemExist(cartItemIds)) {
+                req.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
+                dispatcher = req.getRequestDispatcher(DISPLAY_CART_ACTION);
+            } else {
+                orderConfirmation(req, cartItemIds, user);
             }
-            req.setAttribute(ORDER, newOrder);
-            dispatcher = req.getRequestDispatcher(DISPLAY_CUSTOMER_ORDER_ACTION);
-            dispatcher.forward(req, resp);
+        } else {
+            dispatcher = req.getRequestDispatcher(LOGIN);
         }
+        dispatcher.forward(req, resp);
+    }
+
+    private void orderConfirmation(HttpServletRequest req, List<Long> cartItemIds, User user) throws SQLException {
+        Order newOrder = orderBuilder.fillNew(user.getId(), cartItemIds);
+        Long newOrderId = orderDAO.insert(newOrder);
+
+        for (OrderItem orderItem : newOrder.getOrderItems()) {
+            orderItem.setOrderId(newOrderId);
+            orderItemDAO.insert(orderItem);
+        }
+        req.setAttribute(ORDER, newOrder);
+        dispatcher = req.getRequestDispatcher(DISPLAY_CUSTOMER_ORDER_ACTION);
     }
 }

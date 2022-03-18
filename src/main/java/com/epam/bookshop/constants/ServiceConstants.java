@@ -43,6 +43,7 @@ public class ServiceConstants {
     public static final String EDIT_AUTHOR_ACTION = "/main/editAuthor";
     public static final String EDIT_BOOK_ACTION = "/main/editBookInfo";
     public static final String SEARCH_ACTION = "/main/search";
+    public static final String ABOUT_US_ACTION = "/main/about";
 
 
 }

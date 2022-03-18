@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 
-import static com.epam.bookshop.constants.PageNameConstants.LOGIN;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.DISPLAY_ALL_ORDERS_ACTION;
 
@@ -24,18 +22,15 @@ public class EditOrderStatusAction implements Action {
 
     private final OrderDAO orderDAO = new OrderDAOImpl();
     private final OrderStatusDAO orderStatusDAO = new OrderStatusDAOImpl();
-    private RequestDispatcher dispatcher;
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
+        RequestDispatcher dispatcher;
+
+        AccessValidator.isAdminRole(req, resp, session);
+
         Integer localeId = (Integer) session.getAttribute(LOCALE_ID);
-
-        if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
-            dispatcher = req.getRequestDispatcher(LOGIN);
-            dispatcher.forward(req, resp);
-        }
-
         Integer orderStatusId = Integer.valueOf(req.getParameter(ORDER_STATUS_ID));
         Long orderId = Long.valueOf(req.getParameter(ORDER_ID));
 

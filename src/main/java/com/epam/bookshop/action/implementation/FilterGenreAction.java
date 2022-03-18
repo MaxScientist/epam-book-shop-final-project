@@ -2,7 +2,6 @@ package com.epam.bookshop.action.implementation;
 
 import com.epam.bookshop.action.Action;
 import com.epam.bookshop.action.builder.BookBuilder;
-
 import com.epam.bookshop.entity.Book;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,10 +23,8 @@ public class FilterGenreAction implements Action {
 
     private final BookBuilder bookBuilder = BookBuilder.getInstance();
 
-    private RequestDispatcher dispatcher;
-
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
         Integer localeId = (Integer) session.getAttribute(LOCALE_ID);
         List<Book> bookList;
@@ -43,7 +39,7 @@ public class FilterGenreAction implements Action {
         }
         session.setAttribute(BOOKS, bookList);
 
-        dispatcher = req.getRequestDispatcher(SORT_BOOK_ACTION);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(SORT_BOOK_ACTION);
         dispatcher.forward(req, resp);
 
     }

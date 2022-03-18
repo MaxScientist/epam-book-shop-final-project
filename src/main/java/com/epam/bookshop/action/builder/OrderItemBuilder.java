@@ -21,6 +21,13 @@ public class OrderItemBuilder {
     private OrderItemBuilder() {
     }
 
+    public static OrderItemBuilder getInstance() {
+        if (instance == null) {
+            instance = new OrderItemBuilder();
+        }
+        return instance;
+    }
+
     public List<OrderItem> fillNewOrderItems(List<Long> cartItemIds) throws SQLException {
         List<OrderItem> orderItems = new ArrayList<>();
         List<CartItem> cartItems = cartItemBuilder.fillCartItemByIds(cartItemIds);
@@ -45,14 +52,4 @@ public class OrderItemBuilder {
         }
         return orderItemList;
     }
-
-    public static OrderItemBuilder getInstance() {
-        if (instance == null) {
-            instance = new OrderItemBuilder();
-        }
-        return instance;
-
-    }
-
-
 }

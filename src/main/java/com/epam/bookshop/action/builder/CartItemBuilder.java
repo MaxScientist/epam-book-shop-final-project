@@ -28,7 +28,14 @@ public class CartItemBuilder {
     private final BookDAO bookDAO = new BookDAOImpl();
     private final EditionDAO editionDAO = new EditionDAOImpl();
 
-    private CartItemBuilder(){
+    private CartItemBuilder() {
+    }
+
+    public static CartItemBuilder getInstance() {
+        if (instance == null) {
+            instance = new CartItemBuilder();
+        }
+        return instance;
     }
 
     public CartItem fillNew(HttpServletRequest request) throws SQLException {
@@ -56,10 +63,9 @@ public class CartItemBuilder {
         return cartItems;
     }
 
-
     public BigInteger calculateTotalPrice(List<CartItem> cartItems) throws SQLException {
         BigInteger totalPrice = new BigInteger("0");
-        for (CartItem cartItem: cartItems) {
+        for (CartItem cartItem : cartItems) {
             totalPrice = totalPrice.add(editionDAO.selectByBookId(cartItem.getBookId()).getPrice());
         }
         return totalPrice;
@@ -77,19 +83,11 @@ public class CartItemBuilder {
         return cartItems;
     }
 
-    public CartItem fillToUpdate(HttpServletRequest req) throws SQLException{
+    public CartItem fillToUpdate(HttpServletRequest req) throws SQLException {
         CartItem cartItem = cartDAO.selectById(Long.parseLong(req.getParameter(CART_ITEM_ID)));
         cartItem.setQuantity(Integer.parseInt(req.getParameter(QUANTITY)));
         return cartItem;
     }
-
-    public static CartItemBuilder getInstance() {
-        if (instance == null) {
-            instance = new CartItemBuilder();
-        }
-        return instance;
-    }
-
 
 
 }

@@ -17,6 +17,9 @@ public class GenreDAOImpl implements GenreDAO {
     private ConnectionPool connectionPool;
     private Connection connection;
 
+    private static final String genresAdded = "New genres have been added %s";
+    private static final String genresUpdated = "Genres have been updated %s";
+
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String SELECT_ALL_GENRES = "SELECT * FROM public.genre";
@@ -26,8 +29,8 @@ public class GenreDAOImpl implements GenreDAO {
     private static final String SELECT_GENRE_BY_ID = "SELECT * FROM public.genre WHERE id = ?";
     private static final String SELECT_GENRE_BY_NAME = "SELECT * FROM public.genre WHERE name = ?";
 
-    private static final String SELECT_GENRE_BY_BOOK_LANGUAGE_ID =
-            "select g.id, g.language_id, g.name from public.book b inner join public.genre g on b.genre_id = g.id where b.id = ? AND g.language_id=?";
+    private static final String SELECT_GENRE_BY_BOOK_LANGUAGE_ID = "SELECT g.id, g.language_id, g.name FROM public.book b" +
+            " INNER JOIN public.genre g ON b.genre_id = g.id WHERE b.id = ? AND g.language_id=?";
 
 
     private Genre getGenreByResultSet(ResultSet resultSet) throws SQLException {
@@ -57,7 +60,7 @@ public class GenreDAOImpl implements GenreDAO {
         } catch (SQLException e) {
             connection.rollback();
         } finally {
-            LOGGER.info("New genres has been added " +genres);
+            LOGGER.info(String.format(genresAdded, genres));
             connectionPool.returnConnection(connection);
         }
     }
@@ -158,7 +161,7 @@ public class GenreDAOImpl implements GenreDAO {
         } catch (SQLException e) {
             connection.rollback();
         } finally {
-            LOGGER.info(genres  + " has been deleted.");
+            LOGGER.info(String.format(genresUpdated, genres));
             connectionPool.returnConnection(connection);
         }
     }
@@ -171,10 +174,10 @@ public class GenreDAOImpl implements GenreDAO {
         boolean isExists;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GENRE_BY_NAME)) {
             preparedStatement.setString(1, name);
-            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 isExists = resultSet.next();
             }
-        }finally {
+        } finally {
             connectionPool.returnConnection(connection);
         }
         return isExists;

@@ -12,7 +12,7 @@ public class CartItemValidator {
     private final CartDAO cartDAO = new CartDAOImpl();
 
 
-    public boolean isCartItemsExist(List<Long> cartItemIds) throws SQLException {
+    public boolean isCartItemExist(List<Long> cartItemIds) throws SQLException {
 
         for (Long cartItemId : cartItemIds) {
             if (cartDAO.selectById(cartItemId) == null) {

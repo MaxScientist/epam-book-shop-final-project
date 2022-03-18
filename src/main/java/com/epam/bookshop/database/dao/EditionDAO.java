@@ -13,7 +13,5 @@ public interface EditionDAO {
 
     void update(Edition edition) throws SQLException;
 
-    Edition selectByISBN(String isbn) throws SQLException;
-
     Edition selectByBookId(Long bookId) throws SQLException;
 }

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -30,7 +30,7 @@
                         <c:if test="${empty requestScope.userOrders}">
                             <div class="mx-auto" style="text-align: center">
                                 <h5 class="card-title"><fmt:message key="head.order.empty"/></h5>
-                                <img src="${pageContext.request.contextPath}/static/img/empty.png" style="width: 40%">
+                                <img src="${pageContext.request.contextPath}/static/images/empty.png" style="width: 40%" alt="">
                             </div>
                         </c:if>
                         <c:if test="${not empty requestScope.userOrders}">

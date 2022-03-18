@@ -15,9 +15,6 @@ public class ActionFactory {
     private static final Map<String, Action> ACTION_MAP = new HashMap<>();
     private static final ActionFactory SERVICE_FACTORY = new ActionFactory();
 
-    private ActionFactory() {
-    }
-
     static {
         ACTION_MAP.put(ADD_AUTHOR_TO_BOOK_ACTION, new AddAuthorToBookAction());
         ACTION_MAP.put(ADD_NEW_BOOK_ACTION, new AddNewBookAction());
@@ -58,6 +55,10 @@ public class ActionFactory {
         ACTION_MAP.put(TO_MAIN, new MainPageAction());
         ACTION_MAP.put(EDIT_BOOK_ACTION, new EditBookAction());
         ACTION_MAP.put(SEARCH_ACTION, new SearchAction());
+        ACTION_MAP.put(ABOUT_US_ACTION, new AboutUsAction());
+    }
+
+    private ActionFactory() {
     }
 
     public static ActionFactory getInstance() {

@@ -16,13 +16,16 @@ public class BookDAOImpl implements BookDAO {
     private ConnectionPool connectionPool;
     private Connection connection;
 
+    private static final String bookAdded = "New book has been added %s.";
+    private static final String bookDeleted = "%s has been updated.";
+
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String SELECT_ALL_BOOK = "SELECT * FROM public.book";
     private static final String SELECT_BOOK_BY_ID = "SELECT * FROM public.book where id=?";
     private static final String UPDATE_BOOK = "UPDATE public.book SET title=?, access_status_id=?, genre_id=?, image = ?, language_id=? WHERE id = ?";
     private static final String INSERT_BOOK = "INSERT INTO public.book(title, access_status_id, genre_id, image, language_id) VALUES(?,?,?,?,?)";
-    private static final String SELECT_ALL_BY_FILTER = "select * from public.book b inner join public.genre g on b.genre_id = g.id where g.id = ? and g.language_id = ?";
+    private static final String SELECT_ALL_BY_FILTER = "SELECT * FROM public.book b INNER JOIN public.genre g ON b.genre_id = g.id where g.id = ? AND g.language_id = ?";
     private static final String SELECT_BOOK_BY_TITLE = "SELECT * FROM public.book WHERE title = ?";
 
     private Book getBookByResultSet(ResultSet resultSet) throws SQLException {
@@ -59,7 +62,7 @@ public class BookDAOImpl implements BookDAO {
                 }
             }
         } finally {
-            LOGGER.info("New book has been added " + book);
+            LOGGER.info(String.format(bookAdded,book));
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -98,7 +101,7 @@ public class BookDAOImpl implements BookDAO {
             preparedStatement.setLong(6, book.getId());
             preparedStatement.executeUpdate();
         } finally {
-            LOGGER.info(book + " has been updated");
+            LOGGER.info(String.format(bookDeleted, book));
             connectionPool.returnConnection(connection);
         }
     }

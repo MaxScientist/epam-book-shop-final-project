@@ -14,6 +14,9 @@ public class PublisherDAOImpl implements PublisherDAO {
     private ConnectionPool connectionPool;
     private Connection connection;
 
+    private static final String publisherAdded = "New publisher has been added %s";
+    private static final String publisherUpdated = "Publisher has been updated %s";
+
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String INSERT_PUBLISHER = "INSERT INTO public.publisher(publish_house) VALUES(?)";
@@ -27,6 +30,42 @@ public class PublisherDAOImpl implements PublisherDAO {
         publisher.setId(resultSet.getLong("id"));
         publisher.setPublishHouse(resultSet.getString("publish_house"));
         return publisher;
+    }
+
+    @Override
+    public Long insert(Publisher publisher) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+
+        Long generatedId = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PUBLISHER, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, publisher.getPublishHouse());
+            preparedStatement.executeUpdate();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    generatedId = resultSet.getLong(1);
+                }
+            }
+        } finally {
+            LOGGER.info(String.format(publisherAdded, publisher));
+            connectionPool.returnConnection(connection);
+        }
+        return generatedId;
+    }
+
+    @Override
+    public void update(Publisher publisher) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PUBLISHER)) {
+            preparedStatement.setString(1, publisher.getPublishHouse());
+            preparedStatement.setLong(2, publisher.getId());
+            preparedStatement.executeUpdate();
+        } finally {
+            LOGGER.info(String.format(publisherUpdated, publisher));
+            connectionPool.returnConnection(connection);
+        }
     }
 
     @Override
@@ -47,42 +86,6 @@ public class PublisherDAOImpl implements PublisherDAO {
             connectionPool.returnConnection(connection);
         }
         return publisherList;
-    }
-
-    @Override
-    public Long insert(Publisher publisher) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
-
-        Long generatedId = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PUBLISHER, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, publisher.getPublishHouse());
-            preparedStatement.executeUpdate();
-            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    generatedId = resultSet.getLong(1);
-                }
-            }
-        } finally {
-            LOGGER.info("New publisher has been added " + publisher);
-            connectionPool.returnConnection(connection);
-        }
-        return generatedId;
-    }
-
-    @Override
-    public void update(Publisher publisher) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PUBLISHER)) {
-            preparedStatement.setString(1, publisher.getPublishHouse());
-            preparedStatement.setLong(2, publisher.getId());
-            preparedStatement.executeUpdate();
-        } finally {
-            LOGGER.info("Publisher has been updated " + publisher);
-            connectionPool.returnConnection(connection);
-        }
     }
 
     @Override
@@ -109,7 +112,7 @@ public class PublisherDAOImpl implements PublisherDAO {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         Publisher publisher = null;
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PUBLISHER_BY_PUBLISH_HOUSE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PUBLISHER_BY_PUBLISH_HOUSE)) {
             preparedStatement.setString(1, publishHouse);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {

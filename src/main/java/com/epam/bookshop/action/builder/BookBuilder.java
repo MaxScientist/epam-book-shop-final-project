@@ -6,9 +6,7 @@ import com.epam.bookshop.database.dao.implementation.*;
 import com.epam.bookshop.entity.Book;
 import com.epam.bookshop.entity.Edition;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -28,6 +26,13 @@ public class BookBuilder {
     private final PublisherDAO publisherDAO = new PublisherDAOImpl();
 
     private BookBuilder() {
+    }
+
+    public static BookBuilder getInstance() {
+        if (instance == null) {
+            instance = new BookBuilder();
+        }
+        return instance;
     }
 
     public List<Book> fillByFilter(List<Integer> genreIdList, Integer localeId) throws SQLException {
@@ -85,7 +90,7 @@ public class BookBuilder {
         return book;
     }
 
-    public Book fillToUpdate(HttpServletRequest req) throws IOException, ServletException, SQLException {
+    public Book fillToUpdate(HttpServletRequest req) {
         Book book = fillNewBook(req);
         book.setId(Long.valueOf(req.getParameter(BOOK_ID)));
         book.setAccessStatusId(Integer.parseInt(req.getParameter(ACCESS_STATUS_ID)));
@@ -101,8 +106,11 @@ public class BookBuilder {
             case PRICE_DESC:
                 books.sort(Comparator.comparing(Book::getBookPrice, Comparator.reverseOrder()));
                 break;
-            case TITLE:
+            case TITLE_ASC:
                 books.sort(Comparator.comparing(Book::getTitle));
+                break;
+            case TITLE_DESC:
+                books.sort(Comparator.comparing(Book::getTitle).reversed());
                 break;
         }
     }
@@ -112,6 +120,7 @@ public class BookBuilder {
         fillGivenListOfBooks(books, localeId);
         return books;
     }
+
     public List<Book> getActive(List<Book> books) {
         List<Book> activeVolumes = new ArrayList<>();
         for (Book book : books) {
@@ -119,13 +128,6 @@ public class BookBuilder {
                 activeVolumes.add(book);
         }
         return activeVolumes;
-    }
-
-    public static BookBuilder getInstance() {
-        if (instance == null) {
-            instance = new BookBuilder();
-        }
-        return instance;
     }
 
 

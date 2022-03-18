@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
+
 public class ShopServiceController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String requestFailed = "Couldn't execute request";
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
 
@@ -29,7 +30,7 @@ public class ShopServiceController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             processRequest(req, resp);
-        } catch (SQLException | ParseException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
@@ -38,19 +39,19 @@ public class ShopServiceController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             processRequest(req, resp);
-        } catch (SQLException | ParseException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         try {
             String pathInfo = request.getServletPath() + request.getPathInfo();
             Action action = actionFactory.getAction(pathInfo);
             action.execute(request, response);
-        } catch (ParseException | SQLException e) {
-            LOGGER.error("Couldn't execute request", e);
+        } catch (SQLException e) {
+            LOGGER.error(requestFailed, e);
             throw e;
         }
     }

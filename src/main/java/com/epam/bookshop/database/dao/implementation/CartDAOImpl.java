@@ -14,6 +14,9 @@ public class CartDAOImpl implements CartDAO {
     private ConnectionPool connectionPool;
     private Connection connection;
 
+    private static final String cartItemAdded = "New cart item has been added %s";
+    private static final String cartItemDeleted = "Cart item has been deleted {cart item id = %d}";
+
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String INSERT_CART = "INSERT INTO public.cart (user_id, book_id, quantity) VALUES (?, ?, ?)";
@@ -54,7 +57,7 @@ public class CartDAOImpl implements CartDAO {
                 }
             }
         } finally {
-            LOGGER.info("New cart item has been added " + cartItem);
+            LOGGER.info(String.format(cartItemAdded,cartItem));
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -120,7 +123,7 @@ public class CartDAOImpl implements CartDAO {
             preparedStatement.setLong(1, cartItemId);
             preparedStatement.executeUpdate();
         } finally {
-            LOGGER.info("Cart item has been added " + cartItemId);
+            LOGGER.info(String.format(cartItemDeleted,cartItemId));
             connectionPool.returnConnection(connection);
         }
     }

@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.epam.bookshop.constants.ParameterConstants.EMPTY_AMOUNT;
 import static com.epam.bookshop.constants.ParameterConstants.ORDER_STATUS_IN_PROCESSING;
 
 
@@ -28,6 +29,13 @@ public class OrderBuilder {
     private final OrderDAO orderDAO = new OrderDAOImpl();
 
     private OrderBuilder() {
+    }
+
+    public static OrderBuilder getInstance() {
+        if (instance == null) {
+            instance = new OrderBuilder();
+        }
+        return instance;
     }
 
     public Order fillNew(Long userId, List<Long> cartItemIds) throws SQLException {
@@ -44,9 +52,9 @@ public class OrderBuilder {
     }
 
     private BigInteger calculateTotalPrice(List<OrderItem> orderItems) {
-        BigInteger totalPrice = new BigInteger("0");
+        BigInteger totalPrice = new BigInteger(EMPTY_AMOUNT);
         for (OrderItem orderItem : orderItems) {
-            totalPrice =totalPrice.add(orderItem.getFixedPrice().multiply(new BigInteger(String.valueOf(orderItem.getQuantity()))));
+            totalPrice = totalPrice.add(orderItem.getFixedPrice().multiply(new BigInteger(String.valueOf(orderItem.getQuantity()))));
         }
         return totalPrice;
     }
@@ -68,12 +76,5 @@ public class OrderBuilder {
             order.setUser(userDAO.selectById(order.getUserId()));
         }
         return orderList;
-    }
-
-    public static OrderBuilder getInstance() {
-        if (instance == null) {
-            instance = new OrderBuilder();
-        }
-        return instance;
     }
 }

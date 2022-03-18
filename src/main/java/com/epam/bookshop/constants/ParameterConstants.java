@@ -37,7 +37,8 @@ public class ParameterConstants {
     public final static String IS_USER_BANNED = "isUserBanned";
     public final static String KEY_PRICE_ASC = "select.price.asc";
     public final static String KEY_PRICE_DESC = "select.price.desc";
-    public final static String KEY_TITLE = "select.title";
+    public final static String KEY_TITLE_ASCENDING = "select.title.ascending";
+    public final static String KEY_TITLE_DESCENDING = "select.title.descending";
     public final static String LANGUAGE_ID = "languageId";
     public final static String NOT_UNIQUE_BOOK_AUTHOR_ERROR = "notUniqueBookAuthorError";
     public final static String ORDER = "order";
@@ -93,6 +94,9 @@ public class ParameterConstants {
     public static final String ACCESS_STATUS_ID = "accessStatusId";
     public static final String IMAGE_ERROR = "imageError";
     public static final String SUCH_GENRE_EXISTS_ERROR = "genreExistsError";
+    public static final String EMPTY_AMOUNT = "0";
+    public static final String ONLY_NUMBER_REGEX = "[^\\d]";
+    public static final String WHITE_SPACE = "";
 
 
     public Integer getRoleUserId() {

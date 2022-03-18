@@ -15,7 +15,10 @@ public class EditionDAOImpl implements EditionDAO {
     private ConnectionPool connectionPool;
     private Connection connection;
 
+    private static final String editionAdded = "Edition of book id = %d  has been added %s";
+    private static final String editionUpdated = "Edition of book id = %d has been updated %s";
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+
 
     private static final String SELECT_ALL = "SELECT * FROM public.edition";
     private static final String INSERT_EDITION = "INSERT INTO public.edition ( isbn, binding, pages," +
@@ -24,8 +27,8 @@ public class EditionDAOImpl implements EditionDAO {
             "pages = ?, price = ?, description = ?, release_date = ?, pub_id = ? WHERE id = ?";
     private static final String SELECT_BY_ISBN = "SELECT * FROM public.edition WHERE isbn = ?";
     private static final String SELECT_EDITION_BY_BOOK_ID = "" +
-            "select e.id, e.isbn, e.binding, e.pages, e.price, e.description, e.release_date, e.book_id, e.pub_id " +
-            "from public.book b inner join public.edition e on b.id = e.book_id where b.id = ?";
+            "SELECT e.id, e.isbn, e.binding, e.pages, e.price, e.description, e.release_date, e.book_id, e.pub_id " +
+            "FROM public.book b INNER JOIN public.edition e ON b.id = e.book_id WHERE b.id = ?";
 
     private Edition getEditionByResultSet(ResultSet resultSet) throws SQLException {
         Edition edition = new Edition();
@@ -86,7 +89,7 @@ public class EditionDAOImpl implements EditionDAO {
                 }
             }
         } finally {
-            LOGGER.info("Edition of book id = " + edition.getBookId() + " has been added " + edition);
+            LOGGER.info(String.format(editionAdded,edition.getBookId(),edition));
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -107,27 +110,9 @@ public class EditionDAOImpl implements EditionDAO {
             preparedStatement.setLong(8, edition.getId());
             preparedStatement.executeUpdate();
         } finally {
-            LOGGER.info("Edition of book id = " + edition.getBookId() + " has been updated " + edition);
+            LOGGER.info(String.format(editionUpdated,edition.getBookId(),edition));
             connectionPool.returnConnection(connection);
         }
-    }
-
-    @Override
-    public Edition selectByISBN(String isbn) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
-        Edition edition = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ISBN)) {
-            preparedStatement.setString(1, isbn);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    edition = getEditionByResultSet(resultSet);
-                }
-            }
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-        return edition;
     }
 
     @Override

@@ -22,9 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 
-import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.*;
 import static com.epam.bookshop.util.ErrorMessageProvider.displayErrorMessage;
@@ -32,7 +30,6 @@ import static com.epam.bookshop.util.ErrorMessageProvider.displayErrorMessage;
 
 public class AddNewBookAction implements Action {
 
-    private RequestDispatcher dispatcher;
     private final BookBuilder bookBuilder = BookBuilder.getInstance();
     private final BookValidator bookValidator = BookValidator.getInstance();
     private final AuthorBuilder authorBuilder = AuthorBuilder.getInstance();
@@ -45,20 +42,40 @@ public class AddNewBookAction implements Action {
     private final EditionDAO editionDAO = new EditionDAOImpl();
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
+        RequestDispatcher dispatcher;
 
-
-        if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
-            dispatcher = req.getRequestDispatcher(ERROR_PAGE);
-            dispatcher.forward(req, resp);
-        }
+        AccessValidator.isAdminRole(req, resp, session);
 
         if (bookValidator.isEmptyParamExists(req)) {
             displayErrorMessage(req, resp, EMPTY_FIELD_ERROR, ADD_NEW_BOOK_PAGE);
         }
-        Author author = authorBuilder.fillNewAuthor(req);
+        assembleAllBookDetails(req, resp);
 
+        dispatcher = req.getRequestDispatcher(TO_MAIN);
+        dispatcher.forward(req, resp);
+    }
+
+    private void assembleAllBookDetails(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+        Author author = authorBuilder.fillNewAuthor(req);
+        Book book = checkBookDetails(req, resp);
+        Publisher publisher = publisherBuilder.fillNewPublisher(req);
+        Edition edition = editionBuilder.fillNewEditionBook(req);
+
+        if (!bookValidator.isISBNValid(edition.getIsbn())) {
+            displayErrorMessage(req, resp, ISBN_ERROR, ADD_NEW_BOOK_PAGE);
+        }
+        assembleAuthorDetails(author);
+        assembleBookDetails(book);
+
+        bookToAuthorDAO.insert(book.getId(), author.getId());
+
+        assemblePublisherDetails(publisher);
+        assembleEditionDetails(edition, book, publisher);
+    }
+
+    private Book checkBookDetails(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         Book book = bookBuilder.fillNewBook(req);
         if (bookDAO.isBookExists(book.getTitle())) {
             displayErrorMessage(req, resp, SUCH_BOOK_EXISTS_ERROR, ADD_NEW_BOOK_PAGE);
@@ -68,26 +85,8 @@ public class AddNewBookAction implements Action {
             } else {
                 displayErrorMessage(req, resp, IMAGE_ERROR, ADD_NEW_BOOK_PAGE);
             }
-
-            Publisher publisher = publisherBuilder.fillNewPublisher(req);
-
-            Edition edition = editionBuilder.fillNewEditionBook(req);
-
-            if (!bookValidator.isISBNValid(edition.getIsbn())) {
-                displayErrorMessage(req, resp, ISBN_ERROR, ADD_NEW_BOOK_PAGE);
-
-            }
-            assembleAuthorDetails(author);
-            assembleBookDetails(book);
-
-            bookToAuthorDAO.insert(book.getId(), author.getId());
-            assemblePublisherDetails(publisher);
-            assembleEditionDetails(edition, book, publisher);
-
-
-            dispatcher = req.getRequestDispatcher(SORT_BOOK_ACTION);
-            dispatcher.forward(req, resp);
         }
+        return book;
     }
 
     private void assembleEditionDetails(Edition edition, Book book, Publisher publisher) throws SQLException {

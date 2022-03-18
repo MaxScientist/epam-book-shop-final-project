@@ -12,14 +12,16 @@ public class UserValidator {
     private final static String PHONE_FORMAT_REGEX = "[0-9]{10}";
     private final static String POSTAL_CODE_FORMAT_REGEX = "[0-9]{6}";
 
-    private UserValidator() throws InvalidUserCredentialException { throw new InvalidUserCredentialException();}
+    private UserValidator() throws InvalidUserCredentialException {
+        throw new InvalidUserCredentialException("User's credentials are incorrect");
+    }
 
     public static boolean isEmailFormatCorrect(String email) {
         return Pattern.matches(EMAIL_FORMAT_REGEX, email);
     }
 
     public static boolean isLoginFormatCorrect(String name) {
-        return Pattern.matches(NAME_FORMAT_REGEX, name);
+        return !Pattern.matches(NAME_FORMAT_REGEX, name);
     }
 
     public static boolean isPasswordFormatCorrect(String password) {

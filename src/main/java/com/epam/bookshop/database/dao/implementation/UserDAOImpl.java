@@ -14,6 +14,10 @@ public class UserDAOImpl implements UserDAO {
     private ConnectionPool connectionPool;
     private Connection connection;
 
+    private static final String userAdded = "New user has been added %s";
+    private static final String userAccessUpdated = "User access has been updated %s";
+    private static final String userCredentialsUpdated = "User's credentials has been  updated %s";
+
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     private static final String INSERT_USER = "INSERT INTO public.user " +
@@ -75,7 +79,7 @@ public class UserDAOImpl implements UserDAO {
                 }
             }
         } finally {
-            LOGGER.info("New user has been added " + user);
+            LOGGER.info(String.format(userAdded,user));
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -91,7 +95,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setLong(3, user.getId());
             preparedStatement.executeUpdate();
         } finally {
-            LOGGER.info("User access has been updated " + user);
+            LOGGER.info(String.format(userAccessUpdated,user));
             connectionPool.returnConnection(connection);
         }
     }
@@ -128,7 +132,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(5, user.getPostalCode());
             preparedStatement.setLong(6, user.getId());
         } finally {
-            LOGGER.info("User has been updated " + user);
+            LOGGER.info(String.format(userCredentialsUpdated,user));
             connectionPool.returnConnection(connection);
         }
     }

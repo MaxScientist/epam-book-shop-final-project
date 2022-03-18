@@ -288,20 +288,6 @@ body{
     display:inline-block;
     vertical-align:middle;
 }
-.c1{
-    background: url(../images/tag.png) no-repeat 0px 0px;
-    width:42px;
-    height:42px;
-    display: inline-block;
-    vertical-align: middle;
-}
-.c2{
-    background: url(/static/images/cart.png) no-repeat 0px 10px;
-    width:42px;
-    height:42px;
-    display: inline-block;
-    vertical-align: middle;
-}
 .icon1 .profile_img {
     margin-top: 3px;
 }
@@ -849,6 +835,7 @@ ul.f-list1 li a:hover {
 .footer-bottom{
     background:#0b4b5a;
     padding:2% 0;
+    bottom: 0;
 }
 .copy{
     float:left;
@@ -2923,6 +2910,11 @@ ul.delivery-list li a:hover{
 
 .cell {
    width: 20%;
+}
+
+.container-about{
+    height: 700px;
+    padding: 20px;
 }
 .main-container {
     display: inline-block;

@@ -12,7 +12,6 @@ public class EncodingFilter implements Filter {
     private final String INIT_PARAM_ENCODING = "encoding";
     private final String INIT_PARAM_CONTENT_TYPE = "contentType";
 
-
     @Override
     public void init(FilterConfig filterConfig) {
         encoding = filterConfig.getInitParameter(INIT_PARAM_ENCODING);

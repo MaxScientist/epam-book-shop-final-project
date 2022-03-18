@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" isELIgnored="false" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
@@ -37,16 +37,11 @@
                                             <div class="candidate-list-title">
                                                 <h5 class="mb-0">${order.user.userLogin}</h5>
                                             </div>
-                                            <div class="candidate-list-option">
-                                                <ul class="list-unstyled">
-                                                    <li><i class="fas fa-envelope"></i>
-                                                            ${order.user.email}</li>
-                                                    <li><i class="fas fa-map-marker-alt pr-1"></i>
-                                                            ${order.user.address}, ${order.user.postalCode}
-                                                    </li>
-                                                    <li><i class="fas fa-phone"></i>
-                                                            ${order.user.phoneNumber}
-                                                    </li>
+                                            <div>
+                                                <ul>
+                                                    <li><i>${order.user.email}</i></li>
+                                                    <li><i>  ${order.user.address}, ${order.user.postalCode}</i></li>
+                                                    <li><i>${order.user.phoneNumber}</i></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -55,19 +50,20 @@
                                 <td class="title">
                                     <c:forEach items="${order.orderItems}" var="orderItem">
                                         <ul class="list-group mb-3">
-                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                                <div>
-                                                    <form action="DisplayAllVolumes" method="get">
+                                            <li class="list nav-item list-group-item d-flex justify-content-between lh-condensed">
+                                                <div class="clear">
+                                                    <form action="${pageContext.request.contextPath}/main/editBook" method="get">
                                                         <input type="hidden" name="bookId" value="${orderItem.book.id}">
                                                         <input
                                                                 type="submit"
                                                                 class="btn-link"
-                                                                value="Book ${orderItem.book.title}"
-                                                        style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis; width: 100px">
+                                                                value="${orderItem.book.title}"
+                                                                style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis; width: 250px">
                                                     </form>
                                                 </div>
-                                                <div>
-                                                    <b class="text-success">${orderItem.quantity} <fmt:message
+                                                <div class="clear">
+                                                    <b class="text-success">${orderItem.quantity}
+                                                        <fmt:message
                                                             key="label.amount.short"/></b> x <b
                                                         class="text-danger"> ${orderItem.fixedPrice} <fmt:message
                                                         key="span.currency.tenge"/></b>
@@ -80,7 +76,7 @@
                                     <span><b>${order.totalPrice}</b>  <fmt:message key="span.currency.tenge"/></span>
                                 </td>
                                 <td>
-                                    <form action="/main/editOrderStatus" method="post">
+                                    <form action="${pageContext.request.contextPath}/main/editOrderStatus" method="post">
                                         <input type="hidden" name="orderId" value="${order.id}">
                                         <select name="orderStatusId" class="form-control"
                                                 onchange="this.form.submit();">
@@ -88,8 +84,7 @@
                                                 <option class="text-primary" value="${status.id}"
                                                         <c:if test="${order.orderStatusId eq status.id}">
                                                             selected
-                                                        </c:if>
-                                                >
+                                                        </c:if>>
                                                         ${status.name}
                                                 </option>
                                             </c:forEach>
@@ -108,7 +103,7 @@
         </div>
     </c:if>
     <c:if test="${sessionScope.user.roleId eq Constants.roleUserId}">
-        <img src="img/404.png" class="mx-auto" width="100%">
+        <img src="${pageContext.request.contextPath}/static/images/empty.png" style="width: 40%" alt="">
     </c:if>
 </div>
 <jsp:include page="../fragments/footer.jsp"/>

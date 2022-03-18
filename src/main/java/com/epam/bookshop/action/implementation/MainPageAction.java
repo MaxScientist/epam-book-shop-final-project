@@ -14,12 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
-
 
 public class MainPageAction implements Action {
 
@@ -27,7 +25,7 @@ public class MainPageAction implements Action {
     private final BookBuilder bookBuilder = BookBuilder.getInstance();
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession(true);
         Integer localeId = (Integer) session.getAttribute(LOCALE_ID);
         List<Genre> genres = genreDAO.selectGenresByLanguageId(localeId);

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -30,7 +30,7 @@
                     </c:forEach>
                     <div class="action">
                         <c:if test="${sessionScope.user.roleId ne Constants.roleAdminId}">
-                            <form action="/main/addToCart" method="post">
+                            <form action="${pageContext.request.contextPath}/main/addToCart" method="post">
                                 <input type="hidden" name="bookId" value="${requestScope.bookInfo.id}">
                                 <button style="width: 30%; font-size: 9px; color: mediumseagreen" type="submit"
                                         class="btn btn-outline-primary">

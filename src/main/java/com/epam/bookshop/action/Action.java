@@ -5,9 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 
 public interface Action {
 
-    void execute(HttpServletRequest req, HttpServletResponse resp) throws ParseException, SQLException, ServletException, IOException;
+    void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException;
 }

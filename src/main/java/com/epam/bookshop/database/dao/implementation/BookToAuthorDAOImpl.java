@@ -12,7 +12,8 @@ public class BookToAuthorDAOImpl implements BookToAuthorDAO {
     private Connection connection;
 
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
-
+    private static final String bookToAuthorAdded = "New relation 'book to author' has been added bookId{'%d'} author{'%d'}";
+    private static final String bookToAuthorDeleted = "Relation 'book to author' has been deleted bookId{'%d'} author{'%d'}";
 
     private static final String INSERT = "INSERT INTO public.book_to_author(book_id, author_id) VALUES(?, ?)";
     private static final String SELECT_BY_BOOK_AUTHOR_ID = "SELECT * FROM public.book_to_author WHERE (book_id = ? AND author_id = ?)";
@@ -35,7 +36,7 @@ public class BookToAuthorDAOImpl implements BookToAuthorDAO {
                 }
             }
         } finally {
-            LOGGER.info("New relation 'book to author' has been added bookId{"+bookId+"} author{"+authorId+"}");
+            LOGGER.info(String.format(bookToAuthorAdded, bookId, authorId));
             connectionPool.returnConnection(connection);
         }
         return generatedId;
@@ -69,7 +70,7 @@ public class BookToAuthorDAOImpl implements BookToAuthorDAO {
             preparedStatement.setLong(2, authorId);
             preparedStatement.executeUpdate();
         } finally {
-            LOGGER.info("Relation 'book to author' has been deleted bookId{"+bookId+"} author{"+authorId+"}");
+            LOGGER.info(String.format(bookToAuthorDeleted, bookId, authorId));
             connectionPool.returnConnection(connection);
         }
     }

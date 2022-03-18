@@ -36,12 +36,12 @@
                                         <div class="form-check form-check-inline">
                                             <input name="genreId" type="checkbox" value="${genre.id}"
                                                    class="form-check-input"
-                                                   <c:if test="${fn:containsIgnoreCase(requestScope.checkedGenreIds, genre.id)}">checked</c:if>>
+                                                   <c:if test="${requestScope.checkedGenreIds.contains(genre.id)}">checked</c:if>>
                                             <label class="form-check-label"
                                                    style="font-size: small">${genre.name}</label>
                                         </div>
                                     </c:forEach>
-                                    <hr style="width: 30%;" />
+                                    <hr style="width: 30%;"/>
                                     <button class="btn btn-primary justify-content-center" type="submit"
                                             style="width: fit-content">
                                         <fmt:message key="label.search"/>

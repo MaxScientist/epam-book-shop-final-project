@@ -13,21 +13,18 @@ public class ErrorMessageProvider {
 
     private static final String FILENAME = "local";
 
-    private static ResourceBundle BUNDLE;
-    private static RequestDispatcher dispatcher;
-
     private ErrorMessageProvider() {
         throw new UnsupportedOperationException();
     }
 
     public static String getErrorMessage(String key) {
-        BUNDLE = ResourceBundle.getBundle(FILENAME);
+        ResourceBundle BUNDLE = ResourceBundle.getBundle(FILENAME);
         return BUNDLE.getString(key);
     }
 
     public static void displayErrorMessage(HttpServletRequest request, HttpServletResponse response, String errorName, String routePage) throws ServletException, IOException {
         request.setAttribute(errorName, ERROR_OCCURRED);
-        dispatcher = request.getRequestDispatcher(routePage);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(routePage);
         dispatcher.forward(request, response);
     }
 
