@@ -10,16 +10,18 @@ import java.sql.SQLException;
 
 public class AccessStatusDAOImpl implements AccessStatusDAO {
 
-    private ConnectionPool connectionPool;
-    private Connection connection;
+    private final ConnectionPool connectionPool;
+    private final Connection connection;
 
     private static final String SELECT_VOLUME_BY_ID = "SELECT * FROM access_status WHERE id = ?";
 
+    public AccessStatusDAOImpl(){
+        this.connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+    }
 
     @Override
     public boolean isAccessStatusExists(Integer statusId) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
         boolean isExists;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VOLUME_BY_ID)) {
             preparedStatement.setLong(1, statusId);
