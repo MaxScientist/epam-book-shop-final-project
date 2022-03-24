@@ -11,6 +11,7 @@ import java.io.IOException;
 import static com.epam.bookshop.constants.PageNameConstants.ABOUT_US_PAGE;
 
 public class AboutUsAction implements Action {
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher(ABOUT_US_PAGE);
