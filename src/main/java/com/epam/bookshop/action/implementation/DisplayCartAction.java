@@ -19,7 +19,6 @@ import static com.epam.bookshop.constants.PageNameConstants.CART_PAGE;
 import static com.epam.bookshop.constants.PageNameConstants.ERROR_PAGE;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 
-
 public class DisplayCartAction implements Action {
 
     private final CartItemBuilder cartItemBuilder = CartItemBuilder.getInstance();

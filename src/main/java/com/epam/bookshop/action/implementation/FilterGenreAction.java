@@ -18,7 +18,6 @@ import java.util.stream.Stream;
 import static com.epam.bookshop.constants.ParameterConstants.*;
 import static com.epam.bookshop.constants.ServiceConstants.SORT_BOOK_ACTION;
 
-
 public class FilterGenreAction implements Action {
 
     private final BookBuilder bookBuilder = BookBuilder.getInstance();
