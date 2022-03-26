@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import static com.epam.bookshop.constants.ParameterConstants.*;
 
-
 public class AuthorBuilder {
 
     private static AuthorBuilder instance = new AuthorBuilder();
