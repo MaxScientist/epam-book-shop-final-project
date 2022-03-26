@@ -19,7 +19,6 @@ import java.util.List;
 
 import static com.epam.bookshop.constants.ParameterConstants.*;
 
-
 public class CartItemBuilder {
 
     private static CartItemBuilder instance = new CartItemBuilder();
