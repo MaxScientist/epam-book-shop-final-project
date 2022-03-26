@@ -1,6 +1,5 @@
 package com.epam.bookshop.action;
 
-
 import com.epam.bookshop.action.admin.*;
 import com.epam.bookshop.action.implementation.*;
 
@@ -8,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.epam.bookshop.constants.ServiceConstants.*;
-
 
 public class ActionFactory {
 
