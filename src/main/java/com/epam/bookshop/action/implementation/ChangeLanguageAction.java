@@ -18,7 +18,6 @@ import static com.epam.bookshop.constants.ServiceConstants.INDEX_JSP;
 
 public class ChangeLanguageAction implements Action {
 
-
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
