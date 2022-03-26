@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-
 public final class ConnectionPool {
 
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
@@ -19,7 +18,6 @@ public final class ConnectionPool {
     private ConnectionPool() {
         loadDrivers();
         initPoolData();
-
     }
 
     private void loadDrivers() {
@@ -33,11 +31,9 @@ public final class ConnectionPool {
 
     private void initPoolData() {
         Connection connection;
-
         while (connectionQueue.size() < POOL_SIZE) {
             try {
                 connection = DriverManager.getConnection(DataBaseSupplier.DB_URL, DataBaseSupplier.DB_USER, DataBaseSupplier.DB_PASSWORD);
-
                 connectionQueue.put(connection);
             } catch (InterruptedException | SQLException e) {
                 LOGGER.warn(e);
