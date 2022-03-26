@@ -24,7 +24,7 @@ import static com.epam.bookshop.constants.ServiceConstants.TO_MAIN;
 import static com.epam.bookshop.util.validator.AccessValidator.isBannedOrDeleted;
 
 public class LoginAction implements Action {
-    private final static UserDAO userDAO = new UserDAOImpl();
+    private final UserDAO userDAO = new UserDAOImpl();
     private final static String userLogIn = "User '%s' has logged into the web-site.";
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
