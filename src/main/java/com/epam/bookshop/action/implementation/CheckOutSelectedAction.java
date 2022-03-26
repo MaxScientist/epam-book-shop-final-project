@@ -27,7 +27,6 @@ public class CheckOutSelectedAction implements Action {
     private final CartItemBuilder cartItemBuilder = CartItemBuilder.getInstance();
     private RequestDispatcher dispatcher;
 
-
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         HttpSession session = req.getSession();
