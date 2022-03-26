@@ -63,7 +63,7 @@ public class CartItemBuilder {
     }
 
     public BigInteger calculateTotalPrice(List<CartItem> cartItems) throws SQLException {
-        BigInteger totalPrice = new BigInteger("0");
+        BigInteger totalPrice = new BigInteger(ZERO_AMOUNT);
         for (CartItem cartItem : cartItems) {
             totalPrice = totalPrice.add(editionDAO.selectByBookId(cartItem.getBookId()).getPrice());
         }

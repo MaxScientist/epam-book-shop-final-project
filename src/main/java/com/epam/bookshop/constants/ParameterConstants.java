@@ -94,7 +94,7 @@ public class ParameterConstants {
     public static final String ACCESS_STATUS_ID = "accessStatusId";
     public static final String IMAGE_ERROR = "imageError";
     public static final String SUCH_GENRE_EXISTS_ERROR = "genreExistsError";
-    public static final String EMPTY_AMOUNT = "0";
+    public static final String ZERO_AMOUNT = "0";
     public static final String ONLY_NUMBER_REGEX = "[^\\d]";
     public static final String WHITE_SPACE = "";
 

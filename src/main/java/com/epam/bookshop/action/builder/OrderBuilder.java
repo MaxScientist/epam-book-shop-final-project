@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.epam.bookshop.constants.ParameterConstants.EMPTY_AMOUNT;
+import static com.epam.bookshop.constants.ParameterConstants.ZERO_AMOUNT;
 import static com.epam.bookshop.constants.ParameterConstants.ORDER_STATUS_IN_PROCESSING;
 
 
@@ -52,7 +52,7 @@ public class OrderBuilder {
     }
 
     private BigInteger calculateTotalPrice(List<OrderItem> orderItems) {
-        BigInteger totalPrice = new BigInteger(EMPTY_AMOUNT);
+        BigInteger totalPrice = new BigInteger(ZERO_AMOUNT);
         for (OrderItem orderItem : orderItems) {
             totalPrice = totalPrice.add(orderItem.getFixedPrice().multiply(new BigInteger(String.valueOf(orderItem.getQuantity()))));
         }
