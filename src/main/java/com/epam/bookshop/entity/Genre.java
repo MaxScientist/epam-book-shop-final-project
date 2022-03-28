@@ -1,9 +1,8 @@
 package com.epam.bookshop.entity;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Genre implements Serializable {
+public class Genre {
 
     private Integer id;
     private Integer languageId;

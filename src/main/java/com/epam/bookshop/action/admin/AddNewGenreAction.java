@@ -34,11 +34,14 @@ public class AddNewGenreAction implements Action {
         AccessValidator.isAdminRole(req, resp, session);
 
         List<Genre> genres = genreBuilder.fillNew(req);
+
+        for (Genre genre : genres) {
+            if (genreDAO.isGenreExists(genre.getName())) {
+                displayErrorMessage(req, resp, SUCH_GENRE_EXISTS_ERROR, DISPLAY_ALL_GENRES);
+            }
+        }
         genreDAO.insert(genres);
 
-        for (Genre genre : genres)
-            if (genreDAO.isGenreExists(genre.getName()))
-                displayErrorMessage(req, resp, SUCH_GENRE_EXISTS_ERROR, DISPLAY_ALL_GENRES);
 
         dispatcher = req.getRequestDispatcher(DISPLAY_ALL_GENRES);
         dispatcher.forward(req, resp);

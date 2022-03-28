@@ -22,7 +22,7 @@ public class GenreDAOImpl implements GenreDAO {
 
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
-    private static final String SELECT_ALL_GENRES = "SELECT * FROM public.genre";
+    private static final String SELECT_ALL_GENRES = "SELECT * FROM public.genre ORDER BY 1 ASC, 2 ASC";
     private static final String SELECT_ALL_GENRES_BY_LANGUAGE_ID = "SELECT * FROM public.genre WHERE language_id = ?";
     private static final String INSERT_GENRE = "INSERT INTO public.genre(id, language_id, name) VALUES(?, ?, ?)";
     private static final String UPDATE_GENRE = "UPDATE public.genre SET name = ? WHERE (id = ? AND language_id = ?)";
