@@ -2,6 +2,7 @@ package com.epam.bookshop.action.implementation;
 
 import com.epam.bookshop.action.Action;
 import com.epam.bookshop.action.builder.CartItemBuilder;
+import com.epam.bookshop.database.dao.BookDAO;
 import com.epam.bookshop.database.dao.CartDAO;
 import com.epam.bookshop.database.dao.implementation.BookDAOImpl;
 import com.epam.bookshop.database.dao.implementation.CartDAOImpl;
@@ -23,7 +24,7 @@ public class AddToCartAction implements Action {
 
     private final CartItemBuilder cartItemBuilder = CartItemBuilder.getInstance();
     private final CartDAO cartDAO = new CartDAOImpl();
-    private final BookDAOImpl bookDAO = new BookDAOImpl();
+    private final BookDAO bookDAO = new BookDAOImpl();
 
 
     @Override
