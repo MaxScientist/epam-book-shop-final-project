@@ -1,6 +1,7 @@
 package com.epam.bookshop.action.admin;
 
 import com.epam.bookshop.action.Action;
+import com.epam.bookshop.database.dao.BookToAuthorDAO;
 import com.epam.bookshop.database.dao.implementation.BookToAuthorDAOImpl;
 import com.epam.bookshop.util.validator.AccessValidator;
 
@@ -17,7 +18,7 @@ import static com.epam.bookshop.constants.ServiceConstants.EDIT_BOOK_PAGE_ACTION
 
 public class DeleteAuthorAction implements Action {
 
-    private final BookToAuthorDAOImpl bookToAuthorDAO = new BookToAuthorDAOImpl();
+    private final BookToAuthorDAO bookToAuthorDAO = new BookToAuthorDAOImpl();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
